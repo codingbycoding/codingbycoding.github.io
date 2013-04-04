@@ -1,5 +1,13 @@
 default_target : all
 
+define TM77-PC
+abc
+endef
+
+PC_ID=TM77-PC
+TM77-PC=TM77-PC
+
+ifeq ($(PC_ID), $(TM77-PC))
 C_COMPILER=D:\MinGW\bin\mingw32-gcc.exe
 C_SOURCE_FILES=testc.c
 C_INCLUDE_DIR_RUNTIME=D:\MinGW\include
@@ -16,6 +24,9 @@ CPP_DEFAULT_TARGET_NAME=testpp
 BOOST_HOME=D:\TDDOWNLOAD\Software\DevelopTools\boost_1_47_0
 BOOST_INCLUDE_DIR=$(BOOST_HOME)
 BOOST_LIB_DIR=$(BOOST_HOME)\stage\lib
+endif
+
+BOOST_LIB_NAMES=
 
 
 all : TARGET_C TARGET_CPP
