@@ -10,5 +10,17 @@ int main()
 	using boost::lexical_cast;
 	using boost::bad_lexical_cast;
 
+	int a;
+	try
+	{
+		a = lexical_cast<int, std::string>("20j");
+	}
+	catch(bad_lexical_cast& e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+
+	std::cout << "a:" << a << std::endl;
+
 	return 0;
 }

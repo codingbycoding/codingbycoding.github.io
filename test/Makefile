@@ -19,7 +19,7 @@ CPP_COMPILER=D:\MinGW\bin\mingw32-g++.exe
 CPP_SOURCE_FILES=testcpp.cpp
 CPP_INCLUDE_DIR_RUNTIME=D:\MinGW\lib\gcc\mingw32\4.5.2\include\c++ 
 
-CPP_DEFAULT_TARGET_NAME=testpp
+CPP_DEFAULT_TARGET_NAME=testcpp
 
 BOOST_HOME=D:\TDDOWNLOAD\Software\DevelopTools\boost_1_47_0
 BOOST_INCLUDE_DIR=$(BOOST_HOME)
