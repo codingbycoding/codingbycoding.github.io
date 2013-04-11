@@ -23,3 +23,7 @@ BOOST_HOME=D:\TDDOWNLOAD\Software\DevelopTools\boost_1_47_0
 BOOST_INCLUDE_DIR=$(BOOST_HOME)
 BOOST_LIB_DIR=$(BOOST_HOME)\stage\lib
 endif
+
+
+
+
