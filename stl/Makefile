@@ -9,7 +9,8 @@ all :
 	$(CXX) $(CPP_SRC_FILES) $(CXXFLAGS) -o $(DEFAULT_TARGET_NAME)
 
 
-
 include ../../run_target.mk
 
 
+RUN_TARGET :
+	$(CPP_DEFAULT_TARGET_NAME)
