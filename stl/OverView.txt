@@ -1,0 +1,5 @@
+
+4 sequence containers: deque list vector basic_string
+3 sequence container adaptor: queue priority_queue stack
+4 associative containers: map multimap set multiset
+4 unordered variants(C++11:):
