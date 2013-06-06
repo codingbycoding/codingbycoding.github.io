@@ -15,3 +15,7 @@
 *.exe
 *.out
 *.app
+
+#auto-save and backup files
+*~
+*#

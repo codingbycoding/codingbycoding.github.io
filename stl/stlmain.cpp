@@ -47,7 +47,7 @@ T sum(T arg1, T arg2)
 
 //Overloading 
 template<typename T=int, int magic = 100>
-T sum(T arg1, T arg2, T arg3)
+ T sum(T arg1, T arg2, T arg3)
 {
 	return arg1 + arg2 + arg3;
 }
@@ -87,3 +87,4 @@ int main()
 	
 	return 0;
 }
+
