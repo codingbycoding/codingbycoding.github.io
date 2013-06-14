@@ -16,6 +16,10 @@
 *.out
 *.app
 
+# bin dir
+bin/
+
 #auto-save and backup files
 *~
 *#
+
