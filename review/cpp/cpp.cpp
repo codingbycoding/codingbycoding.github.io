@@ -11,17 +11,17 @@ using namespace std;
 class ArrayClass
 {
 public:
-  ArrayClass();
-  ~ArrayClass();
-  bool operator ==(const ArrayClass&);
-  bool operator !=(const ArrayClass&);
-  ArrayClass& operator = (const ArrayClass&);
+	ArrayClass();
+	~ArrayClass();
+	bool operator ==(const ArrayClass&);
+	bool operator !=(const ArrayClass&);
+	ArrayClass& operator = (const ArrayClass&);
 };
 
 class TestClass
 {
 public: 
-  TestClass();
+	TestClass();
 
   //explicti only effective on class constructor to suppress implicit convert
   // and constructor with only one parameter default has implicit convert operation
