@@ -108,7 +108,8 @@ boost::local_time::tz_database tzDB;
 {
 boost::timer ter;
 std::cout << "load date_time_zonespec.csv cost: ";
-tzDB.load_from_file("D:/Source/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
+// tzDB.load_from_file("D:/Source/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
+ tzDB.load_from_file("D:/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
 std::cout << std::endl;
 }
 
@@ -188,6 +189,51 @@ for(v_s_i_t::iterator it=vs.begin(); it!= vs.end(); it++)
     std::cout << "**it: " << **it << std::endl;
   }
 
+
+// class Background
+// {
+//   // class BackgroundImpl;  
+// public: 
+//   Background(){}
+//   ~Background(){}
+
+//   void print()
+//   {
+//     impl->print();
+//   }
+  
+// private:
+//    boost::shared_ptr<class BackgroundImpl> impl;
+  
+// };
+
+// class Background::BackgroundImpl
+//   {
+//     BackgroundImpl(){}
+//     ~BackgroundImpl(){}
+//     void print()
+//     {
+//       std::cout << "I'm class BackgroundImpl actually..." << std::endl;
+//     }
+    
+//   };
+
+// Background back;
+// back.print();
+
+template<class T>
+class TestDeleter
+{
+  operator()()
+  {
+    std::cout << "TestDeleter operator()" << std::endl;
+  }
+};
+
+boost::shared_ptr<int> tester = boost::make_shared<int>(8, TestDeleter ter);
+
+
 std::cout << "from beginning of function main to end total cost:"; //progress_t will disconstruct
 return 0;
 }
+
