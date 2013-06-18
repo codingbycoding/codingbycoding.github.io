@@ -16,6 +16,7 @@
 #include <vector>
 #include <string>
 
+
 #include "boost/timer.hpp"
 #include "boost/progress.hpp"
 
@@ -33,6 +34,78 @@
 
 #include "boost/smart_ptr.hpp"
 #include "boost/make_shared.hpp"
+
+
+#include "boost/pool/pool.hpp"
+
+
+#include "boost/typeof/typeof.hpp"
+
+#include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
+
+
+
+
+template<class T=char>
+class CDemoT
+{
+public:
+  CDemoT(T& a, T& b, T& c) : _a(a), _b(b), _c(c){}
+void operator()()
+  {
+    std::cout << "template CDemoT operator()" << std::endl;
+  }
+private:
+  T _a, _b, _c;
+  
+};
+
+template<>
+class CDemoT<int>
+{
+  
+public:  
+  CDemoT(int a=0, int b=0, int c=0) : _a(a), _b(b), _c(c){}
+void operator()()
+  {
+    std::cout << "template<int> CDemoT operator()" << std::endl;
+  }  
+  
+  
+private:
+  int _a, _b, _c;
+  
+};
+
+
+class CDemo
+{
+  
+public:  
+  CDemo(int a=0, int b=0, int c=0) : _a(a), _b(b), _c(c){}
+void operator()()
+  {
+    std::cout << "template<int> CDemo operator()" << std::endl;
+  }  
+  
+  
+private:
+  int _a, _b, _c;
+  
+};
+
+struct SDemo
+{
+public:
+  int _a, _b, _c;  
+  SDemo(int a=0, int b=0, int c=0) : _a(a), _b(b), _c(c){}
+// void operator()()
+//   {
+//     std::cout << "SDemo operator()" << std::endl;
+//   }  
+};
+
+BOOST_TYPEOF_REGISTER_TYPE(SDemo)
 
 
 int main()
@@ -221,17 +294,81 @@ for(v_s_i_t::iterator it=vs.begin(); it!= vs.end(); it++)
 // Background back;
 // back.print();
 
-template<class T>
-class TestDeleter
-{
-  operator()()
+// template<class T>
+// class TestDeleter
+// {
+//   operator()()
+//   {
+//     std::cout << "TestDeleter operator()" << std::endl;
+//   }
+// };
+
+// boost::shared_ptr<int> tester = boost::make_shared<int>(8, TestDeleter ter);
+
+
+
+
+
+
+// boost::shared_array<int> sArray = new int[10];
+boost::shared_array<int> sArray(new int[10]);
+// int* iarray = new int[10];
+// boost::shared_array<int> sArray(iarray);
+
+for(int i=0; i<10; i++)
   {
-    std::cout << "TestDeleter operator()" << std::endl;
+    sArray[i] = i;
   }
-};
 
-boost::shared_ptr<int> tester = boost::make_shared<int>(8, TestDeleter ter);
 
+for(int i=0; i<10; i++)
+  {
+    std::cout << "sArray[" << i << "]: " << i << std::endl;
+  }
+
+
+
+boost::shared_ptr<int> spTestwp(new int(5));
+boost::weak_ptr<int> wp = spTestwp;
+assert(wp.use_count() == 1);
+
+if(!wp.expired())
+  {
+    boost::shared_ptr<int> sp2 = wp.lock();
+    *sp2 = 50;
+    assert(wp.use_count() == 2);
+  }
+
+assert(wp.use_count() == 1);
+
+
+
+boost::pool<> pl(sizeof(int));
+int* ptrInp1 = (int*) pl.malloc();
+if( ptrInp1 != NULL)
+  {
+assert(pl.is_from(ptrInp1));
+  }
+
+pl.free(ptrInp1);
+
+
+// boost::object_pool<CDemo<int> > objP;
+//objP 
+// boost::object_pool<SDemo> objP;
+// SDemo demoO = bjP.construct();
+
+
+
+// auto atype = 3; //auto is c feature.
+typeof(3+3) atype = 3;//typeof c++0x std feature.
+
+
+BOOST_TYPEOF(3+9) b_atype = 5;
+BOOST_AUTO(b_btype, 3.0*5);
+
+
+// BOOST_AUTO(
 
 std::cout << "from beginning of function main to end total cost:"; //progress_t will disconstruct
 return 0;
