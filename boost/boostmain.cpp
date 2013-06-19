@@ -15,7 +15,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <utility> //make_pair
 
+#include <complex>
 
 #include "boost/timer.hpp"
 #include "boost/progress.hpp"
@@ -34,6 +36,20 @@
 
 #include "boost/smart_ptr.hpp"
 #include "boost/make_shared.hpp"
+
+
+#include "boost/pool/pool.hpp"
+
+
+#include "boost/typeof/typeof.hpp"
+
+#include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
+
+
+#include "boost/optional.hpp"
+
+
+#include "boost/assign.hpp"
 
 
 
@@ -92,14 +108,13 @@ void TestDeleterFun(T*)
 // {
 //   std::cout << "TestDeleterFun..." << std::endl;
 // }
-#include "boost/pool/pool.hpp"
 
 
-#include "boost/typeof/typeof.hpp"
 
-#include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
-
-
+boost::optional<double> sqrt_op(double x)
+{
+  return boost::optional<double>(x>0, std::sqrt(x));
+}
 
 
 template<class T=char>
@@ -237,8 +252,8 @@ boost::local_time::tz_database tzDB;
 {
 boost::timer ter;
 std::cout << "load date_time_zonespec.csv cost: ";
-tzDB.load_from_file("D:/Source/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
-// tzDB.load_from_file("D:/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
+// tzDB.load_from_file("D:/Source/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
+tzDB.load_from_file("D:/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
 std::cout << std::endl;
 }
 
@@ -433,10 +448,80 @@ BOOST_TYPEOF(3+9) b_atype = 5;
 BOOST_AUTO(b_btype, 3.0*5);
 
 
-// BOOST_AUTO(
+BOOST_AUTO(argDemo, std::make_pair("first", SDemo()));
+std::cout << "struct SDemo: _a: " << argDemo.second._a << std::endl;
+
+
+	   
 
 Background back;
 back.print();
+
+
+
+ std::cout << "sqrt_op(-0.01): " << sqrt_op(-0.01) << std::endl;
+ std::cout << "sqrt_op(100): " << sqrt_op(100) << std::endl;
+
+
+
+boost::optional<std::string> op_strInP(boost::in_place("this is in place string not need temp string"));
+
+std::cout << "*op_strInP: " << *op_strInP << std::endl;
+
+{
+  using namespace boost::assign;  
+std::vector<int> iAss;
+// iAss boost::assign::+= 0,1,2,3,4,5;
+ iAss += 0,1,2,3,4,5;
+ std::cout << ", iAss:::: " << std::endl;
+ for(std::vector<int>::const_iterator cit=iAss.begin(); cit != iAss.end(); cit++)
+   {
+     std::cout << *cit << std::endl;
+   }
+}
+
+
+{
+  using namespace boost::assign;  
+std::vector<int> iAss;
+// iAss boost::assign::+= 0,1,2,3,4,5;
+ push_back(iAss)(0)(1)(20)(30);
+ std::cout << "push_back(iAss) () iAss:::: " << std::endl;
+ for(std::vector<int>::const_iterator cit=iAss.begin(); cit != iAss.end(); cit++)
+   {
+     std::cout << *cit << std::endl;
+   }
+}
+
+
+
+{
+  using namespace boost::assign;  
+std::vector<int> iAss;
+// iAss boost::assign::+= 0,1,2,3,4,5;
+ push_back(iAss)(0)(1)(20)(30),300, 200;
+ std::cout << "push_back(iAss) () , iAss:::: " << std::endl;
+ for(std::vector<int>::const_iterator cit=iAss.begin(); cit != iAss.end(); cit++)
+   {
+     std::cout << *cit << std::endl;
+   }
+}
+
+
+{
+  using namespace boost::assign;  
+  // std::vector<int> iAss = list_of(0)(1)(20)(30)(300);
+  std::vector<int> iAss = (list_of(0)(1)(20),30, 300);
+
+ std::cout << "list_of (iAss) () , iAss:::: " << std::endl;
+ for(std::vector<int>::const_iterator cit=iAss.begin(); cit != iAss.end(); cit++)
+   {
+     std::cout << *cit << std::endl;
+   }
+}
+
+
+
  
 std::cout << "from beginning of function main to end total cost:"; //progress_t will disconstruct
 return 0;
