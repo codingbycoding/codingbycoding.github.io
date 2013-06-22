@@ -51,6 +51,7 @@
 
 #include "boost/assign.hpp"
 
+#include "boost/logic/tribool.hpp"
 
 
 class Background;
@@ -513,13 +514,34 @@ std::vector<int> iAss;
   // std::vector<int> iAss = list_of(0)(1)(20)(30)(300);
   std::vector<int> iAss = (list_of(0)(1)(20),30, 300);
 
+  std::vector<int> iaAss = (list_of(0)(1)(2),3, 4);
+  std::vector<int> ibAss = (list_of(0)(10)(20),30, 400);
+
  std::cout << "list_of (iAss) () , iAss:::: " << std::endl;
  for(std::vector<int>::const_iterator cit=iAss.begin(); cit != iAss.end(); cit++)
    {
      std::cout << *cit << std::endl;
    }
+
+
+ boost::swap(iaAss, ibAss);
+ std::cout << "list_of (iaAss) ( ibAss) for boost::swap () , iaAss now:::: " << std::endl;
+ for(std::vector<int>::const_iterator cit=iaAss.begin(); cit != iaAss.end(); cit++)
+   {
+     std::cout << *cit << std::endl;
+   }
+ std::cout << "( ibAss) for boost::swap () , ibAss now:::: " << std::endl;
+ for(std::vector<int>::const_iterator cit=ibAss.begin(); cit != ibAss.end(); cit++)
+   {
+     std::cout << *cit << std::endl;
+   }
+
 }
 
+
+boost::logic::tribool trib;
+
+ trib = boost::logic::indeterminate;
 
 
  
