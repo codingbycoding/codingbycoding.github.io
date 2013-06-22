@@ -252,8 +252,8 @@ boost::local_time::tz_database tzDB;
 {
 boost::timer ter;
 std::cout << "load date_time_zonespec.csv cost: ";
-// tzDB.load_from_file("D:/Source/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
-tzDB.load_from_file("D:/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
+tzDB.load_from_file("D:/Source/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
+// tzDB.load_from_file("D:/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
 std::cout << std::endl;
 }
 
