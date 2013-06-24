@@ -54,6 +54,35 @@
 #include "boost/logic/tribool.hpp"
 
 
+
+
+
+#include "boost/exception/all.hpp"
+
+
+
+
+#include "boost/uuid/uuid.hpp"
+#include "boost/uuid/uuid_io.hpp"
+#include "boost/uuid/uuid_generators.hpp"
+
+
+
+
+#include "boost/current_function.hpp"
+
+
+#include "boost/lexical_cast.hpp"
+
+#include "boost/format.hpp"
+
+#include "boost/algorithm/string.hpp"
+
+#include "boost/tokenizer.hpp"
+
+
+#include "boost/xpressive/xpressive_dynamic.hpp"
+
 class Background;
 // class Background::BackgroundImpl;
 class BackgroundImpl
@@ -105,6 +134,15 @@ void TestDeleterFun(T*)
   std::cout << "TestDeleterFun..." << std::endl;
 }
 
+
+class my_exception : public virtual boost::exception, public virtual std::exception
+{
+  
+};
+
+struct my_error_info_tag
+{
+};
 // void TestDeleterFun(int*)
 // {
 //   std::cout << "TestDeleterFun..." << std::endl;
@@ -179,6 +217,13 @@ public:
 
 BOOST_TYPEOF_REGISTER_TYPE(SDemo)
 
+
+
+
+double func()
+{
+  std::cout << "double func(): "  << BOOST_CURRENT_FUNCTION << std::endl;
+}
 
 int main()
 {
@@ -544,7 +589,121 @@ boost::logic::tribool trib;
  trib = boost::logic::indeterminate;
 
 
- 
+
+try{
+
+ try{
+
+   throw my_exception() << boost::error_info<my_error_info_tag, int>(20);
+ }
+ catch( my_exception& e)
+   {
+     std::cout << "first my_exception: " << e.what() << std::endl;
+     e << boost::error_info<my_error_info_tag, std::string>("again");
+     throw e;
+     // throw;
+   }
+ // catch( my_exception& e)
+ }
+
+ catch( my_exception& e)
+   {
+     std::cout << "second my_exception: " << e.what() << std::endl;
+   }
+ catch(...)
+   {
+     std::cout << "my_exception: " << " final catch..." << std::endl;
+     // std::cout << "my_exception: " << e.what() << std::endl;
+   }
+
+
+
+boost::uuids::uuid u = boost::uuids::nil_generator()();
+
+assert(u.is_nil());
+
+boost::uuids::random_generator rg = boost::uuids::random_generator();
+boost::uuids::uuid ru = rg();
+std::cout << "random_generator:: " << ru << std::endl;
+
+
+std::cout << std::hex << std::showbase;
+std::cout << BOOST_BINARY(10011) << std::endl;
+
+
+std::cout << "BOOST_CURRENT_FUNCTION: " << BOOST_CURRENT_FUNCTION << std::endl;
+
+func();
+
+
+ try{
+
+   int iLex = boost::lexical_cast<int>("100");
+
+   std::cout << "iLex: " << iLex << std::endl;
+
+ }
+ catch(boost::bad_lexical_cast& e)
+   {
+     std::cout << e.what() << std::endl;
+   } 
+
+
+std::cout << boost::format("%s: %d+%d=%d")  %"great" %1 %2 %(1+2);
+
+std::cout << std::endl;
+
+boost::format fmt("content is: |%s|\n");
+
+std::cout << fmt % "TestOne";
+std::cout << fmt % "TestSecond";
+std::cout << fmt % "TestThird";
+
+
+
+std::string str("little case");
+std::cout << boost::to_upper_copy(str) << std::endl;
+
+std::string strToken("This #??is for #Tokenizer?? use");
+boost::tokenizer<> tok(strToken);
+{
+  // using namespace boost::assign;
+  for(BOOST_AUTO(it, tok.begin()); it!=tok.end(); it++)  {
+
+    std::cout << *it << "8";
+      
+      }
+  std::cout << std::endl;
+
+  boost::char_separator<char> sepCh(" #i");
+  boost::tokenizer<boost::char_separator<char> > tokCh(strToken, sepCh);
+
+    for(BOOST_AUTO(it, tokCh.begin()); it!=tokCh.end(); it++)  {
+
+    std::cout << *it << "6";
+      
+      }
+  std::cout << std::endl;
+}
+
+boost::xpressive::cregex creg = boost::xpressive::cregex::compile("S\\d{8}R\\d");
+assert(boost::xpressive::regex_match("S20130624R1", creg));
+
+
+boost::xpressive::cmatch cm;
+boost::xpressive::cregex csreg = boost::xpressive::cregex::compile("S\\d{8}R\\d-(T){5}");
+// assert(boost::xpressive::regex_search("S20130624R1TTTTT", csreg));
+
+boost::xpressive::regex_search("S20130624R1-TTTTT-C20130624R1", cm, csreg);
+for(BOOST_AUTO(it, cm.begin()); it!=cm.end(); ++it)  {
+    std::cout << "[" << *it << "]";  
+      }
+      
+std::cout << std::endl;
+
+
+
+
 std::cout << "from beginning of function main to end total cost:"; //progress_t will disconstruct
 return 0;
 }
