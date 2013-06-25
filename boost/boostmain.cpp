@@ -702,6 +702,12 @@ for(BOOST_AUTO(it, cm.begin()); it!=cm.end(); ++it)  {
 std::cout << std::endl;
 
 
+std::string strR("Can You Test This(C20130624R1-S20130624R1) For Me, Please.");
+boost::xpressive::sregex sgex = boost::xpressive::sregex::compile("Me");
+boost::xpressive::sregex sgexR = boost::xpressive::sregex::compile("(C)(\\d){8}(R)(\\d)");
+std::string strRed = boost::xpressive::regex_replace(strR, sgex, "Her");
+std::cout << strRed << std::endl;
+std::cout << boost::xpressive::regex_replace(strR, sgexR, "Client$1$2Rev$4") << std::endl;;
 
 
 std::cout << "from beginning of function main to end total cost:"; //progress_t will disconstruct
