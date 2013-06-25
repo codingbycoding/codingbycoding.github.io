@@ -11,6 +11,13 @@
 
 //g++ -ID:\Source\boost_1_47_0\include -o  boostmain.exe boostmain.cpp D:\Source\boost_1_47_0\mingw\stage\lib\libboost_date_time-mgw44-mt-1_47.a
 
+//Release BOOST_ASSERT unavailable
+//g++  -O3 -DNDEBUG -ID:\boost_1_47_0 -o  boostmain.exe boostmain.cpp D:\boost_1_47_0\mingw\stage\lib\libboost_date_time-mgw44-mt-1_47.a
+
+//Debug BOOST_ASSERT will available
+//g++ -g  -ID:\boost_1_47_0 -o  boostmain.exe boostmain.cpp D:\boost_1_47_0\mingw\stage\lib\libboost_date_time-mgw44-mt-1_47.a
+
+
 
 #include <iostream>
 #include <vector>
@@ -82,6 +89,10 @@
 
 
 #include "boost/xpressive/xpressive_dynamic.hpp"
+
+
+#include "boost/assert.hpp"
+#include "boost/static_assert.hpp"
 
 class Background;
 // class Background::BackgroundImpl;
@@ -298,8 +309,8 @@ boost::local_time::tz_database tzDB;
 {
 boost::timer ter;
 std::cout << "load date_time_zonespec.csv cost: ";
-tzDB.load_from_file("D:/Source/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
-// tzDB.load_from_file("D:/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
+// tzDB.load_from_file("D:/Source/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
+tzDB.load_from_file("D:/boost_1_47_0/libs/date_time/data/date_time_zonespec.csv");
 std::cout << std::endl;
 }
 
@@ -710,6 +721,44 @@ std::cout << strRed << std::endl;
 std::cout << boost::xpressive::regex_replace(strR, sgexR, "Client$1$2Rev$4") << std::endl;;
 
 
+
+std::string strIter("C20130625R9-S20130625R9-P20130625R7");
+boost::xpressive::sregex sreg = boost::xpressive::sregex::compile("(\\d){8}(R)(\\d)");
+boost::xpressive::sregex_iterator sregIter(strIter.begin(), strIter.end(), sreg);
+boost::xpressive::sregex_iterator sregIterEnd;
+while(sregIter!=sregIterEnd){
+  std::cout << "[" << (*sregIter)[0] << "]  ";
+  ++sregIter;
+ }
+std::cout << std::endl; 
+
+
+// std::string strRegTok("Anonymous+Hello*World?Boost#");
+std::string strRegTok("+Anonymous+Hello+World+Boost+");
+// boost::xpressive::sregex sTok = boost::xpressive::sregex::compile("\\+\\*\\?#");
+try{
+boost::xpressive::sregex sTok = boost::xpressive::sregex::compile("\\+");
+boost::xpressive::sregex_token_iterator sTokIter = boost::xpressive::sregex_token_iterator(strRegTok.begin(), strRegTok.end(), sTok, -1);
+// boost::xpressive::sregex_token_iterator sTokIter = boost::xpressive::sregex_token_iterator(strRegTok.begin(), strRegTok.end(), sTok);
+while(sTokIter!=boost::xpressive::sregex_token_iterator()){
+  std::cout << *sTokIter << " ";
+  ++sTokIter;
+ }
+ }
+ catch(boost::xpressive::regex_error& e)
+   {
+     std::cout << e.what();
+   }
+
+std::cout << std::endl;
+
+
+//only available on Debug mode 
+BOOST_ASSERT(0);
+BOOST_STATIC_ASSERT(4 == sizeof(int));
+
+
+ 
 std::cout << "from beginning of function main to end total cost:"; //progress_t will disconstruct
 return 0;
 }
