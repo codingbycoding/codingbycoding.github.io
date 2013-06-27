@@ -12,6 +12,13 @@
 #include "boost/bimap.hpp"
 #include "boost/bimap/unordered_multiset_of.hpp"
 
+#include "boost/tuple/tuple.hpp"
+
+
+boost::tuple<int, int, std::string> tupFun(){
+return boost::make_tuple(10,100,"tupFun");
+}
+
 int main()
 {
 boost::array<int, 5> a = {0,1,2,3,4};
@@ -59,8 +66,8 @@ std::cout << "<double>::max(): " << std::numeric_limits<double>::max() << std::e
 
 
 {
-using namespace boost::assign;
-boost::unordered_map<int, std::string> unmap = map_list_of(1,"one")(2,"two")(3,"three");
+// using namespace boost::assign;
+boost::unordered_map<int, std::string> unmap = boost::assign::map_list_of(1,"one")(2,"two")(3,"three");
 
 std::cout << unmap[2] << std::endl;
 
@@ -114,12 +121,38 @@ for(BOOST_AUTO(pos, biUnTag.left.begin()); pos!=biUnTag.left.end(); ++pos)
   {
 std::cout << pos->first << "-" << pos->second << " ";
 }
-  
-  
+std::cout << std::endl;  
+
+BOOST_AUTO(posF, biUnTag.left.find(5));
+biUnTag.left.replace_key(posF, 50);
+std::cout << "replace_key::::";
+for(BOOST_AUTO(pos, biUnTag.left.begin()); pos!=biUnTag.left.end(); ++pos)
+  {
+std::cout << pos->first << "-" << pos->second << " ";
+}
 std::cout << std::endl;
 
 
+boost::tuple<int, int, std::string> tupVar(1,11,"tupVar");
+std::cout << tupVar.get<0>() << " ## ";
+std::cout << tupVar.get<1>() << " ## ";
+std::cout << tupVar.get<2>() << " ## ";
 
+
+std::cout << boost::get<0>(tupVar) << " ## " << std::endl;
+
+int tieI1, tieI2;
+std::string tieStr; 
+boost::tie(tieI1, tieI2, tieStr) = tupFun();
+
+std::string tieStrE;
+boost::tie(boost::tuples::ignore, boost::tuples::ignore, tieStrE) = tupFun();
+
+std::cout << "tieI1: " << tieI1 << " tieI2: " << tieI2 << " tieStr: " << tieStr << " tieStrE: " << tieStrE;
+
+
+
+std::cout << std::endl;
 
 return 0; 
 }
