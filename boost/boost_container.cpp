@@ -14,6 +14,13 @@
 
 #include "boost/tuple/tuple.hpp"
 
+#include "boost/any.hpp"
+
+#include "boost/shared_ptr.hpp"
+#include "boost/make_shared.hpp"
+
+
+#include "boost/variant.hpp"
 
 boost::tuple<int, int, std::string> tupFun(){
 return boost::make_tuple(10,100,"tupFun");
@@ -150,9 +157,39 @@ boost::tie(boost::tuples::ignore, boost::tuples::ignore, tieStrE) = tupFun();
 
 std::cout << "tieI1: " << tieI1 << " tieI2: " << tieI2 << " tieStr: " << tieStr << " tieStrE: " << tieStrE;
 
+std::cout << std::endl;
 
+
+
+boost::any anyI(65);
+try{
+std::cout << "anyI: " << boost::any_cast<std::string>(anyI);
+}
+ catch(boost::bad_any_cast& e)
+   {
+std::cout << e.what() << std::endl; 
+}
+ catch(...)
+   {
+std::cout << "catch(...)" << std::endl; 
+}
+
+boost::any anyP = boost::any( boost::shared_ptr<std::string>(boost::make_shared<std::string>("ptr_any")) );
+std::cout << "make_ptr_any: " << *(boost::any_cast<boost::shared_ptr<std::string> >(anyP)) << std::endl;
 
 std::cout << std::endl;
+
+
+
+
+
+
+
+
+
+ boost::variant<int, double, std::string> var;
+ var = "123";
+ std::cout << "var: " << var << std::endl; 
 
 return 0; 
 }
