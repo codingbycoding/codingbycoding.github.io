@@ -1,0 +1,13 @@
+{
+    "conf":
+    {
+	"head": "",
+	"title": "json test",
+	"urls":
+	{
+	    "url": "http://www.google.com"
+	    
+	},
+	"footer": "this is footer"
+    }
+}

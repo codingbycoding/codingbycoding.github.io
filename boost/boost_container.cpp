@@ -22,6 +22,30 @@
 
 #include "boost/variant.hpp"
 
+
+
+#include "boost/property_tree/ptree.hpp"
+#include "boost/property_tree/xml_parser.hpp"
+#include "boost/property_tree/json_parser.hpp"
+
+#include "boost/foreach.hpp"
+
+#include "boost/algorithm/minmax.hpp"
+#include "boost/algorithm/minmax_element.hpp"
+
+#include "boost/integer_traits.hpp"
+#include "boost/cstdint.hpp"
+
+#include "boost/rational.hpp"
+
+#include "boost/format.hpp"
+
+#include "boost/crc.hpp"
+
+
+#include "boost/random.hpp"
+#include <ctime>
+
 boost::tuple<int, int, std::string> tupFun(){
 return boost::make_tuple(10,100,"tupFun");
 }
@@ -191,5 +215,163 @@ std::cout << std::endl;
  var = "123";
  std::cout << "var: " << var << std::endl; 
 
+
+
+
+
+ boost::property_tree::ptree pt;
+ boost::property_tree::read_xml("ptree.conf", pt);
+ std::cout << pt.get<std::string>("conf.title") << std::endl;
+ std::cout << "<xmlattr> : " << pt.get<std::string>("conf.title.<xmlattr>.id") << std::endl;
+ std::cout << pt.get<int>("conf.number") << std::endl;
+ std::cout << pt.get("conf.number", 20000) << std::endl;
+ std::cout << pt.get("conf.numbers", 50000) << std::endl;
+
+ std::cout << "<xmlcomment> : " << pt.get<std::string>("conf.urls.<xmlcomment>") << std::endl;
+ BOOST_AUTO(child, pt.get_child("conf.urls"));
+ for(BOOST_AUTO(pos, child.begin()); pos!=child.end(); ++pos)
+   {
+     std::cout << pos->second.get_value<std::string>() << " ";
+   }
+ std::cout << std::endl;
+
+ 
+ pt.put("conf.put", "puttest");
+ // write_xml(std::cout, pt);
+
+
+ 
+ boost::property_tree::ptree ptjson;
+ boost::property_tree::read_json("ptree.json", ptjson);
+ 
+
+
+
+ {
+   using namespace boost::assign;
+   std::vector<int> vint = list_of(10)(20)(30)(40);
+
+   BOOST_FOREACH(int itech, vint)
+     {
+       std::cout << itech << " , ";
+     }
+   std::cout << std::endl;
+ }
+
+
+
+  {
+    using namespace boost::assign;
+    std::vector<int> vint = list_of(10)(20)(30)(40);
+
+    BOOST_FOREACH(int& itech, vint)
+      {
+	// std::cout << itech*=2 << " , ";
+	itech *= 2;
+      }
+   
+    BOOST_FOREACH(int itech, vint)
+      {
+	std::cout << itech << " , ";
+      }
+    std::cout << std::endl;    
+  }
+
+
+
+
+  {
+    BOOST_AUTO(var, boost::minmax(1,2));
+    std::cout << "min: " << var.get<0>() << "     max :" << var.get<1>() << std::endl;
+  }
+
+
+  {
+    using namespace boost::assign;
+    std::vector<int> vInt = (list_of(2),30,50,100,20,2,50);
+    BOOST_AUTO(var, boost::minmax_element(vInt.begin(), vInt.end()) );
+
+    
+    // std::cout << "min_element: " << var->first << "     max_element :" << var->second << std::endl;
+    std::cout << "min_element: " << *var.first << "     max_element :" << *var.second << std::endl;    
+  }
+
+
+
+
+  std::cout << boost::integer_traits<int>::const_min << std::endl;
+  std::cout << boost::integer_traits<int>::const_max << std::endl;
+
+  boost::uint8_t u8;
+  std::cout << typeid(u8).name() << std::endl;
+
+  std::string str;
+  std::cout << typeid(str).name() << std::endl;
+
+
+  boost::rational<int> raI(10,3);
+  boost::rational<int> raI2(20,3);
+  
+  std::cout << raI << std::endl;
+
+  std::cout << boost::rational_cast<double>(raI) << std::endl;
+  std::cout << raI.numerator() << "/" << raI.denominator() << std::endl;
+
+
+  int raa=34, rab=17;
+  boost::format fmt("gcd(%1%, %2%)=%3%  lcm(%1%, %2%)=%4%");
+  std::cout << fmt % raa % rab % boost::gcd(raa,rab) % boost::lcm(raa,rab);
+  std::cout << std::endl;
+
+
+
+
+  std::cout << std::hex;
+  boost::crc_32_type crc32;
+  crc32.process_bytes("abcd", 4);
+  std::cout << "crc32: " << crc32.checksum();
+
+  
+  crc32.reset();
+  std::cout << std::endl;
+  
+  char ch4[] = {'a', 'b', 'c', 'd'};
+  crc32.process_block(ch4, ch4+4);
+  std::cout << "crc32: " << crc32.checksum();
+  std::cout << std::endl;
+  std::cout << std::dec;
+
+
+  boost::mt19937 mtran(time(0));
+  for(int i=0; i<10; ++i)
+    {
+      std::cout << mtran() << ", ";
+    }
+  std::cout << std::endl;
+  
+  boost::uniform_int<> uni(0, 255);
+  for(int i=0; i<10; ++i)
+    {
+      std::cout << uni(mtran) << ", ";
+    }
+  std::cout << std::endl;
+  
+  boost::variate_generator<boost::mt19937&, boost::uniform_int<> > vargen(mtran, uni);
+  for(int i=0; i<10; ++i)
+    {
+      std::cout << vargen() << ", ";
+    }  
+  std::cout << std::endl;
+
+  unsigned char chBuf[10];
+  boost::rand_bytes<boost::mt19937>(chBuf, 10);
+  for(int i=0; i<10; ++i)
+    {
+      std::cout << (short)chBuf[i] << ", ";
+    }  
+  std::cout << std::endl;  
+
+		      
+ std::cout << std::endl; 
 return 0; 
 }
