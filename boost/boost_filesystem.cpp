@@ -9,6 +9,15 @@
 
 #include "boost/filesystem.hpp"
 #include "boost/optional.hpp"
+#include "boost/xpressive/xpressive_dynamic.hpp"
+#include "boost/algorithm/string.hpp"
+#include "boost/typeof/typeof.hpp"
+
+#include "boost/foreach.hpp"
+#include "boost/progress.hpp"
+
+#include <vector>
+#include <string>
 
 void recursive_dir(const boost::filesystem::path& p)
 {
@@ -52,6 +61,88 @@ boost::optional<boost::filesystem::path> find_file( const boost::filesystem::pat
   
 }
 
+
+
+void find_files( const boost::filesystem::path& p, const std::string& filename, std::vector<boost::filesystem::path>& r) 
+{
+  if(!boost::filesystem::exists(p) || !boost::filesystem::is_directory(p))
+    {
+      return;
+    }
+  
+  static boost::xpressive::sregex_compiler  sc;
+  if(!sc[filename].regex_id())
+    {
+      std::string str = boost::replace_all_copy(boost::replace_all_copy(filename, ".", "\\."), "*", ".*");
+      sc[filename] = sc.compile(str);
+    }
+  
+  boost::filesystem::recursive_directory_iterator rdend;
+  for(boost::filesystem::recursive_directory_iterator pos(p); pos!=rdend; ++pos)
+    {
+      // if( !boost::filesystem::is_directory(*pos) && boost::xpressive::regex_match(pos->path().string(), sc[filename]) )
+      if( !boost::filesystem::is_directory(*pos) && boost::xpressive::regex_match(pos->path().filename().string(), sc[filename]) )      
+      // if( !boost::filesystem::is_directory(*pos) ) 
+	{
+	  std::cout << filename << "path is: " << (*pos).path() << std::endl; 
+	  r.push_back((*pos).path());	  
+	}
+
+    }
+
+      if(r.empty())
+	{
+	  std::cout << filename << " not found!" << std::endl;
+	}
+      else
+	{
+	  std::cout << "find_files succeed: " << std::endl;
+	}
+      
+      for(BOOST_AUTO(it, r.begin()); it!=r.end(); ++it)
+	{
+	  std::cout << *it << std::endl;
+	}
+      
+}
+
+void copy_files(const boost::filesystem::path& from_dir, const boost::filesystem::path& to_dir, const std::string& filename = "*")
+{
+  if(!boost::filesystem::exists(from_dir) || !boost::filesystem::is_directory(from_dir) )
+    {
+      std::cout << from_dir << "dosent exist." << std::endl;
+      return;
+    }
+
+
+  std::vector<boost::filesystem::path> filesFound;
+  find_files(from_dir, filename, filesFound );
+
+  if(filesFound.empty())
+    {
+      std::cout << "empty dont need copy" << std::endl; 
+    }
+
+  boost::progress_display pd(filesFound.size());  
+  boost::filesystem::recursive_directory_iterator rdEnd;
+  // for( BOOST_AUTO(pos, boost::filesystem::recursive_directory_iterator(
+  boost::filesystem::path tmp;
+  
+  BOOST_FOREACH(boost::filesystem::path& each, filesFound)
+    {
+      tmp = to_dir / each.string().substr(from_dir.string().length()); 
+      if(!boost::filesystem::exists(tmp.parent_path()))
+	{
+	  boost::filesystem::create_directories(tmp.parent_path());
+	}
+	boost::filesystem::copy_file(each, tmp);
+	++pd;
+    }
+  
+
+}
+
+
 int main()
 {
   const int GB_BASE = 1024*1024*1024;
@@ -91,6 +182,10 @@ int main()
 
 
   find_file("d:/codingbycoding", "boostmain.cpp");
-  
+
+  // std::vector<boost::filesystem::path> pv;
+  // find_files("d:/codingbycoding", "boost*", pv);
+
+  // copy_files("d:/codingbycoding/boost", "d:/test");
   return 0; 
 }
