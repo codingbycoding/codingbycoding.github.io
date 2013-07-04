@@ -16,6 +16,9 @@
 #include "boost/foreach.hpp"
 #include "boost/progress.hpp"
 
+#include "boost/program_options.hpp"
+
+
 #include <vector>
 #include <string>
 
@@ -143,7 +146,7 @@ void copy_files(const boost::filesystem::path& from_dir, const boost::filesystem
 }
 
 
-int main()
+int main(int argc, char* argv[] )
 {
   const int GB_BASE = 1024*1024*1024;
   boost::filesystem::space_info si = boost::filesystem::space("d:/");
@@ -187,5 +190,42 @@ int main()
   // find_files("d:/codingbycoding", "boost*", pv);
 
   // copy_files("d:/codingbycoding/boost", "d:/test");
+
+
+  boost::program_options::options_description opts("demo options");
+  // boost::program_options po;
+  opts.add_options()("help,h", "this is help command.")("test,t", boost::program_options::value<std::string>(), "this is test command.");
+  boost::program_options::variables_map vm;
+
+  try{
+    boost::program_options::store(boost::program_options::parse_command_line(argc, argv, opts),vm );
+  }
+  catch(std::exception& e)
+    {
+      std::cout << e.what() << std::endl;
+    }
+  catch(...)
+    {
+      std::cout << "final catch..." << std::endl;
+    }
+
+  
+  if(vm.count("help"))
+    {
+      std::cout << opts << std::endl;
+      // return 0;
+    }
+    if(vm.count("test"))
+      {
+	std::cout << vm["test"].as<std::string>() << std::endl;
+      }
+    if(vm.size() == 0)
+      {
+	std::cout << "no args at all." << std::endl;
+      }
+
+
+
+    
   return 0; 
 }
