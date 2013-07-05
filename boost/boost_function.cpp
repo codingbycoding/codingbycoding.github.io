@@ -7,6 +7,9 @@
 
 #include "boost/utility/result_of.hpp"
 
+#include "boost/ref.hpp"
+#include "boost/typeof/typeof.hpp"
+
 typedef double (*Func)(double);
 
 
@@ -22,4 +25,28 @@ int main()
   boost::result_of<Func(double)>::type x = func(0.0016);
   std::cout << x << std::endl;
   std::cout << typeid(x).name() << std::endl;
+
+
+
+
+  int ia = 100;
+  boost::reference_wrapper<int> iref(ia);
+  std::cout << iref.get() << std::endl;
+
+  std::string str("HelloWorld!");
+  boost::reference_wrapper<std::string> strref(str);
+
+  std::cout << strref.get() << std::endl;
+  strref.get() = "GCC";
+  std::cout << strref.get() << std::endl;
+  
+  *strref.get_pointer() = "GoodBye.";
+  std::cout << strref.get() << std::endl;
+  std::cout << strref.get().size() << std::endl;
+
+  // BOOST_AUTO(sref, boost::ref(std::string("Hello")));
+  BOOST_AUTO(sref, strref);  
+  std::cout << typeid(sref).name() << std::endl;
+  *sref.get_pointer() = "World.";
+  std::cout << boost::unwrap_ref(sref) << std::endl;
 }
