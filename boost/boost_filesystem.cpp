@@ -18,6 +18,8 @@
 
 #include "boost/program_options.hpp"
 
+#include "boost/assign.hpp"
+
 
 #include <vector>
 #include <string>
@@ -53,7 +55,7 @@ boost::optional<boost::filesystem::path> find_file( const boost::filesystem::pat
     {
       if(!boost::filesystem::is_directory(*pos) && (*pos).path().filename() == filename)
 	{
-	  std::cout << filename << "path is: " << (*pos).path() << std::endl; 
+	  std::cout << filename << " path is: " << (*pos).path() << std::endl; 
 	  return (*pos).path();	  
 	}
 
@@ -145,6 +147,14 @@ void copy_files(const boost::filesystem::path& from_dir, const boost::filesystem
 
 }
 
+std::string env_name_wrapper(std::string& env_name)
+{
+  using namespace  boost::assign;
+  std::map<std::string, std::string> nm = map_list_of("TMP", "tmp")("USERNAME", "uname")("PATH", "path");
+  return nm[env_name];
+}
+
+
 
 int main(int argc, char* argv[] )
 {
@@ -170,7 +180,7 @@ int main(int argc, char* argv[] )
   std::cout << "recursive dir: " << std::endl;
   recursive_dir("d:/codingbycoding/boost");
 
-  std::cout << std::endl << std::endl;
+  std::cout << std::endl;
 
   
   boost::filesystem::recursive_directory_iterator recurend;
@@ -225,7 +235,56 @@ int main(int argc, char* argv[] )
       }
 
 
+    boost::program_options::options_description opts_f("demo options file");
+    opts_f.add_options()("Name", boost::program_options::value<std::string>(), "Name in config file.")("Year", boost::program_options::value<std::string>(), "Year in config file.")("Language", boost::program_options::value<std::string>(), "Language in config file.");    
 
+    // opts.add_options()("help,h", "this is help command.")("test,t", boost::program_options::value<std::string>(), "this is test command.");
+    boost::program_options::variables_map vm_f;
+    // boost::program_options::parse_config_file("./config_file.conf", opts_f, true);
+
+    std::ifstream is_f("./config_file.conf");
+    // char* ch_f = "./config_file.conf"; 
+    try{
+      // boost::program_options::store(boost::program_options::parse_config_file<char>(ch_f, opts_f, true), vm_f);
+      boost::program_options::store(boost::program_options::parse_config_file(is_f, opts_f, true), vm_f);
+    }
+    catch(std::exception& e)
+      {
+	std::cout << e.what() << std::endl;
+      }
+    catch(...)
+      {
+	std::cout << "final catch ..." << std::endl;
+      }    
     
+    for(BOOST_AUTO(pos, vm_f.begin()); pos!=vm_f.end(); ++pos)
+      {
+	std::cout << pos->first << ": " << pos->second.as<std::string>() << std::endl;
+
+      }
+
+    // if(vm_f.count("Name"))
+    //   {
+    // 	std::cout << "Name: " << vm_f["Name"].as<std::string>() << std::endl;
+    //   }
+    
+    if(vm_f.size() == 0)
+      {
+	std::cout << "no args in config_file.conf at all." << std::endl;
+      }
+
+
+
+    boost::program_options::options_description opts_env("demo options env");
+    opts_env.add_options()("tmp", boost::program_options::value<std::string>(), "tmp in evn.")("path", boost::program_options::value<std::string>(), "path in env.")("uname", boost::program_options::value<std::string>(), "uname in env.");
+
+
+boost::program_options::variables_map vm_env;
+boost::program_options::store(boost::program_options::parse_environment(opts_env, env_name_wrapper), vm_env);
+
+
+std::cout << "tmp: " << vm_env["tmp"].as<std::string>() << std::endl;
+std::cout << "path: " << vm_env["path"].as<std::string>() << std::endl;
+
   return 0; 
 }
