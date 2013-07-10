@@ -10,6 +10,10 @@
 #include "boost/ref.hpp"
 #include "boost/typeof/typeof.hpp"
 
+
+#include "boost/bind.hpp"
+
+
 typedef double (*Func)(double);
 
 
@@ -47,6 +51,13 @@ template <class T>
 void print(T t)
 {
   boost::unwrap_ref(t).print();
+}
+
+
+template <class T1, class T2>
+void print(T1 t1, T2 t2)
+{
+  std::cout << "arg1: " << t1 << "  arg2: " << t2 << std::endl;
 }
 
 int main()
@@ -99,4 +110,13 @@ int main()
   br.get().print();
   std::cout << "************" << std::endl;
   print(br);
+  std::cout << "************" << std::endl;  
+  print(b);
+  std::cout << "************" << std::endl;
+  print(br);  
+
+
+  boost::bind(print<std::string, int>, _1, _2)("abc", 123);
+  boost::bind(print<std::string, std::string>, _1, "jack")("abc", 123);
+  
 }
