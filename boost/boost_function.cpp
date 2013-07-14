@@ -22,6 +22,10 @@
 
 #include "boost/function.hpp"
 
+#include "boost/signals2.hpp"
+
+#include "boost/make_shared.hpp"
+#include "boost/shared_ptr.hpp"
 
 typedef double (*Func)(double);
 
@@ -144,6 +148,59 @@ public:
 
 // };
 
+// template <int N>
+// void echo(int x)
+// {
+//   std::cout << "echo  : " << t << std::endl;
+// }
+
+template <class T>
+void echo(T t)
+{
+  std::cout << "echo t : " << t << std::endl;
+}
+
+template <class T1, class T2>
+void echo(T1 t1, T2 t2)
+{
+  std::cout << "echo  t1 : " << t1 << "   t2: " << t2 << std::endl;
+}
+
+
+
+void slot_func()
+{
+  std::cout << "slot_func called..." << std::endl;
+}
+
+template <class T>
+void Tslot(T t)
+{
+  std::cout << "TSlot called  t : " << t << std::endl;
+}
+
+
+template <int N>
+struct Cslot
+{
+
+  typedef int result_type;
+  
+  result_type operator()(int x)
+  {
+    std::cout << "TSlot<" << N << "> called  x : " << x << std::endl;
+    return x*N;
+  }
+
+
+};
+
+template<int NN>
+bool operator==(const struct Cslot<NN>& , const struct Cslot<NN>&)
+{
+  return true;
+}
+
 template <class T>
 void print(T t)
 {
@@ -173,6 +230,43 @@ struct printer
   }
 
 };
+
+
+class FuncClass
+{
+public:
+  FuncClass(int a=0):m_a(a)
+  {
+  }
+  
+  // void SetFunc(boost::function<void(int)> fun)
+  // {
+  //   m_func = fun;
+  // }
+  template<typename CallBack>
+  void SetFunc(CallBack fun)
+  {
+    m_func = fun;
+  }  
+  
+  void Run()
+  {
+    if(m_func.empty())
+      {
+	std::cout << "m_func empty." << std::endl;
+      }
+    else
+      {
+	m_func(m_a);
+      }
+  }
+  
+private:
+  boost::function<void(int)> m_func;
+  int m_a;
+};
+
+
 
 int main()
 {
@@ -295,5 +389,75 @@ int main()
   boost::function<void(std::string, std::string)> func2_mem2;
   TestClass tf2;  
   func2_mem2 = boost::bind(&TestClass::print, &tf2,  _1, _2);    
-  func2_mem2("Come","On");  
+  func2_mem2("Come","On");
+
+
+
+  boost::function<void(int)> echoI = echo<int>;
+  FuncClass fun;
+  fun.SetFunc(echoI);
+  fun.Run();
+
+
+  fun.SetFunc(boost::bind<void>(echo<int,int>, _1, 20));
+  fun.Run();
+
+
+  boost::signals2::signal<void()> s;
+  s.connect(&slot_func);
+  s();
+
+
+  boost::signals2::signal<int(int)> s_Cslot_2;
+  boost::signals2::connection c11 = s_Cslot_2.connect(1, Cslot<1>());
+  boost::signals2::connection c111 = s_Cslot_2.connect(1, Cslot<11>());
+  boost::signals2::connection c22 = s_Cslot_2.connect(2, Cslot<2>());
+  s_Cslot_2.connect(2, Cslot<22>());
+  s_Cslot_2.connect(3, Cslot<3>());
+  boost::signals2::connection c333 = s_Cslot_2.connect(3, Cslot<33>());
+  s_Cslot_2.connect(Cslot<33333>());      
+
+  // std::cout << "********************************" << std::endl;
+  // s_Cslot_2(10);
+  // std::cout << "********************************" << std::endl;
+  
+  
+  std::cout << "result of signal call : " << *s_Cslot_2(8) << std::endl;
+
+  s_Cslot_2.disconnect(1);
+  s_Cslot_2.disconnect(Cslot<33333>());
+
+  // boost::signals2::shared_connection_block bloc(c333);
+  //bloc.unblock();
+  c333.disconnect();
+  std::cout << "after disconnect..." << std::endl;
+  std::cout << "********************************" << std::endl;
+  s_Cslot_2(10);
+  std::cout << "********************************" << std::endl;
+  
+
+  std::cout << "################################" << std::endl;
+  boost::signals2::signal<int(int)> sp_i_i_s;
+  boost::shared_ptr<Cslot<88> > sp8(boost::make_shared<Cslot<88> >());
+  sp_i_i_s.connect(boost::signals2::signal<int(int)>::slot_type(boost::ref(*sp8)).track(sp8));
+
+  sp_i_i_s(88);
+  std::cout << "after reset" << std::endl;
+  std::cout << "################################" << std::endl;  
+  sp8.reset();
+  sp_i_i_s(88);
+
+
+
+  std::cout << "################################" << std::endl;
+  boost::signals2::signal<int(int)> sp_i_i_sss;
+  boost::shared_ptr<Cslot<88> > sp888(boost::make_shared<Cslot<88> >());
+  sp_i_i_sss.connect(*sp888);
+
+  sp_i_i_sss(999);
+  std::cout << "after reset" << std::endl;
+  std::cout << "################################" << std::endl;  
+  sp888.reset();//uncertain will happen
+  sp_i_i_sss(999);
+
 }
