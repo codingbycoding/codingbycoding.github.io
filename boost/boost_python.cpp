@@ -1,5 +1,9 @@
 //g++ -g  -ID:\boost_1_47_0 -ID:\Python26\include -o  boost_python.exe boost_python.cpp D:\Python26\libs\libpython26.a
 
+//g++ -g  -ID:\boost_1_47_0 -ID:\Python27\include -o  boost_python.exe boost_python.cpp D:\Python27\libs\libpython27.a
+
+
+
 #define BOOST_PYTHON_SOURCE
 #include "boost/python.hpp"
 
