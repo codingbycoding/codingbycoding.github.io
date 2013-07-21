@@ -23,3 +23,9 @@ bin/
 *~
 *#
 
+
+
+
+#python compiled file
+*.pyc
+
