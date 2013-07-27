@@ -13,6 +13,7 @@ int main()
 {
   Py_Initialize();
   PyRun_SimpleString("print 'hi'");
+  PyRun_SimpleString("import sys; print sys.platform");  
   Py_Finalize();
   printf("HelloWorld.\n");
   return 0;
