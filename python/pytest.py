@@ -134,8 +134,55 @@ ClassTest.staticMethodTest()
 ClassTest.staticMethodTestOne()
 
 if __name__ == '__main__':
-    print 'in __main__'
+    print 'in __main__ in pytest.py'
     filename = 'filename.py'
     f = open(filename, 'r')
     exec f
+# or execfile(filename, globals=globals(), locals=locals())
+
+
+
+# import
+print '*************************'
+import filename   
+
+
+
+import os
+result = -1
+# result = os.system("start cmd")
+print 'result: %d' % result
+
+print 'The End.'
+
+
+if sys.platform != 'win32':
+    ret = os.fork()
+    if ret == 0:
+        print 'child process'
+
+    elif ret > 0:
+        print 'parent process'
+
+    else:
+        print 'error happened.'
+
+
+
+
+import re
+m = re.match('f[12]oo', 'testf1oojackf2oo;')
+if m is not None:
+    print m.group()
+else:
+    print 'match failed.'
+
+
+s = re.search('f[12]oo', 'testf1oojackf2oo;')
+if s is not None:
+    print s.group()
+else:
+    print 'search failed'
+
+    
     
