@@ -1,4 +1,46 @@
 #!/usr/bin/python
+"""
+this is to modify services.xml TmServices-0.1.0.jar/proxool.xml
+and launch Gate Grid Node
+"""
+
+VersionBase = '20130722R1'
+PathBase = '/home/ztgame/plaonline/'
+
+#DSVersion = 'S' + VersionBase
+# configFile = PathBase + 'config.xml'
+# servicesxmlFile = PathBase + DSVersion + '/' + 'DC/' + 'config/' + 'services.xml'
+configFile = 'config.xml'
+servicesxmlFile = 'services.xml' 
+
+cpLibs = ''
+cpoptionPattern =
+
+JedisNameContent= 'TmOnline.Jedis.Address'
+JedisAddressInXML =
+
+
+def ProcessServices_xml():
+    try:
+        f = open(servicesxmlFile, 'r')    
+        tree = ElementTree.parse(f)
+    except IOError, e:
+        print 'open file' + configFile + 'error: ', e
+        f.close()
+        exit(1)
+    except Exception, e:
+        print 'Exception: ', e
+        f.close()
+        exit(1)
+        
+    for tag in tree.getiterator('property'):        
+        nameContent = tag.attrib.get('name')
+        if nameContent == JedisNameContent:
+            argDcAddress += inip
+            DcAddressInDSACfg += inip + '\n'
+            print 'inip: ' + inip        
+
+
 from xml.etree import ElementTree
 import sys
 import os
@@ -10,6 +52,17 @@ for arg in sys.argv:
 
 # import subprocess
 # subprocess.call(['notepad'])
+def Processservicesxml():
+    
+    
+
+def ProcessJar():
+    os.system('jar xvf TmServices-0.0.0.jar proxool.xml')
+
+    
+    os.system('jar uvf TmServices-0.1.0.jar proxool.xml')
+    os.system('rm -f proxool.xml')
+    
 def ParseArgs(ID=1):
     with open('config.xml', 'rt') as f:
         tree = ElementTree.parse(f)
