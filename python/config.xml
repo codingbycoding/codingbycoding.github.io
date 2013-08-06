@@ -4,7 +4,7 @@
 <config>
   <DB IP="172.30.201.141" DATABASE="GRSM_MAIN" USERNAME="grsm" PASSWD="******" />
   <REDIS IP="172.30.201.143" DB="1"/>
-  <GATE ID="1" EXIP="112.65.196.121" INIP="172.30.201.145" />
+  <GATE ID="1" EXIP="112.65.196.121" INIP="172.30.201.145" PlatformUrl="http://172.17.189.10:8080/plagame/plaservice" ServerZone="GRSM_NH01" ServerZoneId="2500" ServerGameId="8" />
   
   <GAME ID="1" EXIP="112.65.196.115" INIP="172.30.201.135" DsaType="1" MaxLoad="50" />
   <GAME ID="2" EXIP="112.65.196.116" INIP="172.30.201.136" DsaType="2" MaxLoad="60" />

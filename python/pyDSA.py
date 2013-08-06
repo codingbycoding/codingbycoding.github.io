@@ -120,10 +120,12 @@ def ProcessDSACfg(filename = DSAConfigFile):
     except IOError, e:
         print 'open file ' + filename + 'error: ' , e
         fileDSACfg.close()
+        fileDSACfgTmp.close()
         exit(1)
     except Exception, e:
         print 'Exception: ', e
         fileDSACfg.close()
+        fileDSACfgTmp.close()
         exit(1)
         
     
