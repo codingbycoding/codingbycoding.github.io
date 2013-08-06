@@ -14,12 +14,14 @@
 	<option>-Xms1024m</option>
 	<option>-Xmx1024m</option>
 	<option>-cp</option>
-	<option></option>
+	<option>E:\PLAOnline\Server\lib\</option>
+	
 
 	<property name="TmOnline.Jedis.Address" value="local" />
-
-
+      </icebox>
+      </server-template>
 	<node name="Node0">
 	  <server-instance template="SrvTempTmSandbox" index="0" />
+	</node>
   </application>
 </icegrid>
