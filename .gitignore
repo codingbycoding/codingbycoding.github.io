@@ -29,3 +29,8 @@ bin/
 #python compiled file
 *.pyc
 
+#latex tmp file
+latex/*.aux
+latex/*.toc
+latex/*.pdf
+latex/*.log

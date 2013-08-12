@@ -1,4 +1,8 @@
-#!/usr/local/bin/python #python in linux hash bang
+#!/bin/python
+##python in linux hash bang
+
+###!/usr/local/bin/python #python in linux hash bang
+
 "this is pytest"
 
 def FuncTest(x):
