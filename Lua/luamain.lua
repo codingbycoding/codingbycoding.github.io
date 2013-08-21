@@ -1,7 +1,22 @@
---#!/usr/local/bin/lua --like sh in linux environment 
+#!/usr/bin/lua
+--like sh in linux environment 
 
 print "HelloWorld"
 
+luapage = [[
+<html>
+<head>
+<title>
+lua.org
+</title>
+</head>
+
+<body>
+<a href="http://www.lua.org">lua home page.</a>
+</body>
+</html>
+
+]]
 
 function fact(n)
    if n==0 then 
@@ -21,7 +36,6 @@ print("test comment for region") -- test comment for region
 --[[
 print("test comment for region") -- test comment for region
 --]]
-
 
 
 print("Enter a number:")

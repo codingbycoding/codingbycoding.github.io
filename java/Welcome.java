@@ -175,11 +175,23 @@ public class Welcome
 	    {
 		System.out.println(f.toString());
 	    }
+	
+	try
+	    {
+		AccessibleObject.setAccessible(fields, true);
+	    }
+	catch(IllegalArgumentException e)
+	    {
+		
+	    }
+	
 
 	Field fname = null; 
 	try
 	    {
-		fname = clazz.getField("name");		
+		//fname = clazz.getField("name");
+		fname = clazz.getDeclaredField("name");		
+
 	    }
 
 	catch(NoSuchFieldException e)
