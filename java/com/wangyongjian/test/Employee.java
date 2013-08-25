@@ -2,9 +2,25 @@ package com.wangyongjian.test;
 
 public class Employee
 {
+
+
+    class InnerClassOne
+    {
+
+	public InnerClassOne()
+	{
+	}
+	
+	public String toString()
+	{
+	    // return "OutClass is Class Employee and This is Class InnerClassOne" + "OutClass Fileds name: " + name;
+	    return "OutClass is Class Employee and This is Class InnerClassOne" + "OutClass Fileds name: " + Employee.this.name;
+	}
+    }
+    
     public Employee()
     {
-	this.name = "";
+	this.name = "uninit name";
 	this.age = 0;
 	this.id = ++nextId;
     }
@@ -32,6 +48,13 @@ public class Employee
 	System.out.println("Name: " + name + " age: " + age + " id: " + id + " salary: " + salary);
     }
 
+    public void TestInnerClass()
+    {
+	InnerClassOne one = new InnerClassOne();
+	System.out.println(one.toString());
+
+    }
+    
     private String name = "";
     private int age = 0;
     private int id = 0;

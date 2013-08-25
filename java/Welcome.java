@@ -4,8 +4,14 @@
 //java -classpath .  Welcome
 //java -cp . Welcome
 
+//jar -cvf Welcome.jar Welcome.class
+//manifest.mf Main-Class: Welcome
+
+//jar -uvf Welcome.jar Size.class
+//jar -uvf Welcome.jar com/wangyongjian/test/Employ.class
 
 import java.util.Date;
+import java.lang.reflect.Array;
 import java.io.Console;
 //import java.util.*;
 
@@ -42,6 +48,7 @@ enum Size
 
 public class Welcome
 {
+
     // public static void main(String args[])
     public static double max(double... val)
     {
@@ -256,7 +263,22 @@ public class Welcome
 	for(Constructor c : constructors)
 	    {
 		System.out.println(c.toString());
-	    }		
+	    }
+
+
+	Employee[] employees = new Employee[10];
+	employees[0] = new Employee();
+	Class employeeComp = employees.getClass().getComponentType();
+
+	Array.newInstance(employeeComp, 10);
+
+	employees[0].TestInnerClass();
+
+	
     }
+
+
+    private final int id = 123456;
+    
 }
 
