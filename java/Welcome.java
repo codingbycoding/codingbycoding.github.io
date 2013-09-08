@@ -1,14 +1,33 @@
 //package com.wangyongjian.test;
 //javac Welcome.java
+
+//javac -g Welcome.java
+
+//jdb Welcome.class
+//stop Welcome.main
+//run Welcome
+
 //java Welcome
 //java -classpath .  Welcome
 //java -cp . Welcome
+//java -cp . -enableassertions Welcome
+//java -cp . -ea Welcome
+//java -cp . -disableassertions Welcome
+//java -cp . -da Welcome
+
+//java -cp .  Welcome
+//java -cp .  -verbose Welcome
+//java -cp .  -Xlint Welcome
+//jconsole
+
 
 //jar -cvf Welcome.jar Welcome.class
 //manifest.mf Main-Class: Welcome
 
 //jar -uvf Welcome.jar Size.class
 //jar -uvf Welcome.jar com/wangyongjian/test/Employ.class
+
+
 
 import java.util.Date;
 import java.lang.reflect.Array;
