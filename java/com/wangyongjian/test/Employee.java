@@ -43,6 +43,28 @@ public class Employee
 	return salary;
     }
 
+    public int getId()
+    {
+	return id; 
+    }
+
+    public boolean setId(int id)
+    {
+	if(id < nextId )
+	    {
+		return false;
+	    }
+	
+	this.id = id;
+	nextId = id+1;
+	return true;
+    }
+
+    public String getName()
+    {
+	return name; 
+    }
+    
     public void PrintInfo()
     {
 	System.out.println("Name: " + name + " age: " + age + " id: " + id + " salary: " + salary);
