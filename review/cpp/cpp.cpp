@@ -23,7 +23,7 @@ class TestClass
 public: 
 	TestClass();
 
-  //explicti only effective on class constructor to suppress implicit convert
+  //explicit only effective on class constructor to suppress implicit convert
   // and constructor with only one parameter default has implicit convert operation
   explicit TestClass(int _id)
     : m_Id( _id )

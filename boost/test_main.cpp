@@ -10,11 +10,11 @@ int main()
   boost::shared_ptr<int> si = boost::make_shared<int>(20);
 
   boost::shared_ptr<int> si_1(pi);
-  boost::shared_ptr<int> si_2(pi);
+  boost::shared_ptr<int> si_2(pi); //!!! attention should not use like this that pi has been pass as parameter to boost::shsared_ptr<int> constructor.
 
   std::cout << si.use_count() << std::endl;
   std::cout << si_1.use_count() << std::endl;
-  std::cout << si_2.use_count() << std::endl;  
+  std::cout << si_2.use_count() << std::endl;  //!!! here can see reference count by reference counter substract to zero will delete the pointer may delete more than once!!!
   
   //  delete pi;
 

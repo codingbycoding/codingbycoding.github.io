@@ -1,7 +1,6 @@
 //g++ -g  -ID:\boost_1_47_0 -o  boost_function.exe boost_function.cpp
 
 #include <iostream>
-// #include <algorithm>
 #include <cmath>
 #include <typeinfo>
 
@@ -11,7 +10,6 @@
 #include "boost/utility/result_of.hpp"
 
 #include "boost/ref.hpp"
-#include "boost/typeof/typeof.hpp"
 
 #include "boost/bind.hpp"
 
