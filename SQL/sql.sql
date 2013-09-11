@@ -3,8 +3,9 @@
 -- Sigle quote to bolder character string, double sigle quotes to repesent one sigle quote in character string.
 
 CREATE DATABASE Books;
-SELECT * FROM tablename;
+-- SELECT * FROM tablename;
 -- SELECT id,
+USE Books;
 
 CREATE TABLE Books
 (

@@ -7,6 +7,9 @@ import java.sql.SQLException;
 
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.sql.DatabaseMetaData;
+
 
 public class TestJDBC 
 {
@@ -44,6 +47,21 @@ public class TestJDBC
 		     {
 			 System.out.println(rs.getString(1));
 		     }
+
+
+		 String pStatStr = "SELECT * FROM Books WHERE Price <> ? ";
+		 PreparedStatement pStat = conn.prepareStatement(pStatStr);
+		 pStat.setDouble(1, 63.00);
+		 ResultSet rsPS = pStat.executeQuery();
+		 System.out.println("*************PreparedStatement**********");
+		 while(rsPS.next())
+		     {
+			 System.out.println(rsPS.getString(1));
+		     }
+
+		 DatabaseMetaData dbMeta = conn.getMetaData();
+		 System.out.println("DB URL: " + dbMeta.getURL());
+		 
 	    }
 	catch(SQLException e)
 	    {

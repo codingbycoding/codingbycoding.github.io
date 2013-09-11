@@ -1,6 +1,10 @@
 # Object files
 *.o
 
+# Object files on Win
+*.obj
+*.exp
+
 # Libraries
 *.lib
 *.a
