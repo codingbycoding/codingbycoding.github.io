@@ -42,3 +42,6 @@ latex/*.log
 
 #class
 *.class
+
+#linux bin
+*.linux
