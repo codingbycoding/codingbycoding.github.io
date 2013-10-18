@@ -1,0 +1,42 @@
+.div_container
+{
+    /* border-style:solid; */
+    /* color:fuchsia; */
+    margin-left:50%;
+    padding:0px;
+    height:400px;
+    margin:0px;
+    width:100%;
+}
+
+.3steps
+{
+    width:33.3%;
+    height:200px;
+    padding:0px;
+    float:left;
+}    
+
+.schedule
+{
+    /* border-style:solid; */
+    /* border-width:30%; */
+    /* border-color:fuchsia; */
+    color:fuchsia;
+    /* margin:1cm; */
+
+}
+
+.countnuing
+{
+    /* border-style:solid;     */
+    /* border-width:30%; */
+    color:teal;    
+}
+
+.done
+{
+    /* border-style:solid;     */
+    /* border-width:30%; */
+    color:green;
+}
