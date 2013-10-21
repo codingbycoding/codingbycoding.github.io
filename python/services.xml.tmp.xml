@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- take GRSM_NH01 for sample -->
 <icegrid>
   <application name="AppTmServices">
     <replica-group id="RepTmServices">
@@ -9,18 +7,18 @@
 
     <server-template id="SrvTempTmSandbox">
       <parameter name="index" />
-      <icebox id="Sandbox${index}" exe="java" activation="on-demand">
+      <icebox activation="on-demand" exe="java" id="Sandbox${index}">
 	<option>-server</option>
 	<option>-Xms1024m</option>
 	<option>-Xmx1024m</option>
 	<option>-cp</option>
-	<option>E:\PLAOnline\Server\lib\Freeze.jar;E:\PLAOnline\Server\lib\Ice.jar</option>
+	<option>test to write</option>
 	
 
-	<property name="TmOnline.Jedis.Address" value="localhost" />
+	<property name="TmOnline.Jedis.Address" value="172.30.201.143" />
 	
-	<property name="TmOnline.ServerZone" value="GRSM_T" />
-	<property name="TmOnline.ServerZoneId" value="1" />
+	<property name="TmOnline.ServerZone" value="GRSM_NH01" />
+	<property name="TmOnline.ServerZoneId" value="2500" />
 	<property name="TmOnline.ServerGameId" value="2000" />
 	
 	<property name="platform.PlatformUrl.0" value="http://172.17.189.69/plagame/plaservice" />
@@ -32,7 +30,7 @@
       </icebox>
       </server-template>
 	<node name="Node0">
-	  <server-instance template="SrvTempTmSandbox" index="0" />
+	  <server-instance index="0" template="SrvTempTmSandbox" />
 	</node>
   </application>
 </icegrid>

@@ -220,4 +220,7 @@ if __name__ == '__main__':
     elif ret1 > 0:
         print 'this is top parent process'
     else:
-        print 'fork error happened'        
+        print 'fork error happened'
+
+    # exit with return value: 0 is success other is failed
+    exit(0) 

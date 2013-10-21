@@ -2,7 +2,7 @@
 <!-- take GRSM_NH01 for sample -->
 
 <config>
-  <DB IP="172.30.201.141" DATABASE="GRSM_MAIN" USERNAME="grsm" PASSWD="******" />
+  <DB IP="172.30.201.200" DATABASE="GRSM_MAIN_MM" USERNAME="gg" PASSWD="gg***" />
   <REDIS IP="172.30.201.143" DB="1"/>
   <GATE ID="1" EXIP="112.65.196.121" INIP="172.30.201.145" PlatformUrl="http://172.17.189.10:8080/plagame/plaservice" ServerZone="GRSM_NH01" ServerZoneId="2500" ServerGameId="8" />
   
