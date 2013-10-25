@@ -10,7 +10,7 @@ PathBase = '/home/ztgame/plaonline/'
 # these variables will be init by par
 GServerType = ''
 GServerID = '1'
-# GVersion = ''
+GServerVersion = ''
 
 
 # error code define here
@@ -103,6 +103,7 @@ class Logger:
         self.rawinfo('')
         self.rawinfo('')
         self.logfilehandle.close()
+
         
     def rawinfo(self, msg):
         line2write = msg + '\n'
@@ -402,18 +403,30 @@ def ProcessArg():
 
     global GServerType
     global GServerID
+    global GServerVersion
     
     if(sys.argv.__len__() != 3):
-        GLogger.error('Parameters Count %d Is Not Correct' % sys.argv.__len__())
+        GLogger.error('Parameters Count %d Is Not Correct' % (sys.argv.__len__()-1))
         exit(GERR_PARAMETER)
 
     if(sys.argv[1] == 'GATE'):
         GServerType = 'GATE'
+        GLogger.info('GServerType: %s' % GServerType)
     elif(sys.argv[1] == 'GAME'):
         GServerType = 'GAME'
+        GLogger.info('GServerType: %s' % GServerType)
     else:
         GLogger.error('First Parameter %s Is Not A Valid Server Type' % sys.argv[1])
         exit(GERR_PARAMETER)
+
+    if(sys.argv[2].isdigit()):
+        GServerID = sys.argv[2]
+        GLogger.info('GServerID: %s' % GServerID)
+    else:
+        GLogger.error('Second Parameter %s Is Not A Valid Digit' % sys.argv[2])
+        exit(GERR_PARAMETER)
+
+        
         
     # for argeach in sys.argv:
     #     print 'argeach:', argeach
