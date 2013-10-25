@@ -19,10 +19,10 @@
 	
 	<property name="TmOnline.ServerZone" value="GRSM_NH01" />
 	<property name="TmOnline.ServerZoneId" value="2500" />
-	<property name="TmOnline.ServerGameId" value="2000" />
+	<property name="TmOnline.ServerGameId" value="8" />
 	
-	<property name="platform.PlatformUrl.0" value="http://172.17.189.69/plagame/plaservice" />
-	<property name="platform.PlatformUrl.1" value="http://172.17.189.69" />	
+	<property name="platform.PlatformUrl.0" value="http://127.0.0.1/plagame/plaservice" />
+	<property name="platform.PlatformUrl.1" value="http://127.0.189.69" />	
 
 	
 	<property name="dudu.addr" value="172.17.189.207" />
