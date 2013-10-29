@@ -12,7 +12,14 @@
   SCHEDULED: <2013-10-17 周四>
 ** Test_10
    SCHEDULED: <2013-10-17 周四>
+
    - Note taken on [2013-10-29 Tue 07:40] \\
      note for entry Test_1
 
+
+
+
+
+
+[[https://www.quora.com][quora]]   
 
