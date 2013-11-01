@@ -7,6 +7,8 @@
 #include <iostream>
 #include <cstring>
 #include <cassert> 
+#include <cstdlib>
+#include <algorithm>
 
 class TestAlgo
 {
@@ -169,54 +171,172 @@ void inertTIPostTJ(T* t, int i, int j, int n)
 
 
 
+// template<typename T>
+// void insertionSort(T* t, int n, bool bforward = true)
+// {
+//   assert(n>=1);
+
+//   if(bforward)
+//     {
+//       for(int i=1; i<n; i++)
+// 	{
+// 	  int j=0;//different
+// 	  do
+// 	    {
+// 	      if(t[i] < t[j])//different
+// 		{
+// 		  inertTIPostTJ(t, i, j, n);//different
+// 		  break;
+// 		}
+// 	      else
+// 		{
+// 		  j++;//different
+// 		}
+	  
+// 	    }
+// 	  while(j<i);
+// 	}
+
+//     }
+//   else
+//     {
+//       for(int i=1; i<n; i++)
+// 	{
+// 	  int j=i-1; //different
+// 	  do
+// 	    {
+// 	      if(t[i] >= t[j]) //different
+// 		{
+// 		  inertTIPostTJ(t, i, j, n);
+// 		  break;
+// 		}
+// 	      else
+// 		{
+// 		  j--;//different
+// 		}
+	  
+// 	    }
+// 	  while(j>=0);
+// 	}
+      
+//     }
+// }
 template<typename T>
-void insertionSort(T* t, int n, bool bforward = true)
+void selectionSort(T* t, int n)
 {
-  assert(n>=1);
-
-  if(bforward)
+  assert(n>1);
+  for(int i=0; i<n; i++)
     {
-      for(int i=1; i<n; i++)
+      int j=i+1;
+      int key = t[i];
+      int iIndexMin = i;
+      
+      while(j<n)
 	{
-	  int j=0;//different
-	  do
+	  if(t[j] < key)
 	    {
-	      if(t[i] < t[j])//different
-		{
-		  inertTIPostTJ(t, i, j, n);//different
-		  break;
-		}
-	      else
-		{
-		  j++;//different
-		}
-	  
+	      key = t[j];
+	      iIndexMin = j;
 	    }
-	  while(j<i);
-	}
-
-    }
-  else
-    {
-      for(int i=1; i<n; i++)
-	{
-	  int j=i-1; //different
-	  do
-	    {
-	      if(t[i] >= t[j]) //different
-		{
-		  inertTIPostTJ(t, i, j, n);
-		  break;
-		}
-	      else
-		{
-		  j--;//different
-		}
-	  
-	    }
-	  while(j>=0);
+	  j++;
 	}
       
+      std::swap(t[i], t[iIndexMin]);
+    } 
+}
+
+
+template<typename T>
+void insertionSort(T* t, int n)
+{
+  assert(n>1);
+
+  for(int i=1; i<n; i++)
+    {
+      int j=i-1;//different
+      T key = t[i];
+
+      while(j>=0 && key < t[j])
+	{
+	  t[j+1] = t[j];
+	  j--;
+	}
+      t[j+1] = key;
+      
+      
+      
+     //  do
+     // 	{
+     // 	  if(key < t[j])//different
+     // 	    {
+     // 	      t[j+1] = t[j];
+     // 	      j--;
+     // 	    }
+     // 	  else
+     // 	    {
+     // 	      break;
+     // 	    }
+	  
+     // 	}
+     //  while(j>=0);
+
+     // t[j+1] = key;
+    }
+
+}
+
+
+template<typename T>
+void merge(T* t, int iBeginIndex, int iMidIndex, int iEndIndex)
+{
+
+  int n1 = iMidIndex-iBeginIndex+1;
+  T* t1 = new T[n1];
+  for(int i=0; i<n1; i++)
+    {
+      t1[i] = t[i];
+    }
+  
+  int n2 = iEndIndex-iMidIndex;
+  T* t2 = new T[n2]; 
+  for(int j=0; j<n2; j++)
+    {
+      t2[j] = t[j+n1];
+    }
+
+  int n = n1+n1;
+  int i=0;
+  int j=0;
+  for(int k=0; k<n; k++)
+    {
+      if(i<n1 && t1[i] <= t2[j])
+	{
+	  t[k] = t[i];
+	  i++;
+	}
+      else
+	{
+	  t[k] = t[j];
+	  j++;
+	}
+    }
+  
+  delete[] t1;
+  delete[] t2; 
+}
+
+template<typename T>
+void merge_sort(T* t, int iBeginIndex, int iEndIndex)
+{
+  assert(iEndIndex>=iBeginIndex);
+  
+  if(iBeginIndex<iEndIndex)
+    {
+      int n = iEndIndex-iBeginIndex+1;
+      
+      merge_sort(t, iBeginIndex, iBeginIndex+(n/2));
+      merge_sort(t, iBeginIndex+(n/2)+1, iEndIndex);
+      merge(t, 0, iBeginIndex+(n/2), iEndIndex);
     }
 }
 
@@ -248,15 +368,64 @@ int main()
   int* t2 = new int[12];
   memcpy(t2, t, 12*sizeof(int));
 
-  std::cout << "insertionSort use insertTIPreTJ" << std::endl;
-  printArray(t1, 12);
-  insertionSort(t1, 12, true);
-  printArray(t1, 12);
+  // std::cout << "insertionSort use insertTIPreTJ" << std::endl;
+  // printArray(t1, 12);
+  // insertionSort(t1, 12, true);
+  // printArray(t1, 12);
 
-  std::cout << "insertionSort use insertTIPostTJ" << std::endl;
+  // std::cout << "insertionSort use insertTIPostTJ" << std::endl;
+  // printArray(t2, 12);
+  // insertionSort(t2, 12, false);
+  // printArray(t2, 12);
+
+  
+
+  std::cout << "insertionSort" << std::endl;
   printArray(t2, 12);
-  insertionSort(t2, 12, false);
-  printArray(t2, 12);  
+  insertionSort(t2, 12);
+  printArray(t2, 12);
+  delete[] t2;
+
+
+  int* randis = new int[20];
+  for(int i=0; i<20; i++)
+    {
+      randis[i] = random()%300;
+    }
+
+  std::cout << "insertionSort randis" << std::endl;
+  printArray(randis, 20);
+  insertionSort(randis, 20);
+  printArray(randis, 20);
+  delete[] randis;
+
+
+  int* randis2selectction = new int[20];
+  for(int i=0; i<20; i++)
+    {
+      randis2selectction[i] = random()%100;
+    }
+
+  std::cout << "selectionSort randis2selectction" << std::endl;
+  printArray(randis2selectction, 20);
+  selectionSort(randis2selectction, 20);
+  printArray(randis2selectction, 20);
+  delete[] randis2selectction;
+
+
+
+  int* randis2merge_sort = new int[20];
+  for(int i=0; i<20; i++)
+    {
+      randis2merge_sort[i] = random()%255;
+    }
+
+  std::cout << "merge_sort randis2merge_sort" << std::endl;
+  printArray(randis2merge_sort, 20);
+  merge_sort(randis2merge_sort, 0, 20-1);
+  printArray(randis2merge_sort, 20);
+  delete[] randis2merge_sort; 
+
   
   return 0;
 }

@@ -2,13 +2,19 @@
 * DONE Server version 20130917R1 First Deployment on BJ01<2013-10-22 Tue>
 * TODO 360 real client_id test
 * TODO outer net test version for Bengbu
-* TODO Autodeploy Task: python process services.xml
+* DONE Autodeploy Task: python process services.xml
 
 * DONE Test NOVODEX0 Phy DS for zhangliming<2013-10-23 Wed>
 
 
+  
 
 
+
+
+* DONE dudu server problem start match
+* TODO New version to test on BJ
+  
   
 
   
