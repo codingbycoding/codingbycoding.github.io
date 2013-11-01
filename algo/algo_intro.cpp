@@ -147,6 +147,29 @@ int TestAlgo::m_iPrintCount = TestAlgo::InitCount();
 //     }
 // }
 
+
+template<typename T>
+void inertTIPreTJ(T* t, int i, int j, int n)
+{
+  assert(j>=0);
+  assert(i>j);
+  assert(n>i);
+  
+  T tmp = t[i];
+  int k = i;
+
+  while(k!=j)
+    {
+      t[k] = t[k-1];
+      k--;
+    }
+
+
+  t[k] = tmp;
+
+}
+
+
 template<typename T>
 void inertTIPostTJ(T* t, int i, int j, int n)
 {
@@ -156,12 +179,13 @@ void inertTIPostTJ(T* t, int i, int j, int n)
   
   T tmp = t[i];
   int k = i;
-  do
+  
+  while(k!=j+1) //different to inserTIPostTJ    
     {
       t[k] = t[k-1];
       k--;
     }
-  while(k!=j-1); //different to inserTIPostTJ
+
 
   t[k] = tmp;
 
@@ -182,6 +206,11 @@ void insertionSort(T* t, int n, bool bforward = true)
 	  do
 	    {
 	      if(t[i] < t[j])//different
+		{
+		  inertTIPreTJ(t, i, j, n);//different
+		  break;
+		}
+	      else if(t[i] = t[j])//different
 		{
 		  inertTIPostTJ(t, i, j, n);//different
 		  break;
@@ -208,6 +237,11 @@ void insertionSort(T* t, int n, bool bforward = true)
 		  inertTIPostTJ(t, i, j, n);
 		  break;
 		}
+	      else if (j==0)
+		{
+		  inertTIPreTJ(t, i, j, n);
+		  break;
+		}
 	      else
 		{
 		  j--;//different
@@ -220,6 +254,35 @@ void insertionSort(T* t, int n, bool bforward = true)
     }
 }
 
+
+
+
+
+template<typename T>
+void insertionSort(T* t, int n)
+{
+  assert(n>=1);
+
+      for(int i=1; i<n; i++)
+	{
+	  int j=i-1;
+	  int key = t[i];
+	  
+	  while(j>=0)
+	    {
+	      if(t[i] < t[j])//different
+		{
+		  t[j+1] = t[j];
+		  j--;//different
+		}
+	    }
+	  t[j] = key;
+	  
+	  
+	}
+}
+
+  
 template<typename T>
 void printArray(T* t, int N)
 {
