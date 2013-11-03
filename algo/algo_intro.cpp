@@ -53,101 +53,6 @@ public:
 
 int TestAlgo::m_iPrintCount = TestAlgo::InitCount();
 
-  // TestAlgo::Initializa();
-// template<typename T>
-// void inertTIPreTJ(T* t, int i, int j, int n)
-// {
-//   assert(j>=0);
-//   assert(i>j);
-//   assert(n>i);
-  
-//   T tmp = t[i];
-//   int k = i;
-//   do
-//     {
-//       t[k] = t[k-1];
-//       k--;
-//     }
-//   while(k!=j);
-
-//   t[k] = tmp;
-
-// }
-
-
-
-// template<typename T>
-// void inertTIPostTJ(T* t, int i, int j, int n)
-// {
-//   assert(j>=0);
-//   assert(i>j);
-//   assert(n>i);
-  
-//   T tmp = t[i];
-//   int k = i;
-//   do
-//     {
-//       t[k] = t[k-1];
-//       k--;
-//     }
-//   while(k!=j-1); //different to inserTIPostTJ
-
-//   t[k] = tmp;
-
-// }
-
-
-
-// template<typename T>
-// void insertionSort(T* t, int n, bool bforward = true)
-// {
-//   assert(n>=1);
-
-//   if(bforward)
-//     {
-//       for(int i=1; i<n; i++)
-// 	{
-// 	  int j=0;//different
-// 	  do
-// 	    {
-// 	      if(t[i] < t[j])//different
-// 		{
-// 		  inertTIPostTJ(t, i, j, n);//different
-// 		  break;
-// 		}
-// 	      else
-// 		{
-// 		  j++;//different
-// 		}
-	  
-// 	    }
-// 	  while(j<i);
-// 	}
-
-//     }
-//   else
-//     {
-//       for(int i=1; i<n; i++)
-// 	{
-// 	  int j=i-1; //different
-// 	  do
-// 	    {
-// 	      if(t[i] <= t[j]) //different
-// 		{
-// 		  inertTIPostTJ(t, i, j, n);
-// 		  break;
-// 		}
-// 	      else
-// 		{
-// 		  j--;//different
-// 		}
-	  
-// 	    }
-// 	  while(j>i);
-// 	}
-      
-//     }
-// }
 
 
 template<typename T>
@@ -195,56 +100,7 @@ void inertTIPostTJ(T* t, int i, int j, int n)
 
 
 
-// template<typename T>
-// void insertionSort(T* t, int n, bool bforward = true)
-// {
-//   assert(n>=1);
 
-//   if(bforward)
-//     {
-//       for(int i=1; i<n; i++)
-// 	{
-// 	  int j=0;//different
-// 	  do
-// 	    {
-// 	      if(t[i] < t[j])//different
-// 		{
-// 		  inertTIPostTJ(t, i, j, n);//different
-// 		  break;
-// 		}
-// 	      else
-// 		{
-// 		  j++;//different
-// 		}
-	  
-// 	    }
-// 	  while(j<i);
-// 	}
-
-//     }
-//   else
-//     {
-//       for(int i=1; i<n; i++)
-// 	{
-// 	  int j=i-1; //different
-// 	  do
-// 	    {
-// 	      if(t[i] >= t[j]) //different
-// 		{
-// 		  inertTIPostTJ(t, i, j, n);
-// 		  break;
-// 		}
-// 	      else
-// 		{
-// 		  j--;//different
-// 		}
-	  
-// 	    }
-// 	  while(j>=0);
-// 	}
-      
-//     }
-// }
 template<typename T>
 void selectionSort(T* t, int n)
 {
@@ -327,8 +183,8 @@ void merge(T* t, int iBeginIndex, int iMidIndex, int iEndIndex)
 	}
     }
   
-  delete [] t1;
-  delete [] t2; 
+  delete[] t1;
+  delete[] t2; 
 }
 
 template<typename T>
@@ -346,7 +202,28 @@ void merge_sort(T* t, int iBeginIndex, int iEndIndex)
     }
 }
 
+
+template<typename T>
+void bubblesort(T* t, int n)
+{
   
+  for(int i=0; i< n; i++)
+    {
+      int j=n-1;
+
+      while(j>i)
+	{
+	  if(t[j] < t[j-1])
+	    {
+	      std::swap(t[j], t[j-1]);
+	    }
+	  j--;
+	}
+      
+    }
+}
+
+
 template<typename T>
 void printArray(T* t, int N)
 {
@@ -431,7 +308,21 @@ int main()
   printArray(randis2merge_sort, NLEN);
   merge_sort(randis2merge_sort, 0, NLEN-1);
   printArray(randis2merge_sort, NLEN);
-  delete[] randis2merge_sort; 
+  delete[] randis2merge_sort;
+
+
+#define BUBBLE_NLEN 28
+  int* randis2bubblesort = new int[BUBBLE_NLEN];
+  for(int i=0; i<BUBBLE_NLEN; i++)
+    {
+      randis2bubblesort[i] = random()%500;
+    }
+
+  std::cout << "bubblesort randis2bubblesort" << std::endl;
+  printArray(randis2bubblesort, BUBBLE_NLEN);
+  bubblesort(randis2bubblesort, BUBBLE_NLEN);
+  printArray(randis2bubblesort, BUBBLE_NLEN);
+  delete[] randis2bubblesort;   
 
   
   return 0;
