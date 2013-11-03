@@ -315,6 +315,46 @@ void quick_sort(T* t, int iBeginIndex, int iEndIndex)
     }
 }
 
+
+
+template<typename T>
+int randomized_partition(T* t, int iBeginIndex, int iEndIndex)
+{
+  assert(iBeginIndex<=iEndIndex);
+
+  //int iRandomIndex = random(iBeginIndex, iEndIndex);
+  //std::swap(t[iRandomIndex], t[iEndIndex]);
+  T pivotValue = t[iEndIndex];
+  int i = iBeginIndex-1;
+  
+  for(int j=iBeginIndex; j<iEndIndex; j++)
+    {
+      if(t[j] <= pivotValue)
+	{
+	  i++;
+	  std::swap(t[i], t[j]);
+	}
+      
+    }
+
+  std::swap(t[i+1], t[iEndIndex]);
+  
+  return i+1;
+}
+
+
+template<typename T>
+void randomized_quick_sort(T* t, int iBeginIndex, int iEndIndex)
+{
+
+  if(iBeginIndex<iEndIndex)
+    {
+      int pivotIndex = randomized_partition(t, iBeginIndex, iEndIndex);
+      randomized_quick_sort(t, iBeginIndex, pivotIndex-1);
+      randomized_quick_sort(t, pivotIndex+1, iEndIndex);
+    }
+}
+
 int main()
 {
 
