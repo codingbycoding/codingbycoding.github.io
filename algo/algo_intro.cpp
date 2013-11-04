@@ -254,16 +254,16 @@ void max_heapify(T* t, int i, int n)
     {
       maxindex = leftindex;
     }
- if(rightindex<n && t[rightindex]>t[maxindex]) //  t[2i+2]; //Right[i]
+  if(rightindex<n && t[rightindex]>t[maxindex]) //  t[2i+2]; //Right[i]
     {
       maxindex = leftindex;
     }
 
- // if(maxindex != i)
- //   {
- //     std::swap(t[i], t[maxindex]);
- //     max_heapify(t, maxindex, 
- //   }
+  // if(maxindex != i)
+  //   {
+  //     std::swap(t[i], t[maxindex]);
+  //     max_heapify(t, maxindex, 
+  //   }
 
  
 }
@@ -354,6 +354,52 @@ void randomized_quick_sort(T* t, int iBeginIndex, int iEndIndex)
       randomized_quick_sort(t, pivotIndex+1, iEndIndex);
     }
 }
+
+
+template<typename T>
+void quick_sort_mod_tail_recursion(T* t, int iBeginIndex, int iEndIndex)
+{
+
+  while(iBeginIndex<iEndIndex)
+    {
+      int pivotIndex = partition(t, iBeginIndex, iEndIndex);
+      quick_sort(t, iBeginIndex, pivotIndex-1);
+      iBeginIndex = pivotIndex+1;
+    }
+}
+
+
+
+void  counting_sort(int* t, int* t_ret, int n, int maxvalue)
+{
+  int* t_temp = new int[maxvalue+1];
+  for(int i=0; i<=maxvalue; i++)
+    {
+      t_temp[i] = 0;
+    }
+
+  for(int i=0; i<n; i++)
+    {
+      t_temp[t[i]]++;
+    }
+
+  for(int i=1; i<=maxvalue; i++)
+    {
+      t_temp[i] = t_temp[i] + t_temp[i-1];
+    }
+
+  for(int i=n-1; i>=0; i--)
+    {
+      t_ret[t_temp[t[i]]-1] = t[i]; // array index begin at 0
+
+      // t_ret[t_temp[t[i]]] = t[i]; // !!! error array index begin at 0      
+      t_temp[t[i]]--;
+    }
+
+
+  delete[] t_temp;
+}
+    
 
 int main()
 {
@@ -475,7 +521,49 @@ int main()
   printArray(randis2quick_sort, ARRAR_LENGTH);
   quick_sort(randis2quick_sort, 0, ARRAR_LENGTH-1);
   printArray(randis2quick_sort, ARRAR_LENGTH);
-  delete[] randis2quick_sort;     
+  delete[] randis2quick_sort;
+
+
+
+  int* randis2quick_sort_mod_tail_recursion = new int[ARRAR_LENGTH];
+  for(int i=0; i<ARRAR_LENGTH; i++)
+    {
+      randis2quick_sort_mod_tail_recursion[i] = random()%888;
+    }
+  
+  std::cout << "quick_sort randis2quick_sort_mod_tail_recursion" << std::endl;
+  printArray(randis2quick_sort_mod_tail_recursion, ARRAR_LENGTH);
+  quick_sort_mod_tail_recursion(randis2quick_sort_mod_tail_recursion, 0, ARRAR_LENGTH-1);
+  printArray(randis2quick_sort_mod_tail_recursion, ARRAR_LENGTH);
+  delete[] randis2quick_sort_mod_tail_recursion;
+
+
+#define MEM_BUFFER_LEN 1024  
+  char* MemBuffer = new char[MEM_BUFFER_LEN];
+  char* testbuff = new(MemBuffer) char[200]; 
+
+  std::cout << "MemBuffer Address: " << (int*)MemBuffer << std::endl;
+  std::cout << "testbuff Address: " << (int*)testbuff << std::endl;
+  testbuff[0] = 'a';
+
+  std::cout << "MemBuffer[0]: " << MemBuffer[0] << std::endl;
+  std::cout << "testbuff[0]: " << testbuff[0] << std::endl;
+
+
+
+  int* randis2counting_sort = new int[ARRAR_LENGTH];
+  int* randis2counting_sort_result = new int[ARRAR_LENGTH];
+  int maxvalue = 1024;
+  for(int i=0; i<ARRAR_LENGTH; i++)
+    {
+      randis2counting_sort[i] = random()%(maxvalue+1);
+    }
+  
+  std::cout << "counting_sort randis2counting_sort" << std::endl;
+  printArray(randis2counting_sort, ARRAR_LENGTH);
+  counting_sort(randis2counting_sort, randis2counting_sort_result, ARRAR_LENGTH, maxvalue);
+  printArray(randis2counting_sort_result, ARRAR_LENGTH);
+  delete[] randis2counting_sort;
 
   
   return 0;
