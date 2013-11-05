@@ -2,13 +2,16 @@
 // g++ algo_intro.cpp -o algo_intro.linux
 // g++ -std=c++11 algo_intro.cpp -o algo_intro.linux
 
-//g++ -std=c++98 -DNDEBUG algo_intro.cpp -o algo_intro.linux
+// g++ -std=c++98 -DNDEBUG algo_intro.cpp -o algo_intro.linux
 
 #include <iostream>
 #include <cstring>
 #include <cassert> 
 #include <cstdlib>
 #include <algorithm>
+
+
+#include <cmath>
 
 class TestAlgo
 {
@@ -236,6 +239,82 @@ void printArray(T* t, int N)
   std::cout << std::endl;
 }
 
+//i : the index of root
+//n : total length of t
+template<typename T>
+void max_heapify(T* t, int i, int n)
+{
+  assert(i<n);
+
+  int leftindex = 2*i+1;
+  int rightindex = 2*i+2;
+  int maxindex = i;
+  
+  if( leftindex<n && t[leftindex]>t[i] )  //t[2i+1]; //Left[i]
+    {
+      maxindex = leftindex;
+    }
+ if(rightindex<n && t[rightindex]>t[maxindex]) //  t[2i+2]; //Right[i]
+    {
+      maxindex = leftindex;
+    }
+
+ // if(maxindex != i)
+ //   {
+ //     std::swap(t[i], t[maxindex]);
+ //     max_heapify(t, maxindex, 
+ //   }
+
+ 
+}
+
+template<typename T>
+void build_max_heapify(T* t, int n)
+{
+  for(int i=n-1; i>=0; i--)
+    {
+      int iindex = 1-1;
+      max_heapify(t, iindex, n);
+    }
+}
+
+
+template<typename T>
+int partition(T* t, int iBeginIndex, int iEndIndex)
+{
+  assert(iBeginIndex<=iEndIndex);
+  
+  T pivotValue = t[iEndIndex];
+  int i = iBeginIndex-1;
+  
+  for(int j=iBeginIndex; j<iEndIndex; j++)
+    {
+      if(t[j] <= pivotValue)
+	{
+	  i++;
+	  std::swap(t[i], t[j]);
+	}
+      
+    }
+
+  std::swap(t[i+1], t[iEndIndex]);
+  
+  return i+1;
+}
+
+
+template<typename T>
+void quick_sort(T* t, int iBeginIndex, int iEndIndex)
+{
+
+  if(iBeginIndex<iEndIndex)
+    {
+      int pivotIndex = partition(t, iBeginIndex, iEndIndex);
+      quick_sort(t, iBeginIndex, pivotIndex-1);
+      quick_sort(t, pivotIndex+1, iEndIndex);
+    }
+}
+
 int main()
 {
 
@@ -297,7 +376,7 @@ int main()
   delete[] randis2selectction;
 
 
-#define NLEN 28
+#define NLEN 26
   int* randis2merge_sort = new int[NLEN];
   for(int i=0; i<NLEN; i++)
     {
@@ -311,7 +390,7 @@ int main()
   delete[] randis2merge_sort;
 
 
-#define BUBBLE_NLEN 28
+#define BUBBLE_NLEN 26
   int* randis2bubblesort = new int[BUBBLE_NLEN];
   for(int i=0; i<BUBBLE_NLEN; i++)
     {
@@ -322,7 +401,41 @@ int main()
   printArray(randis2bubblesort, BUBBLE_NLEN);
   bubblesort(randis2bubblesort, BUBBLE_NLEN);
   printArray(randis2bubblesort, BUBBLE_NLEN);
-  delete[] randis2bubblesort;   
+  delete[] randis2bubblesort;
+
+
+
+#define HEAP_NLEN 9
+  int* randis2heapsort = new int[HEAP_NLEN];
+  for(int i=0; i<HEAP_NLEN; i++)
+    {
+      randis2heapsort[i] = random()%372;
+    }
+
+  std::cout << "heapsort randis2heapsort" << std::endl;
+  printArray(randis2heapsort, HEAP_NLEN);
+  build_max_heapify(randis2heapsort, HEAP_NLEN);
+  printArray(randis2heapsort, HEAP_NLEN);
+  delete[] randis2heapsort;     
+
+
+  
+  std::cout << "log10(8): " << log10(8) << std::endl;
+  std::cout << "log10(2): " << log10(2) << std::endl;
+  std::cout << "log10(8)/log10(2): " << log10(8)/log10(2) << std::endl;  
+
+#define ARRAR_LENGTH 10
+  int* randis2quick_sort = new int[ARRAR_LENGTH];
+  for(int i=0; i<ARRAR_LENGTH; i++)
+    {
+      randis2quick_sort[i] = random()%372;
+    }
+  
+  std::cout << "quick_sort randis2quick_sort" << std::endl;
+  printArray(randis2quick_sort, ARRAR_LENGTH);
+  quick_sort(randis2quick_sort, 0, ARRAR_LENGTH-1);
+  printArray(randis2quick_sort, ARRAR_LENGTH);
+  delete[] randis2quick_sort;     
 
   
   return 0;
