@@ -13,8 +13,10 @@
 
 
 * DONE dudu server problem start match
-* TODO New version to test on BJ
+* DONE New version to test on BJ
   
-  
+
+* TODO VersionPrepare batch file
+* TODO orgnize server list
 
   
