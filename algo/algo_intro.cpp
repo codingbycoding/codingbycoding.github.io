@@ -397,17 +397,14 @@ void  counting_sort(int* t, int* t_ret, int n, int maxvalue)
 
 void radix_sort_test(char** t, char** t_ret, int di, int dj)
 {
-  for(i=di-1; i>=0; i--)
+  for(int i=di-1; i>=0; i--)
     {
-      counting_sort_t(t[i], , dj, 'z');
+      // counting_sort_t(t[i], , dj, 'z');
     }
 
 
-  t_temp[t[i][j]]++;
-  t_temp[t[x][j]]++;
-
-  t_ret
-
+  // t_temp[t[i][j]]++;
+  // t_temp[t[x][j]]++;
     
 }
 

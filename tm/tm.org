@@ -1,9 +1,6 @@
-
-
 * DONE DuDu Test PLAGame Version intranet pass to DuDu Collegues<2013-10-22 Tue>
 * DONE Server version 20130917R1 First Deployment on BJ01<2013-10-22 Tue>
-* TODO 360 real client_id test
-* TODO outer net test version for Bengbu
+
 * DONE Autodeploy Task: python process services.xml
 
 * DONE Test NOVODEX0 Phy DS for zhangliming<2013-10-23 Wed>
@@ -23,8 +20,7 @@
 * TODO orgnize server list
   SCHEDULED: <2013-11-07 Thu>
 
-* TODO superhost01 deploy a version 4 youcheng.
-  SCHEDULED: <2013-11-08 Fri>
+
 
 * TODO DSA problemReport 5 types
 
@@ -34,7 +30,13 @@
    SCHEDULED: <2013-11-08 Fri>
 ** TODO Launcher DuDu
    SCHEDULED: <2013-11-08 Fri>
- 
+
+
+* TODO 360 real client_id test
+* TODO outer net test version for Bengbu   
+* TODO superhost01 deploy a version 4 youcheng.
+  SCHEDULED: <2013-11-11 Mon>
+
 * TODO 360version finance log format verify.
   SCHEDULED: <2013-11-13 Wed>
 
