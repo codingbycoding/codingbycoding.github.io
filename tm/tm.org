@@ -14,15 +14,14 @@
 * DONE dudu server problem start match
 * DONE New version to test on BJ
   
-* TODO VersionPrepare batch file
-  SCHEDULED: <2013-11-07 Thu>
+
   
 * TODO orgnize server list
   SCHEDULED: <2013-11-07 Thu>
 
 
 
-* TODO DSA problemReport 5 types
+* DONE DSA problemReport 5 types
 
 
 * TODO [2013-11-08 Fri]
@@ -31,10 +30,17 @@
 ** TODO Launcher DuDu
    SCHEDULED: <2013-11-08 Fri>
 
+** DONE add dudu.key
+
+
+* DONE VersionPrepare batch file
+  SCHEDULED: <2013-11-12 Tue>   
+
+** DONE add dudu zoneid
 
 * TODO 360 real client_id test
 * TODO outer net test version for Bengbu   
-* TODO superhost01 deploy a version 4 youcheng.
+* DONE superhost01 deploy a version 4 youcheng.
   SCHEDULED: <2013-11-11 Mon>
 
 * TODO 360version finance log format verify.
@@ -56,3 +62,9 @@
 ** TODO [2013-11-20 Wed](周三)一天  停线上真如电信, 南汇网通, 南汇电信, 全部部署上封的版本.
 
   
+
+
+** TODO patch_tools add 2 features
+   SCHEDULED: <2013-12-13 Fri>
+   clean history
+   assign update version
