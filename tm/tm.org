@@ -1,33 +1,20 @@
 * DONE DuDu Test PLAGame Version intranet pass to DuDu Collegues<2013-10-22 Tue>
 * DONE Server version 20130917R1 First Deployment on BJ01<2013-10-22 Tue>
-
 * DONE Autodeploy Task: python process services.xml
-
 * DONE Test NOVODEX0 Phy DS for zhangliming<2013-10-23 Wed>
-
-
-  
-
-
 
 
 * DONE dudu server problem start match
 * DONE New version to test on BJ
-  
-
-  
-* TODO orgnize server list
-  SCHEDULED: <2013-11-07 Thu>
-
 
 
 * DONE DSA problemReport 5 types
 
 
-* TODO [2013-11-08 Fri]
+* DONE [2013-11-08 Fri]
 ** DONE OnFirstNotification not use oneway
    SCHEDULED: <2013-11-08 Fri>
-** TODO Launcher DuDu
+** DONE Launcher DuDu
    SCHEDULED: <2013-11-08 Fri>
 
 ** DONE add dudu.key
@@ -38,33 +25,51 @@
 
 ** DONE add dudu zoneid
 
-* TODO 360 real client_id test
-* TODO outer net test version for Bengbu   
+* DONE 360 real client_id test
+* DONE outer net test version for Bengbu   
 * DONE superhost01 deploy a version 4 youcheng.
   SCHEDULED: <2013-11-11 Mon>
 
-* TODO 360version finance log format verify.
+* DONE 360version finance log format verify.
   SCHEDULED: <2013-11-13 Wed>
 
 
-** TODO [2013-11-08 Fri](周五 出个版本) 或者11.11(周一) 王天耀部署测试Launcher, 版本部署到北京机房,国安机房全部流程 测试内容:1.Dudu 2.360帐号
+* TODO orgnize server list
+  SCHEDULED: <2013-11-07 Thu>  
 
-** TODO [2013-11-14 Thu](周四)(电信)南3, 南4合服
+** DONE [2013-11-08 Fri](周五 出个版本) 或者11.11(周一) 王天耀部署测试Launcher, 版本部署到北京机房,国安机房全部流程 测试内容:1.Dudu 2.360帐号
+
+** DONE [2013-11-14 Thu](周四)(电信)南3, 南4合服
 
 ** TODO [2013-11-15 Fri](周五)(电信)广1, 广2合服
 
-** TODO [2013-11-15 Fri](周五)封版本 部署到北京机房, 国安机房全部流程
+** DONE [2013-11-15 Fri](周五)封版本 部署到北京机房, 国安机房全部流程
 
-** TODO [2013-11-18 Mon](周一)合服成电信一个区:(南4,南3,南2,南1,广2,广1) , 网通一个区:(北3,北2,北1)
+** DONE [2013-11-18 Mon]网通一个区:(北3,北2,北1)
+
+** TODO [2013-11-18 Mon](周一)合服成电信一个区(南2):(南4,南3,南2,南1,广2,广1)  
 
 ** TODO [2013-11-18 Mon](周一) 南一数据拉到北京或者国安其中一个区, 测试内容
 
 ** TODO [2013-11-20 Wed](周三)一天  停线上真如电信, 南汇网通, 南汇电信, 全部部署上封的版本.
 
-  
 
 
 ** TODO patch_tools add 2 features
    SCHEDULED: <2013-12-13 Fri>
-   clean history
-   assign update version
+   1. clean history
+   2. assign update version
+
+* TODO List Order By Date
+** [2013-11-15 Fri] Todo List
+*** DONE 1. 360 Account Version Dudu
+*** DONE 2. 20131115R1 Version
+** [2013-11-18 Mon] Todo List
+*** DONE 1. HP Compiant Win8.1 version
+*** DONE 2. 20131118R1 New Version 2 Deploy
+** [2013-11-19 Tue] Todo List
+*** DONE 1. Amazon Server Verify
+*** DONE 2. New Version 20131119R1 2 Deploy
+** [2013-11-20 Wed] Todo List
+*** TODO 1. 
+*** TODO 2. 
