@@ -71,5 +71,15 @@
 *** DONE 1. Amazon Server Verify
 *** DONE 2. New Version 20131119R1 2 Deploy
 ** [2013-11-20 Wed] Todo List
-*** TODO 1. 
-*** TODO 2. 
+*** DONE 1. 20131120R1 New Version 2 Deploy 
+*** TODO 2. PLAOnline 安装包
+*** DONE 3. 整理服务器列表
+** [2013-11-21 Thu] Todo List
+*** TODO 1. PLAOnline 安装包
+*** TODO 2. 服务器列表梳理
+** [2013-11-22 Fri] Todo List
+*** TODO 1. 根据产品要求更新官网服务器 Pending
+    
+** [2013-11-25 Mon]    
+*** TODO 1. 更新新版本 grsm_split_charaStat_service.sql
+*** TODO 2. 更新新版本 导数据库    
