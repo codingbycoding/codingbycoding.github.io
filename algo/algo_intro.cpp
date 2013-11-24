@@ -369,8 +369,8 @@ void quick_sort_mod_tail_recursion(T* t, int iBeginIndex, int iEndIndex)
 }
 
 
-
-void  counting_sort(int* t, int* t_ret, int n, int maxvalue)
+template<typename T>
+void  counting_sort_t(T* t, T* t_ret, int n, int maxvalue)
 {
   int* t_temp = new int[maxvalue+1];
   for(int i=0; i<=maxvalue; i++)
@@ -399,7 +399,58 @@ void  counting_sort(int* t, int* t_ret, int n, int maxvalue)
 
   delete[] t_temp;
 }
-    
+
+
+
+void  counting_sort(int* t, int* t_ret, int n, int maxvalue)
+{
+  int* t_temp = new int[maxvalue+1];
+  for(int i=0; i<=maxvalue; i++)
+    {
+      t_temp[i] = 0;
+    }
+
+  std::memset(t_temp, 0, maxvalue+1);
+
+  for(int i=0; i<n; i++)
+    {
+      t_temp[t[i]]++;
+    }
+
+  for(int i=1; i<=maxvalue; i++)
+    {
+      t_temp[i] = t_temp[i] + t_temp[i-1];
+    }
+
+  for(int i=n-1; i>=0; i--)
+    {
+      t_ret[t_temp[t[i]]-1] = t[i]; // array index begin at 0
+
+      // t_ret[t_temp[t[i]]] = t[i]; // !!! error array index begin at 0      
+      t_temp[t[i]]--;
+    }
+
+
+  delete[] t_temp;
+}
+
+
+void radix_sort_test(char** t, char** t_ret, int di, int dj)
+{
+  for(int i=di-1; i>=0; i--)
+    {
+      // counting_sort_t(t[i], , dj, 'z');
+    }
+
+
+  // t_temp[t[i][j]]++;
+  // t_temp[t[x][j]]++;
+
+  // t_ret
+
+}
+
+
 
 int main()
 {
