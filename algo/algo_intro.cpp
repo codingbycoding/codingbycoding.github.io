@@ -445,9 +445,6 @@ void radix_sort_test(char** t, char** t_ret, int di, int dj)
 
   // t_temp[t[i][j]]++;
   // t_temp[t[x][j]]++;
-
-  // t_ret
-
 }
 
 
@@ -616,6 +613,9 @@ int main()
   printArray(randis2counting_sort_result, ARRAR_LENGTH);
   delete[] randis2counting_sort;
 
-  
+
+  int** abc = new int*[2];
+  abc[0] = new int(2);
+  std::cout << *abc[0] << std::endl; 
   return 0;
 }
