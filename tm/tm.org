@@ -138,6 +138,9 @@
 
 ** [2014-01-07 Tue] List
 *** DONE 1. investigate dudu unsteabe game server logic failed(2/2) :self verify
-*** TODO 2. dudu service restore, dudu service failed to login dudu
+*** DONE 2. dudu server restore, dudu service failed to login dudu(1/2)
+
+** [2014-01-09 Thu] List
+*** DONE 1. dudu server restore, dudu service failed to login dudu(2/2)
     
     

@@ -1,0 +1,36 @@
+Log4j has three main components: loggers, appenders and layouts
+
+However, since log4j version 1.2, Logger class has replaced the Category class.
+
+This rule is at the heart of log4j. It assumes that levels are
+ordered. For the standard levels, we have DEBUG < INFO < WARN < ERROR < FATAL.
+
+In log4j speak, an output destination is called an
+appender. Currently, appenders exist for the console, files, GUI components, remote socket servers, JMS, NT Event Loggers, and remote UNIX Syslog daemons. It is also possible to log asynchronously.
+
+
+users wish to customize not only the output destination but also the
+output format. This is accomplished by associating a layout with an appender
+
+
+
+The invocation of the BasicConfigurator.configure method creates a
+rather simple log4j setup. This method is hardwired to add to the root
+logger a ConsoleAppender. The output will be formatted using a
+PatternLayout set to the pattern "%-4r [%t] %-5p %c %x - %m%n".
+
+Note that by default, the root logger is assigned to Level.DEBUG.
+
+To avoid the parameter construction cost write:
+
+      if(logger.isDebugEnabled() {
+        logger.debug("Entry number: " + i + " is " +
+        String.valueOf(entry[i]));
+      }
+   
+This will not incur the cost of parameter construction if debugging is
+disabled. On the other hand, if the logger is debug-enabled, it will
+incur twice the cost of evaluating whether the logger is enabled or
+not: once in debugEnabled and once in debug. This is an insignificant
+overhead because evaluating a logger takes about 1% of the time it
+takes to actually log.
