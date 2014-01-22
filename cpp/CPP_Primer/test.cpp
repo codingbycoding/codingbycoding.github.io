@@ -1,8 +1,16 @@
 //C++ Primer 5th
 
-//g++ -std=c++0x -o test.linux test.cpp
+//gcc 4.8.2
+//g++ -std=c++11 -o test.linux test.cpp
+//g++ -std=c++11 -m32 -o test.linux test.cpp
+
 
 #include <iostream>
+#include <vector>
+#include <string>
+
+#include <iterator>
+
 
 int g_TestInt;
 
@@ -30,6 +38,28 @@ int main()
   Testfunction();
 
 
+  std::vector<int> ivec = {2, 3, 4};
+  for(auto i : ivec)
+  {
+    std::cout << i;
+    
+  }
+  std::cout << std::endl;
+
+
+  std::string strarr[] = {"abc", "123", "World"};
+
+  std::string* strbeg = begin(strarr);
+  std::string* strend = end(strarr);
+  for(std::string* it=strbeg; it!=strend; ++it)
+  {
+    std::cout << *it;
+  }
+  std::cout << std::endl;
+
+  int* ip; 
+  std::cout << "size(p): " << sizeof(ip) << std::endl;//-m32:4 -m64:8
+  
   // int* inull = nullptr; //c++11
   return 0;
   
