@@ -12,6 +12,8 @@
 #include <stdexcept>
 #include <iterator>
 #include <cstdlib>
+#include <fstream>
+
 
 int g_TestInt;
 
@@ -85,6 +87,33 @@ int main()
     
   // }
   
-  return EXIT_SUCCESS;
+
+  std::cout << "flush." << std::flush;
+
+  std::cout << std::endl;
+
+
+  std::string strfsname("fsname.txt");
   
+  std::ofstream f1(strfsname);
+  // if(f1.good())
+  // {
+  //   f1 << "f1 Hello" << std::endl;
+  // }
+  // else
+  // {
+  //   std::cout << "f1.good failed." << std::endl;
+  // }
+
+  // std::ofstream f2(strfsname);
+  // if(f2.good())
+  // {
+  //   f2 << "f2 Hello" << std::endl;
+  // }
+  // else
+  // {
+  //   std::cout << "f2.good failed." << std::endl;
+  // }
+
+  return EXIT_SUCCESS;  
 }
