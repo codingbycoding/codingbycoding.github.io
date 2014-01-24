@@ -5,14 +5,20 @@
 //g++ -std=c++11 -o test.linux test.cpp
 //g++ -std=c++11 -m32 -o test.linux test.cpp
 
+#include <iterator>
 
 #include <iostream>
+#include <fstream>
+
 #include <vector>
 #include <string>
+#include <list>
+
 #include <stdexcept>
-#include <iterator>
+
 #include <cstdlib>
-#include <fstream>
+
+#include <numeric>
 
 
 int g_TestInt;
@@ -49,6 +55,15 @@ int main()
 
 
   std::vector<int> ivec = {2, 3, 4};
+  std::cout << "ivec.capacity(): " << ivec.capacity() << " ivec.size(): " << ivec.size() << std::endl;
+
+  ivec.resize(30);
+  std::cout << "ivec.resize(30):" << std::endl;
+  ivec.push_back(88);
+  std::cout << "ivec.capacity(): " << ivec.capacity() << " ivec.size(): " << ivec.size() << std::endl;
+
+  
+      
   for(auto i : ivec)
   {
     std::cout << i;
@@ -95,7 +110,8 @@ int main()
 
   std::string strfsname("fsname.txt");
   
-  std::ofstream f1(strfsname);
+  // std::ofstream f1(strfsname);
+  std::ofstream f1(strfsname, std::ofstream::app);
   // if(f1.good())
   // {
   //   f1 << "f1 Hello" << std::endl;
@@ -115,5 +131,32 @@ int main()
   //   std::cout << "f2.good failed." << std::endl;
   // }
 
+
+  std::list<int> ili = {0, 1, 2, 3, 4, 5};
+
+  auto it = ili.begin();//!!![Caution return iterator]
+  
+  if(!ili.empty())
+  {
+    ili.erase(it);
+  }
+
+  auto it2 = ili.begin();
+  //it2 = 100;
+
+  auto it_f = ili.front();//!!![Caution return reference]
+  //auto &it_f = ili.front();
+  it_f = 100;
+  
+  std::cout << "ili: ";
+  for(auto i : ili)
+  {
+    std::cout << i;
+  }
+  std::cout << std::endl;
+
+  int isum = accumulate(ili.cbegin(), ili.cend(), 0);
+  std::cout << "isum: " << isum << std::endl; 
+  
   return EXIT_SUCCESS;  
 }
