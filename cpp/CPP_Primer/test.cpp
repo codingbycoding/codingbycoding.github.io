@@ -8,9 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-
 #include <iterator>
-
 #include <fstream>
 
 int g_TestInt;
@@ -66,7 +64,7 @@ int main()
 
   std::cout << std::endl;
 
-  
+
   std::string strfsname("fsname.txt");
   
   std::ofstream f1(strfsname);
