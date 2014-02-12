@@ -1,3 +1,4 @@
+
 * DONE DuDu Test PLAGame Version intranet pass to DuDu Collegues<2013-10-22 Tue>
 * DONE Server version 20130917R1 First Deployment on BJ01<2013-10-22 Tue>
 * DONE Autodeploy Task: python process services.xml
@@ -134,10 +135,10 @@
 ** [2014-01-06 Mon] List
 *** DONE 1. Web Service to Platform
 *** DONE 2. Fix Mail 8days ref: BugFree 2172
-*** TODO 3. investigate dudu unsteabe game server logic failed(0/2)
+*** TODO 3. investigate dudu unsteable game server logic failed(0/2)
 
 ** [2014-01-07 Tue] List
-*** DONE 1. investigate dudu unsteabe game server logic failed(2/2) :self verify
+*** DONE 1. investigate dudu unsteable game server logic failed(2/2) :self verify
 *** DONE 2. dudu server restore, dudu service failed to login dudu(1/2)
 
 ** [2014-01-09 Thu] List
@@ -148,3 +149,11 @@
 *** TODO 2. DSA 对应多DC--
     
     
+** [2014-02-10 Mon] List
+*** TODO 1. 线上运维流程
+
+** [2014-02-11 Tue] List
+*** TODO 1. 单DSA多DC环境
+   
+** [2014-02-12 Wed] List
+*** TODO 1. fix bug 2691 restart login server need restart client to login

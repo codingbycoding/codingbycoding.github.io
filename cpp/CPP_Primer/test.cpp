@@ -14,11 +14,24 @@
 #include <string>
 #include <list>
 
+#include <map>
+#include <unordered_map>
+
+
+
 #include <stdexcept>
 
 #include <cstdlib>
 
 #include <numeric>
+#include <algorithm>
+
+#include <functional>
+
+
+#include <memory>
+
+
 
 
 int g_TestInt;
@@ -37,6 +50,154 @@ int (*func_1(int))[5];
 auto func_2(int) -> int(*)[5];
 
 
+
+bool checksize(const std::string& str, int size)
+{
+  return str.size() == size;
+}
+
+class MyString_Base
+{
+
+ public:
+  MyString_Base()
+      : m_name("")
+  {
+    
+  }
+  
+  MyString_Base(const MyString_Base& in)
+      : m_name(in.m_name)
+  {
+    
+  }
+  
+  MyString_Base(MyString_Base&& in)
+      : m_name(std::move(in.m_name))
+  {
+    
+  }
+  
+  virtual ~MyString_Base()
+  {
+    
+  }
+
+  MyString_Base& operator =(const MyString_Base& )
+  {
+    
+  }
+
+  MyString_Base& operator =(MyString_Base&& )
+  {
+
+    
+  }
+
+  virtual void print()
+  {
+    std::cout << "MyString_Base m_name:" << m_name; 
+  }
+
+  virtual void printProtected()
+  {
+    std::cout << "MyString_Base m_nameProtected: " << m_nameProtected; 
+  }
+  
+ protected:
+  std::string m_nameProtected;
+ private:
+  std::string m_name;
+};
+
+
+class MyString : public MyString_Base
+{
+ public:
+  MyString() : MyString_Base(), m_mystr("") 
+  {
+    
+  }
+  
+  explicit MyString(const std::string& str)
+      : MyString_Base(), m_mystr(str) 
+  {
+    
+  }
+  
+  explicit MyString(std::string&& str)
+      : MyString_Base(), m_mystr(str) 
+  {
+    
+  }
+
+  MyString(const MyString& mystr)
+      : MyString_Base()
+  {
+    
+  }
+
+  MyString(const MyString&& mystr)
+      : MyString_Base()
+  {
+    
+  }
+    
+  ~MyString()
+  {
+    
+  }
+  
+
+  MyString& operator =(const MyString& mystr)
+  {
+    m_mystr = mystr.m_mystr;
+    return *this;
+  }
+
+  MyString& operator =(const MyString&& mystr)
+  {
+    m_mystr = std::move(mystr.m_mystr);
+    return *this;
+  }
+
+
+  void print()
+  {
+    std::cout << "MyString m_name: ";// << MyString_Base::m_name;n
+    
+  }
+
+  void printProtected()
+  {
+    std::cout << "MyString m_nameProtected: " << m_nameProtected; 
+  }
+  
+ private:
+  friend std::ostream& operator << (std::ostream& os, const MyString& mystr)
+  {
+    os << mystr.m_mystr;
+    return os;
+  }
+
+  friend std::istream& operator >> (std::istream& is, MyString& mystr)
+  {
+    is >> mystr.m_mystr;
+    if(is)
+    {
+      ;
+    }
+    else
+    {
+      mystr.m_mystr = "";
+    }
+    return is;
+  }
+
+  
+ private:
+  std::string m_mystr;
+};
 
 int main()
 {
@@ -156,7 +317,100 @@ int main()
   std::cout << std::endl;
 
   int isum = accumulate(ili.cbegin(), ili.cend(), 0);
-  std::cout << "isum: " << isum << std::endl; 
+  std::cout << "isum: " << isum << std::endl;
+
+
+  std::cout << "find_if: " << std::endl;
+  find_if(ili.begin(), ili.end(), [](int i){std::cout << "i: " << i << std::endl; return 3==i;});
+
   
+
+  std::vector<std::string> strvec = {"Jack", "Rose", "Aka", "Page"};
+  
+  auto checksize3 = bind(checksize, std::placeholders::_1, 3);
+
+  auto itfinded = find_if(strvec.begin(), strvec.end(), checksize3);
+  if(itfinded != strvec.end())
+  {
+    std::cout << "itfinded: " << *itfinded << std::endl; 
+  }
+
+
+  // std::istream_iterator<int> isBeg(std::cin), isEOF;
+  // std::cout << accumulate(isBeg, isEOF, 0) << std::endl;
+
+#define MAPISUNORDERED
+
+  //#undef MAPISUNORDERED  
+
+#ifdef   MAPISUNORDERED
+   std::unordered_map<std::string, std::string> AuthorEntrymap;
+#else
+  std::map<std::string, std::string> AuthorEntrymap;
+#endif  
+
+  AuthorEntrymap.insert( {std::string("TCP/IP Illustrate"), std::string("Stevens")} );
+
+  for(auto it = AuthorEntrymap.cbegin(); it!=AuthorEntrymap.cend(); ++it)
+  {
+    std::cout << it->first <<  ":" << it->second << "    ";
+  }
+  std::cout << std::endl;
+
+  
+  for(auto it : AuthorEntrymap)    
+  {
+    std::cout << it.first <<  ":" << it.second << "    ";
+  }
+
+  std::cout << std::endl;
+
+#ifdef   MAPISUNORDERED  
+  std::cout << " buckets info:" << std::endl;
+  std::cout << AuthorEntrymap.max_bucket_count() << " : " << AuthorEntrymap.bucket_count();
+#endif
+
+  std::cout << std::endl;
+
+
+  std::allocator<std::string> stralloc;
+  auto const palloc = stralloc.allocate(10);
+  auto qalloc = palloc; 
+  stralloc.construct(qalloc++, 5, 'c');
+  stralloc.construct(qalloc++, 5, 'a');
+
+  std::cout << *(qalloc-2) << std::endl;
+  std::cout << *(qalloc-1) << std::endl;
+
+  MyString mstr(std::string("my"));
+
+  std::cout << "MyString:" << mstr << std::endl;
+  std::cin >> mstr;
+  std::cout << "MyString:" << mstr << std::endl;
+
+  // int ia = (int)(1.15*100);
+  // int ib = (int)(1.150000*100);
+
+  int ia = (1.15*100 + .5);
+  int ib = (1.150000*100 + .5); //the term for it is truncation a fact of life in computing 
+  std::cout << "ia:" << ia << " ib:" << ib << std::endl;
+  
+
+  std::map<std::string, std::function<int(int, int)> > bifunmap;
+
+  bifunmap = {
+    {"+", [](int lhs, int rhs){return lhs+rhs;} },
+    {"-", [](int lhs, int rhs){return lhs-rhs;} },
+    {"*", std::multiplies<int>()},
+    {"/", std::divides<int>()}    
+    
+  };
+
+  std::cout << "function map:";
+  std::cout << bifunmap["+"](2, 3) << "  ";
+  std::cout << bifunmap["/"](200, 4) << "  ";
+  
+  std::cout << std::endl; 
   return EXIT_SUCCESS;  
 }
+
