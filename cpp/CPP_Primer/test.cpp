@@ -31,13 +31,14 @@
 
 #include <memory>
 
+#include <tuple>
+#include <bitset>
 
-
+#include <regex>
 
 int g_TestInt;
 
-void Testfunction()
-{
+void Testfunction() {
   int a;
   char ch;
   std::cout << "a: " <<  a << " ch: " << ch << std::endl;
@@ -51,56 +52,46 @@ auto func_2(int) -> int(*)[5];
 
 
 
-bool checksize(const std::string& str, int size)
-{
+bool checksize(const std::string& str, int size) {
   return str.size() == size;
 }
 
-class MyString_Base
-{
+class MyString_Base {
 
  public:
   MyString_Base()
-      : m_name("")
-  {
+      : m_name("") {
     
   }
   
   MyString_Base(const MyString_Base& in)
-      : m_name(in.m_name)
-  {
+      : m_name(in.m_name) {
     
   }
   
   MyString_Base(MyString_Base&& in)
-      : m_name(std::move(in.m_name))
-  {
+      : m_name(std::move(in.m_name)) {
     
   }
   
-  virtual ~MyString_Base()
-  {
+  virtual ~MyString_Base() {
     
   }
 
-  MyString_Base& operator =(const MyString_Base& )
-  {
+  MyString_Base& operator =(const MyString_Base& ) {
     
   }
 
-  MyString_Base& operator =(MyString_Base&& )
-  {
+  MyString_Base& operator =(MyString_Base&& ) {
 
     
   }
 
-  virtual void print()
-  {
+  virtual void print() {
     std::cout << "MyString_Base m_name:" << m_name; 
   }
 
-  virtual void printProtected()
-  {
+  virtual void printProtected() {
     std::cout << "MyString_Base m_nameProtected: " << m_nameProtected; 
   }
   
@@ -111,84 +102,69 @@ class MyString_Base
 };
 
 
-class MyString : public MyString_Base
-{
+class MyString : public MyString_Base {
  public:
-  MyString() : MyString_Base(), m_mystr("") 
-  {
+  MyString() : MyString_Base(), m_mystr("") {
     
   }
   
   explicit MyString(const std::string& str)
-      : MyString_Base(), m_mystr(str) 
-  {
+      : MyString_Base(), m_mystr(str) {
     
   }
   
   explicit MyString(std::string&& str)
-      : MyString_Base(), m_mystr(str) 
-  {
+      : MyString_Base(), m_mystr(str) {
     
   }
 
   MyString(const MyString& mystr)
-      : MyString_Base()
-  {
+      : MyString_Base() {
     
   }
 
   MyString(const MyString&& mystr)
-      : MyString_Base()
-  {
+      : MyString_Base() {
     
   }
     
-  ~MyString()
-  {
+  ~MyString() {
     
   }
   
 
-  MyString& operator =(const MyString& mystr)
-  {
+  MyString& operator =(const MyString& mystr) {
     m_mystr = mystr.m_mystr;
     return *this;
   }
 
-  MyString& operator =(const MyString&& mystr)
-  {
+  MyString& operator =(const MyString&& mystr) {
     m_mystr = std::move(mystr.m_mystr);
     return *this;
   }
 
 
-  void print()
-  {
+  void print() {
     std::cout << "MyString m_name: ";// << MyString_Base::m_name;n
     
   }
 
-  void printProtected()
-  {
+  void printProtected() {
     std::cout << "MyString m_nameProtected: " << m_nameProtected; 
   }
   
  private:
-  friend std::ostream& operator << (std::ostream& os, const MyString& mystr)
-  {
+  friend std::ostream& operator << (std::ostream& os, const MyString& mystr) {
     os << mystr.m_mystr;
     return os;
   }
 
-  friend std::istream& operator >> (std::istream& is, MyString& mystr)
-  {
+  friend std::istream& operator >> (std::istream& is, MyString& mystr) {
     is >> mystr.m_mystr;
-    if(is)
-    {
+    if(is) {
       ;
     }
-    else
-    {
+    else {
       mystr.m_mystr = "";
     }
     return is;
@@ -199,8 +175,43 @@ class MyString : public MyString_Base
   std::string m_mystr;
 };
 
-int main()
-{
+template <typename T>
+class Printer {
+  typedef T value_type;
+
+ public:
+  Printer(const T& t)
+      : m_content(t) {
+    
+  }
+
+  Printer(T&& t)
+      : m_content(std::move(t)) {
+    
+  }
+  
+  void operator()() {
+    std::cout << m_content;
+  }
+  
+ private:
+  value_type m_content;
+};
+
+
+template <typename T1>
+void printn(T1 t1) {
+  std::cout << t1;
+}
+
+template <typename T1, typename... TArgs>
+void printn(T1 t1, TArgs... args ) {
+  // std::cout << sizeof...(args)+1;
+  std::cout << t1 << " ";
+  return printn(args...);
+}
+  
+int main() {
 
   unsigned int una = 2;
   int sib = -2;
@@ -225,8 +236,7 @@ int main()
 
   
       
-  for(auto i : ivec)
-  {
+  for(auto i : ivec) {
     std::cout << i;
     
   }
@@ -237,8 +247,7 @@ int main()
 
   std::string* strbeg = begin(strarr);
   std::string* strend = end(strarr);
-  for(std::string* it=strbeg; it!=strend; ++it)
-  {
+  for(std::string* it=strbeg; it!=strend; ++it) {
     std::cout << *it;
   }
   std::cout << std::endl;
@@ -297,8 +306,7 @@ int main()
 
   auto it = ili.begin();//!!![Caution return iterator]
   
-  if(!ili.empty())
-  {
+  if(!ili.empty()) {
     ili.erase(it);
   }
 
@@ -310,8 +318,7 @@ int main()
   it_f = 100;
   
   std::cout << "ili: ";
-  for(auto i : ili)
-  {
+  for(auto i : ili) {
     std::cout << i;
   }
   std::cout << std::endl;
@@ -330,8 +337,7 @@ int main()
   auto checksize3 = bind(checksize, std::placeholders::_1, 3);
 
   auto itfinded = find_if(strvec.begin(), strvec.end(), checksize3);
-  if(itfinded != strvec.end())
-  {
+  if(itfinded != strvec.end()) {
     std::cout << "itfinded: " << *itfinded << std::endl; 
   }
 
@@ -351,15 +357,13 @@ int main()
 
   AuthorEntrymap.insert( {std::string("TCP/IP Illustrate"), std::string("Stevens")} );
 
-  for(auto it = AuthorEntrymap.cbegin(); it!=AuthorEntrymap.cend(); ++it)
-  {
+  for(auto it = AuthorEntrymap.cbegin(); it!=AuthorEntrymap.cend(); ++it) {
     std::cout << it->first <<  ":" << it->second << "    ";
   }
   std::cout << std::endl;
 
   
-  for(auto it : AuthorEntrymap)    
-  {
+  for(auto it : AuthorEntrymap) {
     std::cout << it.first <<  ":" << it.second << "    ";
   }
 
@@ -384,9 +388,9 @@ int main()
 
   MyString mstr(std::string("my"));
 
-  std::cout << "MyString:" << mstr << std::endl;
-  std::cin >> mstr;
-  std::cout << "MyString:" << mstr << std::endl;
+  // std::cout << "MyString:" << mstr << std::endl;
+  // std::cin >> mstr;
+  // std::cout << "MyString:" << mstr << std::endl;
 
   // int ia = (int)(1.15*100);
   // int ib = (int)(1.150000*100);
@@ -399,18 +403,92 @@ int main()
   std::map<std::string, std::function<int(int, int)> > bifunmap;
 
   bifunmap = {
-    {"+", [](int lhs, int rhs){return lhs+rhs;} },
-    {"-", [](int lhs, int rhs){return lhs-rhs;} },
+    {"+", [](const int& lhs, const int& rhs){return lhs+rhs;} },
+    {"-", [](const int& lhs, const int& rhs){return lhs-rhs;} },
     {"*", std::multiplies<int>()},
     {"/", std::divides<int>()}    
     
   };
+  
 
   std::cout << "function map:";
   std::cout << bifunmap["+"](2, 3) << "  ";
   std::cout << bifunmap["/"](200, 4) << "  ";
   
-  std::cout << std::endl; 
+  std::cout << std::endl;
+
+
+  Printer<std::string> per("per");
+  per();
+  std::string strper2 = "per2";
+  std::cout << std::endl;
+  Printer<std::string> per2(strper2);
+  per2();
+  std::cout << std::endl;
+
+  printn(2, 3, "hello", 100, "world");
+  std::cout << std::endl;
+
+
+  std::tuple<int, int, std::string> tup3(0, 1, "tup3");
+  std::cout << "tup3:" << std::get<0>(tup3);
+  std::cout << std::endl;
+
+  decltype(tup3) tup3_2(100, 200, "tup3_2");
+  std::cout << "tup3_2 size:" << std::tuple_size<decltype(tup3_2)>::value << std::endl;
+
+  std::cout << "tup3_2:" << std::get<0>(tup3_2);
+  std::cout << std::endl;
+
+
+  try {
+    // std::bitset<32> bitvec("2323");
+    std::bitset<32> bitvec("1100");
+    std::cout << "bitvec: " << bitvec << std::endl;
+    std::cout << "bitvec.to_ulong(): " << bitvec.to_ulong() << std::endl;
+  } catch (std::invalid_argument& e) {
+    std::cout << "File: " << __FILE__ << " Line: "<< __LINE__ << " invalid_argument "<< e.what() << std::endl;
+  } catch (std::overflow_error& e) {
+    std::cout << "File: " << __FILE__ << " Line: "<< __LINE__ << " overflow_error "<< e.what() << std::endl;
+  } catch (...) {
+    std::cout << "File: " << __FILE__ << " Line: "<< __LINE__ << " catch(...) "<< std::endl;
+  }
+
+
+
+  std::string strpattern("^cie");
+  //strpattern = "[[:alpha:]]*" + strpattern + "[[:alpha:]]*";
+  std::string strtesttext("this");
+  std::smatch reresults;
+  
+  try {
+    std::regex re(strpattern);
+    //std::regex re(strtesttext, std::regex::basic | std::regex::icase);
+    if(std::regex_search(strtesttext, reresults, re)) {
+      std::cout << reresults.str() << std::endl;
+    } else {
+      std::cout << "regex_search failed." << std::endl;
+    }
+    
+
+  } catch (std::regex_error& e) {
+    std::cout << "File: " << __FILE__ << " Line: "<< __LINE__ <<  " " << e.what() << std::endl;
+  }
+  // catch (...) {
+  //   std::cout << "File: " << __FILE__ << " Line: "<< __LINE__ << " catch(...) "<< std::endl;
+  // }
+
+  
+
   return EXIT_SUCCESS;  
 }
 
+
+  
+  
+  
+
+
+  
+  
+  
