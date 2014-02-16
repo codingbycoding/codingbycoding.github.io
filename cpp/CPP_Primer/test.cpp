@@ -456,7 +456,8 @@ int main() {
 
 
 
-  std::string strpattern("^cie");
+  //  std::string strpattern("^cie");
+  std::string strpattern("*is*");
   //strpattern = "[[:alpha:]]*" + strpattern + "[[:alpha:]]*";
   std::string strtesttext("this");
   std::smatch reresults;
@@ -464,8 +465,9 @@ int main() {
   try {
     std::regex re(strpattern);
     //std::regex re(strtesttext, std::regex::basic | std::regex::icase);
-    if(std::regex_search(strtesttext, reresults, re)) {
-      std::cout << reresults.str() << std::endl;
+    if(std::regex_search("this", re)) {
+      //if(std::regex_search(strtesttext, re)) {
+      //std::cout << reresults.str() << std::endl;
     } else {
       std::cout << "regex_search failed." << std::endl;
     }
@@ -478,8 +480,44 @@ int main() {
   //   std::cout << "File: " << __FILE__ << " Line: "<< __LINE__ << " catch(...) "<< std::endl;
   // }
 
-  
 
+
+
+  //   try {
+  //   std::regex re(strpattern);
+  //   //std::regex re(strtesttext, std::regex::basic | std::regex::icase);
+  //   if(std::regex_search(strtesttext, reresults, re)) {
+  //     std::cout << reresults.str() << std::endl;
+  //   } else {
+  //     std::cout << "regex_search failed." << std::endl;
+  //   }
+    
+
+  // } catch (std::regex_error& e) {
+  //   std::cout << "File: " << __FILE__ << " Line: "<< __LINE__ <<  " " << e.what() << std::endl;
+  // }
+  // // catch (...) {
+  // //   std::cout << "File: " << __FILE__ << " Line: "<< __LINE__ << " catch(...) "<< std::endl;
+  // // }
+
+
+  std::default_random_engine e;
+  for(size_t i=0; i<5; i++) {
+    std::cout << e() << " ";
+  }
+
+  std::uniform_int_distribution<unsigned> uid(0,9);
+  for(size_t i=0; i<5; i++) {
+    std::cout << uid(e) << " ";
+  }
+  
+  std::cout << std::endl;
+
+  std::cout << true << " " <<  false << " " << std::boolalpha << true << " " << false << std::endl;
+  std::cout << std::noboolalpha;
+  int i2cout = 87999999;
+  std::cout << i2cout << " dec:" << std::dec << i2cout << " oct:" << std::oct << i2cout << " hex:" << std::hex << i2cout << std::endl;
+  
   return EXIT_SUCCESS;  
 }
 
