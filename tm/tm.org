@@ -157,3 +157,9 @@
    
 ** [2014-02-12 Wed] List
 *** TODO 1. fix bug 2691 restart login server need restart client to login
+
+
+** [2014-02-25 Tue] List
+*** TODO 1. 南京军区服务器和客户端版本
+*** TODO 2. 嘟嘟服务器找谢睿
+*** TODO 3. 查外挂用户

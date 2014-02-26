@@ -37,7 +37,7 @@ print("test comment for region") -- test comment for region
 print("test comment for region") -- test comment for region
 --]]
 
-
+print("中文")
 print("Enter a number:")
 a=io.read("*number")
 print(fact(a))
