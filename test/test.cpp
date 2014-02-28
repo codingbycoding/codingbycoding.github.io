@@ -1,14 +1,14 @@
 //preprocessing: just process preprocess output to stdout
 //g++ -E test.cpp > test.ii
 
-//compilation: output is assemble file output to .ii
-//g++ -S test.cpp
+//compilation: output is assemble file output to .s
+//g++ -S test.ii
 
-//assemble: -c compile or assemble dont link output to .s
-//g++ -c test.ii
+//assemble: -c compile or assemble dont link output to .o
+//g++ -c test.s
 
 //linking: output to a.out or -o filename.suffix
-//g++ test.o
+//g++ test.o -o test.linux
 
 
 //g++ test.cpp -o test.linux
@@ -55,6 +55,13 @@ class TmDataCenter
   {
     m_DSAManager = new TmDSAManager;
     m_MatchManager = new TmMatchManager;
+  }
+  ~TmDataCenter()
+  {
+    delete m_DSAManager;
+    delete m_MatchManager;
+    m_DSAManager = NULL;
+    m_MatchManager = NULL;
   }
   
   TmDSAManager* GetDSAManager()
@@ -190,7 +197,7 @@ int main() {
   slist_node<int>* slist = new slist_node<int>(10);
   slist_node<int>* slistit = slist; 
   
-  for(int i=1; i<3; ++i) {
+  for(int i=1; i<5; ++i) {
     slist_node<int>*  newNode = new slist_node<int>(i);
 
     while(slistit->_M_next != NULL) {
