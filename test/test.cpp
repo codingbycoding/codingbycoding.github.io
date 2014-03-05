@@ -13,7 +13,9 @@
 
 //g++ test.cpp -o test.linux
 
-//g++ test.cpp -o -DNDEBUG -O3 test.linux
+//g++ -x c++ test.cpp -o test.linux
+
+//g++ -x c++ test.cpp -o -DNDEBUG -O3 test.linux
 
 #define DataCenterOperation(DataCenterObjectName, ManagerName, FunName, Args...) \
   DataCenterObjectName->Get##ManagerName()->FunName(Args)  
@@ -167,12 +169,10 @@ slist_node<T>* reverse_slist(slist_node<T>* slisthead) {
     return slisthead;
   }
 
-  slist_node<T>* cur;
+  slist_node<T>* cur = slisthead;
   slist_node<T>* pre = NULL;
   slist_node<T>* tmp;
 
-  cur = slisthead;
-  
   while (cur->_M_next) {
     tmp = cur;
     cur = cur->_M_next;
