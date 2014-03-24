@@ -1,3 +1,5 @@
+//g++ test.cpp -o test.linux
+
 //preprocessing: just process preprocess output to stdout
 //g++ -E test.cpp > test.ii
 
@@ -11,7 +13,7 @@
 //g++ test.o -o test.linux
 
 
-//g++ test.cpp -o test.linux
+
 
 //g++ -x c++ test.cpp -o test.linux
 
@@ -31,9 +33,11 @@
 #include <string>
 #include <iostream>
 
+#include <cstdint>
+
 class TmDSAManager
 {
- public:
+public:
   void Print1(std::string arg1)
   {
     std::cout << "class TmDSAManger::Print1()  arg1: " << arg1  << std::endl;
@@ -42,7 +46,7 @@ class TmDSAManager
 
 class TmMatchManager
 {
- public:
+public:
   void Print2(int arg1, std::string arg2)
   {
     std::cout << "class TmMatchManger::Print2:: arg1: " << arg1 << "  arg2: " << arg2 << std::endl;
@@ -52,7 +56,7 @@ class TmMatchManager
 
 class TmDataCenter
 {
- public:
+public:
   TmDataCenter()
   {
     m_DSAManager = new TmDSAManager;
@@ -76,14 +80,14 @@ class TmDataCenter
     return m_MatchManager; 
   }
   
- private:
+private:
   TmDSAManager* m_DSAManager;
   TmMatchManager* m_MatchManager;
 };
 
 template<typename T>
 class slist_node {
- public:
+public:
   typedef T value_type;
   slist_node(T t) {
     _M_data = t;
@@ -186,6 +190,50 @@ slist_node<T>* reverse_slist(slist_node<T>* slisthead) {
 }
 
 
+
+class CA0 {
+public:
+  virtual void print0() {
+    std::cout << "CA0 print0" << std::endl;
+  }
+  virtual void print1() {
+    std::cout << "CA0 print1" << std::endl;
+  }
+  virtual void print2() {
+    std::cout << "CA0 print2" << std::endl;    
+  }
+};
+
+
+class CA1 : CA0 {
+public:  
+  virtual void print0() {
+    std::cout << "CA1 print0" << std::endl;
+  }
+  virtual void print1() {
+    std::cout << "CA1 print1" << std::endl;
+  }
+  virtual void print2() {
+    std::cout << "CA1 print2" << std::endl;    
+  }
+};
+
+
+class CA2 : CA1 {
+public:  
+  virtual void print0() {
+    std::cout << "CA2 print0" << std::endl;
+  }
+  virtual void print1() {
+    std::cout << "CA2 print1" << std::endl;
+  }
+  virtual void print2() {
+    std::cout << "CA2 print2" << std::endl;    
+  }
+};
+
+typedef void (*printfunc)(void);
+
 int main() {
   TmDataCenter* DC = new TmDataCenter;
   // DataCenterOperation(DC, DSAManager, Print1, "Yes");
@@ -224,6 +272,49 @@ int main() {
   std::cout << slist << std::endl;
   slist_node<int>* reslist = reverse_slist(slist);
   std::cout << reslist << std::endl;
+
+
+  CA0 ca0;
+  ca0.print0();
+
+  std::cout << (int*)&ca0 << std::endl;
+  //  std::cout << (int*)(ca0) << std::endl;
+
+
+#if __GNUC__
+#if __x86_64  || __ppc64__
   
+  typedef std::int64_t myptrdiff;
+  
+#else
+  typedef std::int32_t myptrdiff;
+  
+#endif
+#endif
+  
+
+
+#if _WIN32 || _WIN64
+#if _WIN64
+  
+  typedef std::int64_t myptrdiff;
+  
+#else
+  typedef std::int32_t myptrdiff;
+#endif
+#endif
+
+  
+  printfunc pfun0 = (printfunc)*((myptrdiff*)*(myptrdiff*)(&ca0));
+  pfun0();
+
+  printfunc pfun1 = (printfunc)*(((myptrdiff*)*(myptrdiff*)(&ca0) +1) );
+  pfun1();
+
+  printfunc pfun2 = (printfunc)*(((myptrdiff*)*(myptrdiff*)(&ca0) +2) );
+  pfun2();
+  
+  std::cout << std::showbase << (int*)&ca0 << std::endl;
+
   return 0;
 }
