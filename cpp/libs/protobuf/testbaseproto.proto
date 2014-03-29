@@ -1,0 +1,5 @@
+package testpackagebase;
+
+message TimeStamp {
+  required uint64 time = 1;
+}

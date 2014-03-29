@@ -1,0 +1,45 @@
+package testpackage;
+
+import "testbaseproto.proto";
+
+message Request {
+  required testpackagebase.TimeStamp time = 1;
+  required string req_url = 2;
+  optional string req_params = 3;
+	
+}
+
+
+
+message Response {
+  required string res_result = 1;
+}
+
+service SearchService {
+  rpc Search (Request) returns (Response);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
