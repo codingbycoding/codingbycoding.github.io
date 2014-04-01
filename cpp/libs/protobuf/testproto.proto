@@ -1,7 +1,7 @@
 package testpackage;
 
 
-option optimize_for = LITE_RUNTIME;
+// option optimize_for = LITE_RUNTIME;
 // option optimize_for = CODE_SIZE;
  
 import "testbaseproto.proto";

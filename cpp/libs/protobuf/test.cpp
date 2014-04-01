@@ -44,6 +44,14 @@ int main(int argc, char* argv[]) {
     std::cout << "New tdi1 ByteSize:" << tdi1.ByteSize() << std::endl;
     std::cout << std::endl;
 
+    
+    std::string str;
+    tdi1.SerializeToString(&str);
+    std::cout << "str:" << str << std::endl;
+
+    
+    std::cout << std::endl;
+
 
     testpackage::TestDataInt2 tdi2;
     std::cout << "tdi2 ByteSize:" << tdi2.ByteSize() << std::endl;
@@ -64,6 +72,10 @@ int main(int argc, char* argv[]) {
     
     std::cout << "time:" << req.time().time() << std::endl;
 
+    // std::string str;
+    // req.SerializeToString(&str);
+    // std::cout << "str:" << str << std::endl;
+    
     google::protobuf::ShutdownProtobufLibrary();
     return EXIT_SUCCESS;
 

@@ -111,7 +111,8 @@ int main() {
 	char chbuff[1024];
 	bzero(chbuff, strlen(chbuff));
 
-	if( (recvlen = recv(events[i].data.fd, chbuff, 1024, 0 )) > 0) {
+	if( (recvlen = recv(events[i].data.fd, chbuff, 5, 0 )) > 0) {
+        //if( (recvlen = recv(events[i].data.fd, chbuff, 1024, 0 )) > 0) {
 	  printf("recv %d: %s\n", recvlen, chbuff);
 
 	}
@@ -138,7 +139,8 @@ int main() {
   }
 
   printf("close listened socket\n");
-  close(g_sock_server.ss_);
+  shutdown(g_sock_server.ss_, SHUT_RDWR);
+  //close(g_sock_server.ss_);
 
   return EXIT_SUCCESS;
 }

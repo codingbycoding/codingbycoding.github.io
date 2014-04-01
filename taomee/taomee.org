@@ -1,6 +1,11 @@
 [Days in TaoMee]
 
 
+第一个完整版本 201404 中旬 下旬
+
+公测节点 201410 201411
+
+
 * DONE [2014-03-25 Tue] TaoMee Day 1
 ** DONE 1.入职手续
 ** DONE 2.Initilize My Couputer Environment

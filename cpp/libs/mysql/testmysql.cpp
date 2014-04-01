@@ -51,9 +51,9 @@ int main(int argc, char* argv[]) {
 
 
     while(sql_row = mysql_fetch_row(sql_res)) {
-        int field_count = 0;
+        int field_count = -1;
         while(field_count < mysql_field_count(g_pmysql)) {
-            std::cout << sql_row[field_count++] << "|";
+            std::cout << sql_row[++field_count] << "|";
             
         }
         std::cout << std::endl;
