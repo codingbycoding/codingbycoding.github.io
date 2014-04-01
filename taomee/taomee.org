@@ -1,0 +1,12 @@
+[Days in TaoMee]
+
+* DONE [2014-04-25 Fri] TaoMee First Day 
+** DONE 1.入职手续
+** DONE 2.Initilize My Couputer Environment
+** DONE 3.F google protobuf  
+
+* TODO [2014-03-26 Wed]  TaoMee Second Day
+** DONE 1.Instructions From 老大Miller(倪维柱) 
+** DONE 2.checkout dplan/server
+** TODO 3.dplan/server introduction from Saga(曹海鸽)
+
