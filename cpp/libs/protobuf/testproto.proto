@@ -1,26 +1,52 @@
 package testpackage;
 
+
+option optimize_for = LITE_RUNTIME;
+// option optimize_for = CODE_SIZE;
+ 
 import "testbaseproto.proto";
 
 message Request {
-  required testpackagebase.TimeStamp time = 1;
-  required string req_url = 2;
-  optional string req_params = 3;
-	
+    required testpackagebase.TimeStamp time = 1;
+    required string req_url = 2 [default="index.html"];
+    repeated string req_params = 3;
+    repeated uint32 req_randoms = 4 [packed=true];
+    
+
 }
 
 
 
 message Response {
-  required string res_result = 1;
+
+    required uint32 res_result_code = 1;
+    repeated string res_results = 2;
+    extensions 100 to 199; 
+}
+
+
+message TestDataVoid {
+    
+}
+
+message TestDataInt1 {
+    required uint32 data1 = 1;
+}
+
+message TestDataInt2 {
+    required uint32 data1 = 1;
+    required uint32 data2 = 2;
 }
 
 service SearchService {
-  rpc Search (Request) returns (Response);
+    rpc Search (Request) returns (Response);
+
 }
 
 
-
+extend Response {
+    optional string surprise = 100;
+}
 
 
 
