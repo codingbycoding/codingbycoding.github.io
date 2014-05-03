@@ -4,4 +4,4 @@
 
 int g_Counter = 9999;
 
-Plane g_Plane;
+Plane* g_pPlane;

@@ -11,6 +11,7 @@
 
 #include "gen/testproto.pb.h"
 
+#include <sstream>
 
 int main(int argc, char* argv[]) {
 
@@ -33,6 +34,19 @@ int main(int argc, char* argv[]) {
     std::cout << "extension:" << res[0].GetExtension(testpackage::surprise) << std::endl;
 
     std::cout << "ByteSize:" << res[0].ByteSize() << std::endl;
+
+    const google::protobuf::Descriptor* desc = res[0].GetDescriptor();
+    std::cout << "desc: " << desc->full_name() << " field_count: " << desc->field_count() << std::endl;
+    std::stringstream ss;
+    
+    for(int i=0; i<desc->field_count(); i++) {
+        const FieldDescriptor* fieldDesc = desc->field(i);
+        ss << i << ": name:" << fieldDesc->name() << std::endl;
+    }
+
+    
+    
+    
 
 
     testpackage::TestDataVoid tdv;
@@ -58,6 +72,9 @@ int main(int argc, char* argv[]) {
     tdi2.set_data1(5);
     tdi2.set_data2(65535);
     std::cout << "New tdi2 ByteSize:" << tdi2.ByteSize() << std::endl;
+
+
+    
 
 
     testpackage::Request req;

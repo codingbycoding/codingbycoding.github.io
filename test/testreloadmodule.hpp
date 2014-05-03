@@ -41,7 +41,7 @@ public:
     }
 
     virtual void Fly(float inSpeed) {
-        
+        std::cout << "BaseVehicleInternal void Fly" << std::endl;
     }
         
 };

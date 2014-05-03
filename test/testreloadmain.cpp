@@ -16,7 +16,7 @@ BaseCar* g_pMyCar = NULL;
 
 
 extern int g_Counter;
-extern Plane g_Plane;
+extern Plane* g_pPlane;
 
 
 int funOne() {
@@ -31,7 +31,7 @@ enum ReloadEnum{
 class OperateWrapper {
 
 public:
-    OperateWrapper() : so_data_handle_(NULL), so_module_handle_(NULL), g_Counter_(NULL), g_Plane_(NULL) {
+    OperateWrapper() : so_data_handle_(NULL), so_module_handle_(NULL), g_Counter_(NULL), g_pPlane_(NULL) {
         
     }
 
@@ -45,17 +45,21 @@ public:
     }
 
     int init_load_so() {
-        if(NULL == (so_module_handle_ = dlopen("testreloadmodule.so", RTLD_NOW|RTLD_GLOBAL))
-           || NULL == (so_data_handle_ = dlopen("testreloadglobaldata.so", RTLD_NOW|RTLD_GLOBAL))) {
+        if(NULL == (so_data_handle_ = dlopen("testreloadglobaldata.so", RTLD_NOW|RTLD_GLOBAL)) 
+           || NULL == (so_module_handle_ = dlopen("testreloadmodule.so", RTLD_NOW|RTLD_GLOBAL))) {
 
             std::cout << dlerror() << std::endl;
             return ERR_RELOAD;
         } else {            
-            if(NULL != (g_Counter_ = dlsym(so_data_handle_, "g_Counter")) &&
-               NULL != (g_Plane_ = (Plane*)dlsym(so_data_handle_, "g_Plane")) ) {
-                return SUCC_RELOAD;
+            if(NULL == (g_Counter_ = dlsym(so_data_handle_, "g_Counter")) ||
+               NULL == (g_pPlane_ = dlsym(so_data_handle_, "g_pPlane")) ) {
+
+                std::cout << dlerror() << std::endl;
+                return ERR_RELOAD;
+
             }
         }
+        return SUCC_RELOAD;
     }
 
     void before_reload_so() {
@@ -71,14 +75,14 @@ public:
         so_data_handle_ = NULL;
         so_module_handle_ = NULL;
 
-        if(NULL == (so_module_handle_ = dlopen("testreloadmodule.so", RTLD_NOW|RTLD_GLOBAL))
-           || NULL == (so_data_handle_ = dlopen("testreloadglobaldata.so", RTLD_NOW|RTLD_GLOBAL))) {
+        if(NULL == (so_data_handle_ = dlopen("testreloadglobaldata.so", RTLD_NOW|RTLD_GLOBAL))
+           || NULL == (so_module_handle_ = dlopen("testreloadmodule.so", RTLD_NOW|RTLD_GLOBAL))) {
      
             std::cout << dlerror() << std::endl;
             return ERR_RELOAD;
         } else {            
             if(NULL != (g_Counter_ = dlsym(so_data_handle_, "g_Counter")) &&
-               NULL != (g_Plane_ = (Plane*)dlsym(so_data_handle_, "g_Plane")) ) {
+               NULL != (g_pPlane_ = dlsym(so_data_handle_, "g_pPlane")) ) {
 
                 g_pMyCar = g_CarMap["SportCar"]();
                     
@@ -95,7 +99,8 @@ public:
     }
 
     void PlaneFly() {
-        g_Plane_->Fly();
+        std::cout << "void PlaneFly" << std::endl;
+        (*((Plane**)g_pPlane_))->Fly();
     }
     
     void SetGlobalCounter(int InCounter) {
@@ -106,7 +111,8 @@ private:
     void* so_data_handle_;
     void* so_module_handle_;
     void* g_Counter_;
-    Plane* g_Plane_;
+    // Plane* g_pPlane_;
+    void* g_pPlane_;
     SportCar* pSportCar_;
     
 };

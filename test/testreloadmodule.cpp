@@ -62,10 +62,21 @@ public:
 
 Proxy g_proxy;
 
+void test() {
+    std::cout << "void test()" << std::endl;
+}
     
 void Plane::Fly() {
-    BaseVehicle::SetInternal(new AnotherPlaneInternal);
-    std::cout << "Yes Yes Plane Can Fly." << std::endl;
-    std::cout << "Yes Plane Can Fly." << std::endl;
+    // BaseVehicle::SetInternal(new AnotherPlaneInternal);
+    // std::cout << ".............#########  Plane Can Fly." << std::endl;
+    // std::cout << "Yes Plane Can Fly." << std::endl;
+    // test();
     pBaseVehicleInternal_->Fly(BaseVehicle::speed_);
+
+    SetInternal(new BaseVehicleInternal);
 }
+
+
+
+
+Plane* g_pPlane = new Plane;
