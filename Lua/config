@@ -1,2 +1,7 @@
 witdh = 300
 height = 200
+
+
+testtablename = {}
+testtablename[1] = {100, "cs_struct100", "sc_struct200"}
+testtablename[2] = {200, "cs_struct200", "sc_struct200"}
