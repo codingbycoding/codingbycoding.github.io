@@ -45,3 +45,8 @@ latex/*.log
 
 #linux bin
 *.linux
+
+
+#cscope
+cscope.files
+cscope.out

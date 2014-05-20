@@ -1,11 +1,15 @@
 //gcc luamain.c -llua -o luamain.linux
 
+//gcc luamain.c -I../../lua-5.2.3/src -llua -o luamain.linux
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>
+#include <lstate.h>
+
 #include <string.h> 
 
 
@@ -66,7 +70,7 @@ int main(int argc, char* argv[]) {
 
     /* printf("%d\n", lua_getfield(L, 1)); */
     /* lua_gettable(L, -1); */
-    /* printf("%d", L->stack_last - L->top);  /\* stack large enough? *\/ */
+
   
     printf("LUA_VERSION_NUM:%d\n", LUA_VERSION_NUM);
 
@@ -77,6 +81,9 @@ int main(int argc, char* argv[]) {
     /* } */
   
     printf("lua_check:%d\n", lua_checkstack(L, 10));
+
+    printf("%d", L->stack_last - L->top);  /* stack large enough? */
+    
     lua_close(L);
     
     
