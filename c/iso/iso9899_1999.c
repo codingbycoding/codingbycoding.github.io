@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 #include <ctype.h>
 #include <stdarg.h>
@@ -27,7 +28,7 @@ void argFunci(int argNum, ...)
 }
 
 
-int main()
+int main(int argc, char* argv[])
 {
   printf("__func__: %s\n", __func__);
 
@@ -38,7 +39,7 @@ int main()
       printf("and useful.\n");
     }
 
-  assert(false);
+  //assert(false);
   /* assert(true);   */
 
   uint8_t ui8var = 65;
@@ -57,5 +58,11 @@ int main()
   argFunci(2, 10, 20);
 
   printf("CLOCKS_PER_SEC: %d\n", CLOCKS_PER_SEC);
+
+  char* prog_name = argv[0];
+  size_t namelen = strlen(argv[0]);
+  strncpy(prog_name, "hhah", namelen);
+  memset(prog_name+4, 0, namelen-4);
+  getchar();
   return EXIT_SUCCESS;
 }
