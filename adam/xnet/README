@@ -1,0 +1,11 @@
+暂时命名为xnet, 以后会更改(与http://www.xnet.com冲突)
+
+
+目标:
+1.linux平台下追求最高效率epoll ET模式, 不浪费精力在多种api(select, poll, kqueue)如libevent, 力求精炼.
+
+2.完整的游戏服务器框架(xnet暂只net部分功能+协议数据)有别与libev, libuv, libevent.
+
+3.防御性原则,网络连接,协议数据异常应对. 
+
+4.学习作用, 最终提取设计先c语言实现, 然后C++, Erlang, Go, Python实现.学习不同语言的特性, 发挥不同语言的特性. 
