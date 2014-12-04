@@ -13,6 +13,13 @@
 
 int main(int argc, char* argv[]) {
 
+	if(2 != argc) {
+		std::cout << "usage: " << argv[0] << " redis_dbno(%d)" << std::endl;
+		return -1;
+	}
+
+	uint32_t redis_dbno = atoi(argv[1]);
+	
 	redisContext  *g_redis = NULL;
 	struct timeval timeout = { 2000, 500000 }; // 2.5 seconds
 	
@@ -25,21 +32,34 @@ int main(int argc, char* argv[]) {
 		} else {
 			std::cout << "Connection error: can't allocate redis context\n" << std::endl;
 		}
+
 		return -1;
 	}
 
 
 	redisReply* reply;
-	enum {
-		REDIS_DBNO_TEST = 1,
-		REDIS_DBNO_DEV = 2,
-	};
+	// enum {
+	// 	REDIS_DBNO_TEST = 1,
+	// 	REDIS_DBNO_DEV = 2,
+	// };
 	
-	uint32_t redis_dbno = REDIS_DBNO_DEV;
+	// uint32_t redis_dbno = REDIS_DBNO_DEV;
+	//uint32_t redis_dbno = REDIS_DBNO_TEST;
 	
 	reply = (redisReply*)redisCommand(g_redis, "SELECT %d", redis_dbno);
 	if(reply) {
 		freeReplyObject(reply);
+	} else {
+		std::cout << "SELECT error" << std::endl;
+		return -1;
+	}
+
+	reply = (redisReply*)redisCommand(g_redis, "flushdb");
+	if(reply) {
+		freeReplyObject(reply);
+	} else {
+		std::cout << "flushdb error" << std::endl;
+		return -1;
 	}
 		
 	
@@ -113,11 +133,17 @@ int main(int argc, char* argv[]) {
 		redisGetReply(g_redis, (void**)&reply);
 		if(reply) {
 			freeReplyObject(reply);
-		}		
+		} else {
+			std::cout << "redisGetReply error" << std::endl;
+			return -1;
+		}
 
 		redisGetReply(g_redis, (void**)&reply);
 		if(reply) {
 			freeReplyObject(reply);
+		} else {
+			std::cout << "redisGetReply error" << std::endl;
+			return -1;
 		}
 	}
 
