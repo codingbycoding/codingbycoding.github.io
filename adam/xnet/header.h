@@ -3,4 +3,4 @@
 
 typedef struct header_t {
 	uint32_t len;	
-} header_t;
+} header_t(packed);

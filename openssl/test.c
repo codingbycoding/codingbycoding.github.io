@@ -1,7 +1,7 @@
 //gcc -ggdb -std=c99 test.c -o test.linux -lssl
 
 
-//g++ -ggdb -std=c++0x test.c -I/home/adam/test/strike2014/server/proto/client -I/home/adam/test/strike2014/server/online/src -L/home/adam/test/strike2014/server/proto/client -L/usr/local/lib/ -L/usr/local/lib/ -lssl  -lclientproto  -lprotobuf -o test.linux
+//g++ -ggdb -std=c++0x test.c  -I/home/adam/snappy -I/home/adam/test/strike2014/server/proto/client -I/home/adam/test/strike2014/server/online/src -L/home/adam/test/strike2014/server/proto/client -L/usr/local/lib/ -L/usr/local/lib/ -L/home/adam/snappy/.libs/ -lssl  -lclientproto  -lprotobuf  -lsnappy -o test.linux
 
 #include "pb0x01.pb.h"
 #include "header.pb.h"
@@ -17,6 +17,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include "snappy.h"
 
 void my_encrypt(char* indata, char* outdata, long int llen) {	
 	/* unsigned char key[] = { */
@@ -60,7 +61,7 @@ int main() {
 	skaddr_in.sin_family = AF_INET;
 	skaddr_in.sin_port = htons(9888);
 	//skaddr_in.sin_addr.s_addr = htonl(INADDR_ANY);
-	skaddr_in.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+	//skaddr_in.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
 
 	skaddr_in.sin_addr.s_addr = inet_addr("192.168.1.116");
 
@@ -89,15 +90,88 @@ int main() {
 	header->head_len = proto_header.ByteSize();
 	header->cmd = 0x0101;
 	enter_svr.SerializeToArray(buf+8+header->head_len, header->total_len-8-header->head_len);
-	printf("%s\n", enter_svr.DebugString().c_str());
+	/* printf("%s\n", enter_svr.DebugString().c_str()); */
 
-	/* proto_header.ParseFromArray(buf+8, header->head_len); */
-	printf("%s\n", proto_header.DebugString().c_str());
+	proto_header.ParseFromArray(buf+8, header->head_len);
+	/* printf("%s\n", proto_header.DebugString().c_str()); */
 	char my_outdata[1024];
 	my_encrypt(buf+8, my_outdata, sizeof(buf)-8);
 
 	memcpy(buf+8, my_outdata, sizeof(buf)-8);
 	send(fd_, buf, sizeof(buf), 0);
+
+	char chrecv[10240];
+
+	int recvlen = 0;
+	recvlen = recv(fd_, chrecv, 8, 0);
+	int recvret = 0;
+	while(recvlen != 8) {
+		recvret = recv(fd_, chrecv, 8, 0);
+		if(recvret < 0) {
+			printf("err recv\n");
+			break;
+		}
+		recvlen += recvret;
+		continue;
+	}
+
+	
+	cli_proto_header_t* header_recv = (cli_proto_header_t*)chrecv;
+	/* printf("total_len :%d, head_len:%d\n", header_recv->total_len, header_recv->head_len); */
+
+	recvlen = 0;
+	do {
+		recvret = recv(fd_, chrecv+8, header_recv->total_len-8, 0);
+		if(recvret < 0) {
+			printf("err recv\n");
+			break;
+		}
+		recvlen += recvret;
+	} while(recvlen != header_recv->total_len-8);
+	
+
+	onlineproto::proto_header_t pro_header;
+	pro_header.ParseFromArray(chrecv+8, header_recv->head_len);
+	
+	onlineproto::sc_0x0101_enter_svr sc_enter_svr;
+	sc_enter_svr.ParseFromArray(chrecv+8+header_recv->head_len, header_recv->total_len-8-header_recv->head_len);
+	
+
+
+	onlineproto::cs_0x0108_query_package query_package;
+
+	header->total_len = proto_header.ByteSize() + query_package.ByteSize() + 8;
+	header->head_len = proto_header.ByteSize();
+	header->cmd = 0x0108;
+	query_package.SerializeToArray(buf+8+header->head_len, header->total_len-8-header->head_len);
+	/* printf("%s\n", query_package.DebugString().c_str()); */
+
+	my_encrypt(buf+8, my_outdata, sizeof(buf)-8);
+
+	memcpy(buf+8, my_outdata, sizeof(buf)-8);
+	send(fd_, buf, sizeof(buf), 0);
+
+	recv(fd_, chrecv, 10240, 0);
+
+	
+	header_recv = (cli_proto_header_t*)chrecv;
+	size_t output_length = header_recv->total_len - header_recv->head_len;
+	
+	char* output = chrecv + 8;
+	size_t uncompressed_length;
+	if(!snappy::GetUncompressedLength(output, output_length, &uncompressed_length)) {
+		printf("error");
+	}
+
+	char* uncompressed = new char[uncompressed_length];
+	if(!snappy::RawUncompress(output, output_length, uncompressed)) {
+		
+	}
+
+	onlineproto::sc_0x0108_query_package sc_query_package;
+	sc_query_package.ParseFromArray(uncompressed, uncompressed_length);
+
+	/* printf("%s\n", sc_query_package.DebugString().c_str()); */
 	
 	return EXIT_SUCCESS;
 }
