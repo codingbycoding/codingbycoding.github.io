@@ -3,6 +3,18 @@ package testpackagebase;
 
 // option optimize_for = LITE_RUNTIME;
 
+message pb_ext_data_t {
+	required uint32 ext_int1 = 2;
+}
+
+message pb_ext_str_t {
+	required string ext_str_val = 2;
+}
+
 message TimeStamp {
-  required uint64 time = 1;
+	required uint64 time = 1;
+	optional pb_ext_data_t ext_data = 2;
+	optional pb_ext_str_t ext_str = 3;
+	optional string opt_name = 4;
+	repeated string rep_name = 5;
 }
