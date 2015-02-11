@@ -1,11 +1,117 @@
-//g++ -ggdb -std=c++0x testrobot.cpp -I/home/adam/test/strike2014/server/proto/client -I/home/adam/test/strike2014/server/online/src -L/home/adam/test/strike2014/server/proto/client -L/usr/local/lib/ -L/usr/local/lib/ -lssl  -lclientproto -lhiredis  -lprotobuf -o testrobot.linux
+//g++ -ggdb -std=c++0x testrobot.cpp -I/home/adam/test/strike2014/server/proto/client -I/home/adam/test/strike2014/server/online/src -L/home/adam/test/strike2014/server/proto/client -L/usr/local/lib/ -I/usr/include/libxml2/ -L/usr/local/lib/ -lssl  -lclientproto -lhiredis  -lprotobuf -lxml2 -o testrobot.linux
 
 #include <iostream>
 #include <cstdlib>
 #include <sstream>
+#include <string.h>
 #include <string>
 #include <cmath>
+#include <vector>
 //#include <random>
+extern "C" {
+#include <libxml/tree.h>
+}
+
+
+#define STRCPY_SAFE(buf, str) \
+    do { \
+        int buflen = sizeof(buf); \
+        buf[buflen - 1] = '\0';\
+        strncpy(buf, str, buflen - 1); \
+    } while (0);
+
+
+#define DECODE_XML_PROP(cur, prop, str)								\
+	do {															\
+		str = xmlGetProp(cur, (xmlChar*)prop);						\
+		if (!str) {													\
+			std::cerr << "xml parse error: prop=%s" << std::endl;	\
+			return -1;												\
+		}															\
+	} while (0)
+
+
+#define DECODE_XML_PROP_STR(v, cur, prop)		\
+	do {										\
+		xmlChar* str;							\
+		DECODE_XML_PROP(cur, prop, str);		\
+		STRCPY_SAFE(v, (const char *)str);		\
+		v[sizeof(v) - 1] = '\0';				\
+		xmlFree(str);							\
+	} while (0)
+
+
+int load_xmlconf(const char* file, int (*parser)(xmlNodePtr cur_node)) {
+	int err = -1;
+
+	xmlDocPtr doc = xmlParseFile(file);
+	if (!doc) {
+		std::cerr << "Failed to Load:" << file << std::endl;
+	}
+
+	xmlNodePtr cur = xmlDocGetRootElement(doc); 
+	if (!cur) {
+		std::cerr << "xmlDocGetRootElement error when loading file: " << file << std::endl;
+		goto fail;
+	}
+
+	err = parser(cur);
+fail:
+	xmlFreeDoc(doc);
+	std::cerr << err << "Load File: " << file  << std::endl;
+	return 0;
+}
+
+struct name_conf_t {
+	std::string name1;
+	std::string name2;
+};
+
+// class name_manager_t {
+// public:
+	
+// private:
+// 	std::
+// };
+
+std::vector<name_conf_t> g_name_vec;
+
+int load_name_conf(xmlNodePtr root) {
+    xmlNodePtr cur = root->xmlChildrenNode;
+	// name_manager_t tmp;
+
+    while (cur) {
+        if (xmlStrEqual(cur->name, (const xmlChar *)("CfgRobotName"))) {
+
+			name_conf_t conf;
+			char name1[100] = {0};
+			char name2[100] = {0};
+			DECODE_XML_PROP_STR(name1, cur, "Name01");
+			DECODE_XML_PROP_STR(name2, cur, "Name02");
+
+			conf.name1.assign(name1);
+			conf.name2.assign(name2);
+			// tmp.add_name_conf(conf);
+			g_name_vec.push_back(conf);
+		}
+		
+		cur = cur->next;
+    }
+
+	// g_name_conf_mgr.copy_from(tmp);	
+	// if(g_name_conf_mgr.empty()) {
+	// 	ERROR_TLOG("g_name_conf_mgr empty");
+	// 	return -1;
+	// }
+
+	if(g_name_vec.empty()) {
+		std::cerr<< "g_name_vec empty";
+		return -1;
+	}	
+
+	return 0;
+}
+
 
 #include <hiredis/hiredis.h>
 
@@ -21,6 +127,12 @@ int main(int argc, char* argv[]) {
 	if(2 != argc) {
 		std::cout << "usage: " << argv[0] << " redis_dbno(%d)" << std::endl;
 		return -1;
+	}
+
+
+	// if(0 != load_xmlconf("/home/adam/test/strike2014/server/conf/CfgRobotName.xml", &load_name_conf)) {
+	if(0 != load_xmlconf("./CfgRobotName.xml", &load_name_conf)) {		
+		std::cerr << "load_xml_conf faild!!" << std::endl;
 	}
 
 	uint32_t redis_dbno = atoi(argv[1]);
@@ -75,7 +187,7 @@ int main(int argc, char* argv[]) {
 	
 	int uid_beg = 80000;
 	int uid;
-	int robot_sum = 50000;
+	int robot_sum = 60000;
 	std::stringstream ss;
 	commonproto::pb_challenge_player_t challenge_player;
 	commonproto::pb_hero_t* challenge_hero;
@@ -98,8 +210,12 @@ int main(int argc, char* argv[]) {
 			commonproto::pb_challenge_player_t challenge_player_top1;
 			uint32_t uid = 80000+i;
 			challenge_player_top1.set_uid(uid);
+			
+			uint32_t name_index1 = f_range_random(0, g_name_vec.size()-1);
+			uint32_t name_index2 = f_range_random(0, g_name_vec.size()-1);
+
 			std::stringstream ss_nick;
-			ss_nick << "Jack_" << uid;
+			ss_nick << g_name_vec[name_index1].name1 << g_name_vec[name_index2].name2; 
 			challenge_player_top1.set_nick(ss_nick.str());
 			uint32_t lv = 49-i;
 			challenge_player_top1.set_lv(lv);
@@ -198,9 +314,17 @@ int main(int argc, char* argv[]) {
 			commonproto::pb_challenge_player_t challenge_player_top4;
 			uint32_t uid = 80000+3+i;
 			challenge_player_top4.set_uid(uid);
+
+			uint32_t name_index1 = f_range_random(0, g_name_vec.size()-1);
+			uint32_t name_index2 = f_range_random(0, g_name_vec.size()-1);
+
 			std::stringstream ss_nick;
-			ss_nick << "Jack_" << uid;
+			ss_nick << g_name_vec[name_index1].name1 << g_name_vec[name_index2].name2; 
 			challenge_player_top4.set_nick(ss_nick.str());
+			
+			// std::stringstream ss_nick;
+			// ss_nick << "Jack_" << uid;
+			// challenge_player_top4.set_nick(ss_nick.str());
 
 			uint32_t rank = 4+i;
 			challenge_player_top4.set_rank(rank);
@@ -295,12 +419,20 @@ int main(int argc, char* argv[]) {
 		commonproto::pb_challenge_player_t challenge_player_top51;
 		uint32_t uid = 80000+51+i;
 		challenge_player_top51.set_uid(uid);
+
+		uint32_t name_index1 = f_range_random(0, g_name_vec.size()-1);
+		uint32_t name_index2 = f_range_random(0, g_name_vec.size()-1);
+
 		std::stringstream ss_nick;
-		ss_nick << "Jack_" << uid;
+		ss_nick << g_name_vec[name_index1].name1 << g_name_vec[name_index2].name2; 
 		challenge_player_top51.set_nick(ss_nick.str());
+			
+		// std::stringstream ss_nick;
+		// ss_nick << "Jack_" << uid;
+		// challenge_player_top51.set_nick(ss_nick.str());
 
 		uint32_t rank = 51+i;
-		uint32_t lv = 33- rank/2500+1;
+		uint32_t lv = 33 - (33-10)*rank/(50000-50);
 		challenge_player_top51.set_lv(lv);
 		challenge_player_top51.set_win_count(f_range_random(500, 600));
 		challenge_player_top51.set_rank(rank);

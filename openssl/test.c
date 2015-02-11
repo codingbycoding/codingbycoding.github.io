@@ -152,7 +152,6 @@ int main() {
 	send(fd_, buf, sizeof(buf), 0);
 
 	recv(fd_, chrecv, 10240, 0);
-
 	
 	header_recv = (cli_proto_header_t*)chrecv;
 	size_t output_length = header_recv->total_len - header_recv->head_len;
