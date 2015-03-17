@@ -1,82 +1,114 @@
-//g++ effective.cpp -o effective.linux
-
-#include <iostream>
-#include <cstdlib>
-#include <cassert>
-
-class A {
-public:
-	A() : x_(0) { //default ctor
-		
-	}
-
-	explicit A(int a) { //explict to avoid impliment convert 
-		
-	}
-	
-	// A(int a) { //explict to avoid impliment convert ctor
-		
-	// }
-	
-	A(const A& rhs) { //copy ctor
-		
-	}
-
-	A& operator= (const A& rhs) { //copy assign ctor
-		return *this;
-	}
-
-	const int& operator[] (int index) const {
-		assert(index>0 && index<100);
-		return y_[index];
-	}
-
-	int& operator[] (int index) {
-		return const_cast<int&>(static_cast<const A&>(*this)[index]);
-	}
-	
-private:
-	int x_;
-	int y_[100];
-};
-
-
-class AgainstDefaultCompilerGen {
-
-private:
-	AgainstDefaultCompilerGen(const AgainstDefaultCompilerGen&);//on purpose only declare this to against compiler default gen ctor.
-	AgainstDefaultCompilerGen& operator= (const AgainstDefaultCompilerGen&);//the same as above.
-};
-
-
-class AbstractClass {
-public:
-	virtual ~AbstractClass() = 0;
-};
+#include "effective.h"
 
 
 AbstractClass::~AbstractClass() {
 	
 }
 
+
+class MsgBuffer {
+public:
+	MsgBuffer() {
+		
+	}
+
+	explicit MsgBuffer(char* pMsg) {
+		p_msg_ = pMsg;
+	}
+
+	MsgBuffer(const MsgBuffer& rhs) : p_msg_(rhs.p_msg_) {
+		
+	}
+
+	MsgBuffer& operator= (const MsgBuffer& rhs) {
+		// char* pOrig = p_msg_;
+		// this = new char*;
+		// MsgBuffer(rhs);
+		// delete orig;
+		return *this;
+	}
+
+	~MsgBuffer() {
+		
+	}
 	
-int main(int argc, char* argv[]) {
-
-	A a0;
-	A a1 = a0; //use copy ctor beause here is a new object being defined.
-	A a2;
-	a2 = a0; //use copy assign ctor beause here isn't a new object being defined.
+private:
+	char* p_msg_;
+};
 
 
-	enum {array_size = 10};
-	int iarry[array_size]; //enum hack
+//pass-by-value means call copy ctor.
+//pass-by-reference-to-const
 
-	const char* p_ch;//const occur at the left of aster means pointed data is const
-	char* const cch = NULL;//const occur at the right of aster means pointer itself is const
-	const char* const cp_ch = NULL;
+//undefined behavior
+
+const float Timeline::innerF = 1.2f;//define is here
 
 
 
-	//A tempA = 2;
-	return EXIT_SUCCESS;
+
+#define CALL_WITH_MAX(a, b) fun_test((a) > (b) ? (a) : (b))
+
+void bad_use_of_define() {
+	int a = 5, b = 0;
+
+	CALL_WITH_MAX(++a, b);//a will be added twice.
+	CALL_WITH_MAX(++a, b+10);//a will be added once.
+}
+
+
+//non-member function for 2*Rational because 2 cann't implict convert to Rational at as first parameter.
+const Rational operator*(const Rational& lhs, const Rational& rhs) {
+	return Rational(lhs.numerator()*rhs.numerator(), lhs.denominator()*rhs.denominator());
+}
+
+
+
+
+int doSomething() throw() {
+	
+	return 0;
+}
+
+
+Base::Base() {
+	
+}
+
+void Base::mf1() {
+	std::cout << "LINE:" << __LINE__ << ":" << __func__ << std::endl;
+}
+
+void Base::mf2() {
+	std::cout << "LINE:" << __LINE__ << ":" << __func__ << std::endl;
+}
+
+void Base::mf3() {
+	std::cout << "LINE:" << __LINE__ << ":" << __func__ << std::endl;
+}
+
+void Base::mf4() {
+	std::cout << "LINE:" << __LINE__ << ":" << __func__ << std::endl;
+}
+
+
+Derived::Derived() {
+	
+}
+
+
+void Derived::mf1() {
+	std::cout << "LINE:" << __LINE__ << ":" << __func__ << std::endl;
+}
+
+void Derived::mf2(int x) {
+	std::cout << "LINE:" << __LINE__ << ":" << __func__ << ":x" << std::endl;
+}
+
+void Derived::mf3() {
+	std::cout << "LINE:" << __LINE__ << ":" << __func__ << std::endl;
+}
+
+void Derived::mf4() {
+	std::cout << "LINE:" << __LINE__ << ":" << __func__ << std::endl;
 }

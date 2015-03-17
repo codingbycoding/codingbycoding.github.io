@@ -1,4 +1,4 @@
-//g++ -ggdb -std=c++0x final_test_robot.cpp -I/home/adam/test/strike2014/server/proto/client -I/home/adam/test/strike2014/server/online/src -L/home/adam/test/strike2014/server/proto/client -L/usr/local/lib/ -I/usr/include/libxml2/ -L/usr/local/lib/ -lssl  -lclientproto -lhiredis  -lprotobuf -lxml2 -o final_test_robot.linux
+//g++ -ggdb -std=c++0x final_test_robot.cpp xml_utils.cpp conf.cpp  -I/home/adam/test/strike2014/server/proto/client -I/home/adam/test/strike2014/server/online/src -L/home/adam/test/strike2014/server/proto/client -L/usr/local/lib/ -I/usr/include/libxml2/ -L/usr/local/lib/ -lssl  -lclientproto -lhiredis  -lprotobuf -lxml2 -o final_test_robot.linux
 
 #include <iostream>
 #include <cstdlib>
@@ -8,109 +8,10 @@
 #include <cmath>
 #include <vector>
 //#include <random>
-extern "C" {
-#include <libxml/tree.h>
-}
 
 
-#define STRCPY_SAFE(buf, str) \
-    do { \
-        int buflen = sizeof(buf); \
-        buf[buflen - 1] = '\0';\
-        strncpy(buf, str, buflen - 1); \
-    } while (0);
-
-
-#define DECODE_XML_PROP(cur, prop, str)								\
-	do {															\
-		str = xmlGetProp(cur, (xmlChar*)prop);						\
-		if (!str) {													\
-			std::cerr << "xml parse error: prop=%s" << std::endl;	\
-			return -1;												\
-		}															\
-	} while (0)
-
-
-#define DECODE_XML_PROP_STR(v, cur, prop)		\
-	do {										\
-		xmlChar* str;							\
-		DECODE_XML_PROP(cur, prop, str);		\
-		STRCPY_SAFE(v, (const char *)str);		\
-		v[sizeof(v) - 1] = '\0';				\
-		xmlFree(str);							\
-	} while (0)
-
-
-int load_xmlconf(const char* file, int (*parser)(xmlNodePtr cur_node)) {
-	int err = -1;
-
-	xmlDocPtr doc = xmlParseFile(file);
-	if (!doc) {
-		std::cerr << "Failed to Load:" << file << std::endl;
-	}
-
-	xmlNodePtr cur = xmlDocGetRootElement(doc); 
-	if (!cur) {
-		std::cerr << "xmlDocGetRootElement error when loading file: " << file << std::endl;
-		goto fail;
-	}
-
-	err = parser(cur);
-fail:
-	xmlFreeDoc(doc);
-	std::cerr << err << "Load File: " << file  << std::endl;
-	return 0;
-}
-
-struct name_conf_t {
-	std::string name1;
-	std::string name2;
-};
-
-// class name_manager_t {
-// public:
-	
-// private:
-// 	std::
-// };
-
-std::vector<name_conf_t> g_name_vec;
-
-int load_name_conf(xmlNodePtr root) {
-    xmlNodePtr cur = root->xmlChildrenNode;
-	// name_manager_t tmp;
-
-    while (cur) {
-        if (xmlStrEqual(cur->name, (const xmlChar *)("CfgRobotName"))) {
-
-			name_conf_t conf;
-			char name1[100] = {0};
-			char name2[100] = {0};
-			DECODE_XML_PROP_STR(name1, cur, "Name01");
-			DECODE_XML_PROP_STR(name2, cur, "Name02");
-
-			conf.name1.assign(name1);
-			conf.name2.assign(name2);
-			// tmp.add_name_conf(conf);
-			g_name_vec.push_back(conf);
-		}
-		
-		cur = cur->next;
-    }
-
-	// g_name_conf_mgr.copy_from(tmp);	
-	// if(g_name_conf_mgr.empty()) {
-	// 	ERROR_TLOG("g_name_conf_mgr empty");
-	// 	return -1;
-	// }
-
-	if(g_name_vec.empty()) {
-		std::cerr<< "g_name_vec empty";
-		return -1;
-	}	
-
-	return 0;
-}
+#include "conf.h"
+#include "xml_utils.h"
 
 
 #include <hiredis/hiredis.h>
@@ -122,6 +23,7 @@ uint32_t f_range_random(uint32_t beg, uint32_t end) {
 	return beg + random()%(end-beg+1);  
 }
 
+
 int main(int argc, char* argv[]) {
 
 	if(2 != argc) {
@@ -130,8 +32,9 @@ int main(int argc, char* argv[]) {
 	}
 
 
-	// if(0 != load_xmlconf("/home/adam/test/strike2014/server/conf/CfgRobotName.xml", &load_name_conf)) {
-	if(0 != load_xmlconf("./CfgRobotName.xml", &load_name_conf)) {		
+	if(0 != load_xmlconf("./CfgRobotName.xml", &load_name_conf)
+	   // || 0 != load_xmlconf("Cfg", &load_skill_lv_config)
+	   || 0 != load_xmlconf("CfgBattlePoint", &load_battle_point_conf)) {		
 		std::cerr << "load_xml_conf faild!!" << std::endl;
 	}
 
@@ -308,35 +211,64 @@ int main(int argc, char* argv[]) {
 		redisAppendCommand(g_redis, "HSET %s %d %b", chal_key, challenge_player_top1.rank(), seri_str.c_str(), seri_str.size());
 		redisAppendCommand(g_redis, "HSET %s %d %d", uid2rank_key, challenge_player_top1.uid(), challenge_player_top1.rank());
 		redisAppendCommand(g_redis, "ZADD %s %d %d", exped2uid_key, challenge_player_top1.btl_val(), challenge_player_top1.uid());
+
+
+
+		//splice redis command.
+
+		redisGetReply(g_redis, (void**)&reply);
+		if(reply) {
+			freeReplyObject(reply);
+		} else {
+			std::cout << "redisGetReply error" << std::endl;
+			return -1;
+		}
+
+		redisGetReply(g_redis, (void**)&reply);
+		if(reply) {
+			freeReplyObject(reply);
+		} else {
+			std::cout << "redisGetReply error" << std::endl;
+			return -1;
+		}
+
+		redisGetReply(g_redis, (void**)&reply);
+		if(reply) {
+			freeReplyObject(reply);
+		} else {
+			std::cout << "redisGetReply error" << std::endl;
+			return -1;
+		}
+		
 	}
 
 
 		
-	for(int ii=0; ii<robot_sum; ++ii) {
-		redisGetReply(g_redis, (void**)&reply);
-		if(reply) {
-			freeReplyObject(reply);
-		} else {
-			std::cout << "redisGetReply error" << std::endl;
-			return -1;
-		}
+	// for(int ii=0; ii<robot_sum; ++ii) {
+	// 	redisGetReply(g_redis, (void**)&reply);
+	// 	if(reply) {
+	// 		freeReplyObject(reply);
+	// 	} else {
+	// 		std::cout << "redisGetReply error" << std::endl;
+	// 		return -1;
+	// 	}
 
-		redisGetReply(g_redis, (void**)&reply);
-		if(reply) {
-			freeReplyObject(reply);
-		} else {
-			std::cout << "redisGetReply error" << std::endl;
-			return -1;
-		}
+	// 	redisGetReply(g_redis, (void**)&reply);
+	// 	if(reply) {
+	// 		freeReplyObject(reply);
+	// 	} else {
+	// 		std::cout << "redisGetReply error" << std::endl;
+	// 		return -1;
+	// 	}
 
-		redisGetReply(g_redis, (void**)&reply);
-		if(reply) {
-			freeReplyObject(reply);
-		} else {
-			std::cout << "redisGetReply error" << std::endl;
-			return -1;
-		}
-	}
+	// 	redisGetReply(g_redis, (void**)&reply);
+	// 	if(reply) {
+	// 		freeReplyObject(reply);
+	// 	} else {
+	// 		std::cout << "redisGetReply error" << std::endl;
+	// 		return -1;
+	// 	}
+	// }
 
 	redisFree(g_redis);
 	return EXIT_SUCCESS;
