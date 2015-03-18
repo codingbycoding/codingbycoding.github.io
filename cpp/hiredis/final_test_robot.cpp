@@ -1,4 +1,4 @@
-//g++ -ggdb -std=c++0x final_test_robot.cpp xml_utils.cpp conf.cpp  -I/home/adam/test/strike2014/server/proto/client -I/home/adam/test/strike2014/server/online/src -L/home/adam/test/strike2014/server/proto/client -L/usr/local/lib/ -I/usr/include/libxml2/ -L/usr/local/lib/ -lssl  -lclientproto -lhiredis  -lprotobuf -lxml2 -o final_test_robot.linux
+//g++ -ggdb -std=c++0x final_test_robot.cpp xml_utils.cpp conf.cpp utils.cpp  -I/home/adam/test/strike2014/server/proto/client -I/home/adam/test/strike2014/server/online/src -L/home/adam/test/strike2014/server/proto/client -L/usr/local/lib/ -I/usr/include/libxml2/ -L/usr/local/lib/ -lssl  -lclientproto -lhiredis  -lprotobuf -lxml2 -o final_test_robot.linux
 
 #include <iostream>
 #include <cstdlib>
@@ -32,9 +32,9 @@ int main(int argc, char* argv[]) {
 	}
 
 
-	if(0 != load_xmlconf("./CfgRobotName.xml", &load_name_conf)
+	if(0 != load_xmlconf("./CfgRobotName.xml", &load_name_conf)) {
 	   // || 0 != load_xmlconf("Cfg", &load_skill_lv_config)
-	   || 0 != load_xmlconf("CfgBattlePoint", &load_battle_point_conf)) {		
+	   // || 0 != load_xmlconf("CfgBattlePoint", &load_battle_point_conf)) {		
 		std::cerr << "load_xml_conf faild!!" << std::endl;
 	}
 
@@ -111,6 +111,8 @@ int main(int argc, char* argv[]) {
 	const char* uid2rank_key = "ARENA_UID2RANK";
 	const char* rank2uid_key = "ARENA_RANK2UID";
 	const char* exped2uid_key = "EXPED_BTL2UID";
+
+	const char* rk_arena_rank_btl_val = "ARENA_RANK_BTL_VAL";
 
 	std::string seri_str;
 		
@@ -213,8 +215,19 @@ int main(int argc, char* argv[]) {
 		redisAppendCommand(g_redis, "ZADD %s %d %d", exped2uid_key, challenge_player_top1.btl_val(), challenge_player_top1.uid());
 
 
+		redisAppendCommand(g_redis, "ZADD %s %d %d", rk_arena_rank_btl_val, challenge_player_top1.btl_val(), challenge_player_top1.uid());
+
+
 
 		//splice redis command.
+
+		redisGetReply(g_redis, (void**)&reply);
+		if(reply) {
+			freeReplyObject(reply);
+		} else {
+			std::cout << "redisGetReply error" << std::endl;
+			return -1;
+		}
 
 		redisGetReply(g_redis, (void**)&reply);
 		if(reply) {

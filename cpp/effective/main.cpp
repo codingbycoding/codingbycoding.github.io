@@ -86,7 +86,12 @@ int main(int argc, char* argv[]) {
 	d.mf2();
 	d.mf3();
 	d.mf4();
-	
+
+	Base* base = new Derived;
+
+	base->mf1();
+	base->Base::mf1();
+	delete base;
 	
 	return EXIT_SUCCESS;
 }

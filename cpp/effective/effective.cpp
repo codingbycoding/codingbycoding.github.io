@@ -76,19 +76,19 @@ Base::Base() {
 }
 
 void Base::mf1() {
-	std::cout << "LINE:" << __LINE__ << ":" << __func__ << std::endl;
+	std::cout << "Base LINE:" << __LINE__ << ":" << __func__ << std::endl;
 }
 
 void Base::mf2() {
-	std::cout << "LINE:" << __LINE__ << ":" << __func__ << std::endl;
+	std::cout << "Base LINE:" << __LINE__ << ":" << __func__ << std::endl;
 }
 
 void Base::mf3() {
-	std::cout << "LINE:" << __LINE__ << ":" << __func__ << std::endl;
+	std::cout << "Base LINE:" << __LINE__ << ":" << __func__ << std::endl;
 }
 
 void Base::mf4() {
-	std::cout << "LINE:" << __LINE__ << ":" << __func__ << std::endl;
+	std::cout << "Base LINE:" << __LINE__ << ":" << __func__ << std::endl;
 }
 
 
@@ -98,17 +98,17 @@ Derived::Derived() {
 
 
 void Derived::mf1() {
-	std::cout << "LINE:" << __LINE__ << ":" << __func__ << std::endl;
+	std::cout << "Derived LINE:" << __LINE__ << ":" << __func__ << std::endl;
 }
 
 void Derived::mf2(int x) {
-	std::cout << "LINE:" << __LINE__ << ":" << __func__ << ":x" << std::endl;
+	std::cout << "Derived LINE:" << __LINE__ << ":" << __func__ << ":x" << std::endl;
 }
 
 void Derived::mf3() {
-	std::cout << "LINE:" << __LINE__ << ":" << __func__ << std::endl;
+	std::cout << "Derived LINE:" << __LINE__ << ":" << __func__ << std::endl;
 }
 
 void Derived::mf4() {
-	std::cout << "LINE:" << __LINE__ << ":" << __func__ << std::endl;
+	std::cout << "Derived LINE:" << __LINE__ << ":" << __func__ << std::endl;
 }
