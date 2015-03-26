@@ -1,4 +1,4 @@
-//g++ -ggdb -std=c++0x stlmain.cpp -o stlmain.linux
+//g++ -ggdb -std=c++0x stlmain.cpp algorithm.cpp -o stlmain.linux
 
 #include <iostream>
 #include <cassert>
@@ -89,6 +89,8 @@ struct TestValue_t {
 };
 
 
+extern void test_stl_algo();
+
 int main()
 {
 	std::cout << "stlmain cpp..." << std::endl;
@@ -122,7 +124,8 @@ int main()
 	
 	tkvM[tk1] = tv1;
 
-	
+
+	test_stl_algo();
 	return 0;
 }
 

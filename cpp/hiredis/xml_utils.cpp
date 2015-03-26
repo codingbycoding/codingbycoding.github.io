@@ -89,6 +89,40 @@ int load_skill_lv_config(xmlNodePtr root) {
 }
 
 
+int load_robot_config(xmlNodePtr root) {
+    xmlNodePtr cur = root->xmlChildrenNode;
+    while (cur) {
+        if (!xmlStrEqual(cur->name, (const xmlChar *)("CfgRobot"))) {
+            cur = cur->next;
+            continue;
+        }
+        robot_conf_t robot_conf;
+
+		uint32_t type;
+		uint32_t rank;
+		DECODE_XML_PROP_UINT32(type, cur, "Type");
+		DECODE_XML_PROP_UINT32(rank, cur, "Rank");
+		robot_conf.type_rank = type*100+rank;		
+		
+        DECODE_XML_PROP_UINT32(robot_conf.LVLimit, cur, "LVLimit");
+		DECODE_XML_PROP_UINT32(robot_conf.skill_lv, cur, "LV");
+        DECODE_XML_PROP_UINT32(robot_conf.RatingLimit, cur, "RatingLimit");
+		DECODE_XML_PROP_UINT32(robot_conf.RankUpCost, cur, "RankUpCost");
+		DECODE_XML_PROP_UINT32(robot_conf.LVUpCostBase, cur, "LVUpCostBase");
+		DECODE_XML_PROP_UINT32(robot_conf.LVUpCostAdd, cur, "LVUpCostAdd");
+        
+        if (g_robot_conf_mgr.is_robot_conf_exist(robot_conf.type_rank)) {
+			std::cerr << "Duplicate robot_conf type_rank[ ]" << robot_conf.type_rank << "]" << std::endl;
+            return -1;
+        }
+
+        g_robot_conf_mgr.add_robot_conf(robot_conf);
+        cur = cur->next;
+    }
+    return 0;
+}
+
+
 int load_xmlconf(const char* file, int (*parser)(xmlNodePtr cur_node)) {
 	int err = -1;
 

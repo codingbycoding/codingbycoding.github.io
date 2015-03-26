@@ -5145,12 +5145,12 @@ class pb_rank_player_t : public ::google::protobuf::Message {
   inline ::std::string* release_nick();
   inline void set_allocated_nick(::std::string* nick);
 
-  // required uint32 stars = 2;
-  inline bool has_stars() const;
-  inline void clear_stars();
-  static const int kStarsFieldNumber = 2;
-  inline ::google::protobuf::uint32 stars() const;
-  inline void set_stars(::google::protobuf::uint32 value);
+  // optional uint32 total_stars = 2;
+  inline bool has_total_stars() const;
+  inline void clear_total_stars();
+  static const int kTotalStarsFieldNumber = 2;
+  inline ::google::protobuf::uint32 total_stars() const;
+  inline void set_total_stars(::google::protobuf::uint32 value);
 
   // optional string union_name = 3;
   inline bool has_union_name() const;
@@ -5164,23 +5164,53 @@ class pb_rank_player_t : public ::google::protobuf::Message {
   inline ::std::string* release_union_name();
   inline void set_allocated_union_name(::std::string* union_name);
 
+  // optional uint32 uid = 4;
+  inline bool has_uid() const;
+  inline void clear_uid();
+  static const int kUidFieldNumber = 4;
+  inline ::google::protobuf::uint32 uid() const;
+  inline void set_uid(::google::protobuf::uint32 value);
+
+  // optional uint32 top4_btl_val = 5;
+  inline bool has_top4_btl_val() const;
+  inline void clear_top4_btl_val();
+  static const int kTop4BtlValFieldNumber = 5;
+  inline ::google::protobuf::uint32 top4_btl_val() const;
+  inline void set_top4_btl_val(::google::protobuf::uint32 value);
+
+  // optional uint32 total_btl_val = 6;
+  inline bool has_total_btl_val() const;
+  inline void clear_total_btl_val();
+  static const int kTotalBtlValFieldNumber = 6;
+  inline ::google::protobuf::uint32 total_btl_val() const;
+  inline void set_total_btl_val(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:commonproto.pb_rank_player_t)
  private:
   inline void set_has_nick();
   inline void clear_has_nick();
-  inline void set_has_stars();
-  inline void clear_has_stars();
+  inline void set_has_total_stars();
+  inline void clear_has_total_stars();
   inline void set_has_union_name();
   inline void clear_has_union_name();
+  inline void set_has_uid();
+  inline void clear_has_uid();
+  inline void set_has_top4_btl_val();
+  inline void clear_has_top4_btl_val();
+  inline void set_has_total_btl_val();
+  inline void clear_has_total_btl_val();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* nick_;
   ::std::string* union_name_;
-  ::google::protobuf::uint32 stars_;
+  ::google::protobuf::uint32 total_stars_;
+  ::google::protobuf::uint32 uid_;
+  ::google::protobuf::uint32 top4_btl_val_;
+  ::google::protobuf::uint32 total_btl_val_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void  protobuf_AddDesc_common_2eproto();
   friend void protobuf_AssignDesc_common_2eproto();
@@ -5257,15 +5287,25 @@ class pb_rank_player_list_t : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::commonproto::pb_rank_player_t >*
       mutable_rank_players();
 
+  // optional uint32 self_rank = 2;
+  inline bool has_self_rank() const;
+  inline void clear_self_rank();
+  static const int kSelfRankFieldNumber = 2;
+  inline ::google::protobuf::uint32 self_rank() const;
+  inline void set_self_rank(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:commonproto.pb_rank_player_list_t)
  private:
+  inline void set_has_self_rank();
+  inline void clear_has_self_rank();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::RepeatedPtrField< ::commonproto::pb_rank_player_t > rank_players_;
+  ::google::protobuf::uint32 self_rank_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_common_2eproto();
   friend void protobuf_AssignDesc_common_2eproto();
@@ -8629,26 +8669,26 @@ inline void pb_rank_player_t::set_allocated_nick(::std::string* nick) {
   }
 }
 
-// required uint32 stars = 2;
-inline bool pb_rank_player_t::has_stars() const {
+// optional uint32 total_stars = 2;
+inline bool pb_rank_player_t::has_total_stars() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void pb_rank_player_t::set_has_stars() {
+inline void pb_rank_player_t::set_has_total_stars() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void pb_rank_player_t::clear_has_stars() {
+inline void pb_rank_player_t::clear_has_total_stars() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void pb_rank_player_t::clear_stars() {
-  stars_ = 0u;
-  clear_has_stars();
+inline void pb_rank_player_t::clear_total_stars() {
+  total_stars_ = 0u;
+  clear_has_total_stars();
 }
-inline ::google::protobuf::uint32 pb_rank_player_t::stars() const {
-  return stars_;
+inline ::google::protobuf::uint32 pb_rank_player_t::total_stars() const {
+  return total_stars_;
 }
-inline void pb_rank_player_t::set_stars(::google::protobuf::uint32 value) {
-  set_has_stars();
-  stars_ = value;
+inline void pb_rank_player_t::set_total_stars(::google::protobuf::uint32 value) {
+  set_has_total_stars();
+  total_stars_ = value;
 }
 
 // optional string union_name = 3;
@@ -8721,6 +8761,72 @@ inline void pb_rank_player_t::set_allocated_union_name(::std::string* union_name
   }
 }
 
+// optional uint32 uid = 4;
+inline bool pb_rank_player_t::has_uid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void pb_rank_player_t::set_has_uid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void pb_rank_player_t::clear_has_uid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void pb_rank_player_t::clear_uid() {
+  uid_ = 0u;
+  clear_has_uid();
+}
+inline ::google::protobuf::uint32 pb_rank_player_t::uid() const {
+  return uid_;
+}
+inline void pb_rank_player_t::set_uid(::google::protobuf::uint32 value) {
+  set_has_uid();
+  uid_ = value;
+}
+
+// optional uint32 top4_btl_val = 5;
+inline bool pb_rank_player_t::has_top4_btl_val() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void pb_rank_player_t::set_has_top4_btl_val() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void pb_rank_player_t::clear_has_top4_btl_val() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void pb_rank_player_t::clear_top4_btl_val() {
+  top4_btl_val_ = 0u;
+  clear_has_top4_btl_val();
+}
+inline ::google::protobuf::uint32 pb_rank_player_t::top4_btl_val() const {
+  return top4_btl_val_;
+}
+inline void pb_rank_player_t::set_top4_btl_val(::google::protobuf::uint32 value) {
+  set_has_top4_btl_val();
+  top4_btl_val_ = value;
+}
+
+// optional uint32 total_btl_val = 6;
+inline bool pb_rank_player_t::has_total_btl_val() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void pb_rank_player_t::set_has_total_btl_val() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void pb_rank_player_t::clear_has_total_btl_val() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void pb_rank_player_t::clear_total_btl_val() {
+  total_btl_val_ = 0u;
+  clear_has_total_btl_val();
+}
+inline ::google::protobuf::uint32 pb_rank_player_t::total_btl_val() const {
+  return total_btl_val_;
+}
+inline void pb_rank_player_t::set_total_btl_val(::google::protobuf::uint32 value) {
+  set_has_total_btl_val();
+  total_btl_val_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // pb_rank_player_list_t
@@ -8748,6 +8854,28 @@ pb_rank_player_list_t::rank_players() const {
 inline ::google::protobuf::RepeatedPtrField< ::commonproto::pb_rank_player_t >*
 pb_rank_player_list_t::mutable_rank_players() {
   return &rank_players_;
+}
+
+// optional uint32 self_rank = 2;
+inline bool pb_rank_player_list_t::has_self_rank() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void pb_rank_player_list_t::set_has_self_rank() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void pb_rank_player_list_t::clear_has_self_rank() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void pb_rank_player_list_t::clear_self_rank() {
+  self_rank_ = 0u;
+  clear_has_self_rank();
+}
+inline ::google::protobuf::uint32 pb_rank_player_list_t::self_rank() const {
+  return self_rank_;
+}
+inline void pb_rank_player_list_t::set_self_rank(::google::protobuf::uint32 value) {
+  set_has_self_rank();
+  self_rank_ = value;
 }
 
 // -------------------------------------------------------------------

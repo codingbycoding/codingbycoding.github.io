@@ -953,10 +953,13 @@ void protobuf_AssignDesc_common_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(pb_exped_survive_hero_list_t));
   pb_rank_player_t_descriptor_ = file->message_type(46);
-  static const int pb_rank_player_t_offsets_[3] = {
+  static const int pb_rank_player_t_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(pb_rank_player_t, nick_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(pb_rank_player_t, stars_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(pb_rank_player_t, total_stars_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(pb_rank_player_t, union_name_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(pb_rank_player_t, uid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(pb_rank_player_t, top4_btl_val_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(pb_rank_player_t, total_btl_val_),
   };
   pb_rank_player_t_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -970,8 +973,9 @@ void protobuf_AssignDesc_common_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(pb_rank_player_t));
   pb_rank_player_list_t_descriptor_ = file->message_type(47);
-  static const int pb_rank_player_list_t_offsets_[1] = {
+  static const int pb_rank_player_list_t_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(pb_rank_player_list_t, rank_players_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(pb_rank_player_list_t, self_rank_),
   };
   pb_rank_player_list_t_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -1339,104 +1343,107 @@ void protobuf_AddDesc_common_2eproto() {
     "hero_hp\030\002 \002(\r\022\017\n\007hero_cd\030\003 \002(\r\022\016\n\006b_dead"
     "\030\004 \002(\010\"Z\n\034pb_exped_survive_hero_list_t\022:"
     "\n\014survive_hero\030\001 \003(\0132$.commonproto.pb_ex"
-    "ped_survive_hero_t\"C\n\020pb_rank_player_t\022\014"
-    "\n\004nick\030\001 \002(\t\022\r\n\005stars\030\002 \002(\r\022\022\n\nunion_nam"
-    "e\030\003 \001(\t\"L\n\025pb_rank_player_list_t\0223\n\014rank"
-    "_players\030\001 \003(\0132\035.commonproto.pb_rank_pla"
-    "yer_t\"/\n\026pb_enemies_rank_list_t\022\025\n\renemi"
-    "es_ranks\030\001 \003(\r*n\n\020pb_server_type_t\022\023\n\017SE"
-    "RVER_TYPE_ALL\020\000\022\026\n\022SERVER_TYPE_ONLINE\020\001\022"
-    "\025\n\021SERVER_TYPE_LOGIN\020\002\022\026\n\022SERVER_TYPE_SW"
-    "ITCH\020\003*4\n\021pb_server_state_t\022\n\n\006SMOOTH\020\001\022"
-    "\t\n\005CROWD\020\002\022\010\n\004FULL\020\003*E\n\017pb_money_type_t\022"
-    "\021\n\rDIAMOND_MONEY\020\001\022\016\n\nGOLD_MONEY\020\002\022\017\n\013AR"
-    "ENA_MONEY\020\003*\214\004\n\020pb_unlock_type_t\022\020\n\014EXPE"
-    "D_UNLOCK\020\001\022\017\n\013SHOP_UNLOCK\020\002\022\020\n\014ARENA_UNL"
-    "OCK\020\003\022\020\n\014ELITE_UNLOCK\020\004\022\032\n\026EQUIP_MIJING_"
-    "L1_UNLOCK\020\005\022\032\n\026EQUIP_MIJING_L2_UNLOCK\020\006\022"
-    "\032\n\026EQUIP_MIJING_L3_UNLOCK\020\007\022\032\n\026EQUIP_MIJ"
-    "ING_L4_UNLOCK\020\010\022\032\n\026EQUIP_MIJING_L5_UNLOC"
-    "K\020\t\022\032\n\026EQUIP_MIJING_L6_UNLOCK\020\n\022\030\n\024EXP_M"
-    "IJING_L1_UNLOCK\020\013\022\030\n\024EXP_MIJING_L2_UNLOC"
-    "K\020\014\022\030\n\024EXP_MIJING_L3_UNLOCK\020\r\022\030\n\024EXP_MIJ"
-    "ING_L4_UNLOCK\020\016\022\030\n\024EXP_MIJING_L5_UNLOCK\020"
-    "\017\022\030\n\024EXP_MIJING_L6_UNLOCK\020\020\022\037\n\033VIP_TREAS"
-    "URE_VISABLE_UNLOCK\020\021\022\037\n\033VIP_TREASURE_USE"
-    "ABLE_UNLOCK\020\022\022\027\n\023TASK_USEABLE_UNLOCK\020\024\022\022"
-    "\n\016SAODANG_UNLOCK\020\025*\231\003\n\020pb_novice_type_t\022"
-    "\024\n\020NOV_LOTTERY_GOLD\020\001\022\027\n\023NOV_LOTTERY_DIA"
-    "MOND\020\002\022\020\n\014NOV_TUTORIAL\020\003\022\033\n\027NOV_LOTTERY_"
-    "GOLD_SECOND\020\004\022\023\n\017NOV_FIRST_BLOOD\020\005\022\023\n\017NO"
-    "V_HERO_SUMMON\020\006\022\021\n\rNOV_EQUIP_ARM\020\007\022\r\n\tNO"
-    "V_ARENA\020\010\022\r\n\tNOV_EXPED\020\t\022\016\n\nNOV_MIJING\020\n"
-    "\022\r\n\tNOV_ELITE\020\013\022\033\n\027NOV_STAR_RATING_UPGRA"
-    "DE\020\014\022\026\n\022NOV_RATING_UPGRADE\020\r\022\023\n\017NOV_USE_"
-    "EXPITEM\020\016\022\024\n\020NOV_BATTLE_QUEUE\020\017\022\022\n\016NOV_D"
-    "AILY_TASK\020\020\022\022\n\016NOV_MAIN_EVENT\020\021\022\r\n\tNOV_D"
-    "EATH\020\022\022\026\n\022NOV_SKILL_RATINGUP\020\023*\"\n\016pb_ope"
-    "n_type_t\022\020\n\014EXPED_O_TYPE\020\001*d\n\017pb_level_s"
-    "tar_t\022\023\n\017LEVEL_STAR_NONE\020\000\022\022\n\016LEVEL_STAR"
-    "_ONE\020\001\022\022\n\016LEVEL_STAR_TWO\020\002\022\024\n\020LEVEL_STAR"
-    "_THREE\020\003*V\n\017pb_level_type_t\022\017\n\013LEVEL_STO"
-    "RY\020\000\022\017\n\013LEVEL_ARENA\020\024\022\017\n\013LEVEL_ELITE\020\036\022\020"
-    "\n\014LEVEL_MIJING\020(*\344\001\n\017pb_queue_type_t\022\017\n\013"
-    "QUEUE_STORY\020\000\022\017\n\013QUEUE_ELITE\020\n\022\023\n\017QUEUE_"
-    "ARENA_DEF\020\024\022\023\n\017QUEUE_ARENA_ATK\020\036\022\026\n\022QUEU"
-    "E_MIJING_MONEY\020(\022\024\n\020QUEUE_MIJING_EXP\0202\022\026"
-    "\n\022QUEUE_MIJING_ITEM1\020<\022\026\n\022QUEUE_MIJING_I"
-    "TEM2\020F\022\026\n\022QUEUE_MIJING_ITEM3\020Z\022\017\n\013QUEUE_"
-    "EXPED\020d*\307\t\n\017pb_event_type_t\022\024\n\020e_ev_t_pl"
-    "ayer_lv\020\001\022\022\n\016e_ev_t_hero_lv\020\002\022\027\n\023e_ev_t_"
-    "hero_num4_lv\020\003\022\027\n\023e_ev_t_hero_num8_lv\020\004\022"
-    "\030\n\024e_ev_t_hero_num12_lv\020\005\022\030\n\024e_ev_t_hero"
-    "_num16_lv\020\006\022\030\n\024e_ev_t_hero_num20_lv\020\007\022\030\n"
-    "\024e_ev_t_hero_num25_lv\020\010\022\030\n\024e_ev_t_hero_n"
-    "um30_lv\020\t\022 \n\034e_ev_t_hero_green_rating_nu"
-    "m\020\n\022\033\n\027e_ev_t_hero_num4_rating\020\013\022\033\n\027e_ev"
-    "_t_hero_num8_rating\020\014\022\034\n\030e_ev_t_hero_num"
-    "12_rating\020\r\022\034\n\030e_ev_t_hero_num20_rating\020"
-    "\016\022\034\n\030e_ev_t_hero_num30_rating\020\017\022\023\n\017e_ev_"
-    "t_hero_num\020\020\022\033\n\027e_ev_t_hero_star_rating\020"
-    "\021\022 \n\034e_ev_t_hero_num4_star_rating\020\022\022!\n\035e"
-    "_ev_t_hero_num12_star_rating\020\023\022!\n\035e_ev_t"
-    "_hero_num20_star_rating\020\024\022!\n\035e_ev_t_hero"
-    "_num30_star_rating\020\025\022\020\n\014e_ev_t_level\020\026\022\020"
-    "\n\014e_ev_t_elite\020\027\022\026\n\022e_ev_t_level_again\020\030"
-    "\022\026\n\022e_ev_t_elite_again\020\031\022\027\n\023e_ev_t_first"
-    "_charge\020\032\022\035\n\031e_ev_t_first_hero_rank_up\020\033"
-    "\022\030\n\024e_ev_t_player_lv_new\020\034\022\037\n\033e_ev_t_her"
-    "o_summon_gaoqiang\020\035\022\037\n\033e_ev_t_hero_summo"
-    "n_lishuang\020\036\022\035\n\031e_ev_t_hero_summon_sanya"
-    "n\020\037\022!\n\035e_ev_t_hero_green1_rating_num\020 \022\037"
-    "\n\033e_ev_t_hero_blue_rating_num\020!\022 \n\034e_ev_"
-    "t_hero_blue1_rating_num\020\"\022 \n\034e_ev_t_hero"
-    "_blue2_rating_num\020#\022!\n\035e_ev_t_hero_purpl"
-    "e_rating_num\020$\022\"\n\036e_ev_t_hero_purple1_ra"
-    "ting_num\020%\022\"\n\036e_ev_t_hero_purple2_rating"
-    "_num\020&\022\"\n\036e_ev_t_hero_purple3_rating_num"
-    "\020\'\022\"\n\036e_ev_t_hero_purple4_rating_num\020(\022!"
-    "\n\035e_ev_t_hero_orange_rating_num\020)*\267\002\n\023pb"
-    "_hero_attr_type_t\022\013\n\007HERO_LV\020\001\022\014\n\010HERO_E"
-    "XP\020\002\022\030\n\024HERO_SKILL_ACTIVE_LV\020\003\022\034\n\030HERO_S"
-    "KILL_ACTIVE_RATING\020\004\022\031\n\025HERO_SKILL_PASSI"
-    "VE_LV\020\005\022\035\n\031HERO_SKILL_PASSIVE_RATING\020\006\022\030"
-    "\n\024HERO_SKILL_FRIEND_LV\020\007\022\034\n\030HERO_SKILL_F"
-    "RIEND_RATING\020\010\022\027\n\023HERO_SKILL_COMBO_LV\020\t\022"
-    "\033\n\027HERO_SKILL_COMBO_RATING\020\n\022\017\n\013HERO_RAT"
-    "ING\020\013\022\024\n\020HERO_STAR_RATING\020\014*Y\n\017pb_skill_"
-    "type_t\022\020\n\014SKILL_ACTIVE\020\001\022\020\n\014SKILL_FRIEND"
-    "\020\002\022\017\n\013SKILL_COMBO\020\003\022\021\n\rSKILL_PASSIVE\020\004*\255"
-    "\001\n\021pb_lottery_type_t\022\022\n\016LOTTERY_GOLD_1\020\001"
-    "\022\023\n\017LOTTERY_GOLD_10\020\002\022\025\n\021LOTTERY_DIAMOND"
-    "_1\020\003\022\026\n\022LOTTERY_DIAMOND_10\020\004\022\025\n\021LOTTERY_"
-    "GOLD_FREE\020\005\022\030\n\024LOTTERY_DIAMOND_FREE\020\006\022\017\n"
-    "\013LOTTERY_VIP\020\007*\213\001\n\021pb_saodang_type_t\022\r\n\t"
-    "SAODANG_1\020\001\022\016\n\nSAODANG_10\020\002\022\017\n\013SAODANG_A"
-    "LL\020\003\022\025\n\021SAODANG_DIAMOND_1\020\004\022\026\n\022SAODANG_D"
-    "IAMOND_10\020\005\022\027\n\023SAODANG_DIAMOND_ALL\020\006*2\n\017"
-    "pb_midas_type_t\022\016\n\nMIDAS_ONCE\020\001\022\017\n\013MIDAS"
-    "_COMBO\020\002*C\n\026pb_stamina_task_type_t\022\t\n\005LU"
-    "NCH\020\001\022\n\n\006DINNER\020\002\022\022\n\016MIDNIGHT_SNACK\020\003", 7997);
+    "ped_survive_hero_t\"\203\001\n\020pb_rank_player_t\022"
+    "\014\n\004nick\030\001 \002(\t\022\023\n\013total_stars\030\002 \001(\r\022\022\n\nun"
+    "ion_name\030\003 \001(\t\022\013\n\003uid\030\004 \001(\r\022\024\n\014top4_btl_"
+    "val\030\005 \001(\r\022\025\n\rtotal_btl_val\030\006 \001(\r\"_\n\025pb_r"
+    "ank_player_list_t\0223\n\014rank_players\030\001 \003(\0132"
+    "\035.commonproto.pb_rank_player_t\022\021\n\tself_r"
+    "ank\030\002 \001(\r\"/\n\026pb_enemies_rank_list_t\022\025\n\re"
+    "nemies_ranks\030\001 \003(\r*n\n\020pb_server_type_t\022\023"
+    "\n\017SERVER_TYPE_ALL\020\000\022\026\n\022SERVER_TYPE_ONLIN"
+    "E\020\001\022\025\n\021SERVER_TYPE_LOGIN\020\002\022\026\n\022SERVER_TYP"
+    "E_SWITCH\020\003*4\n\021pb_server_state_t\022\n\n\006SMOOT"
+    "H\020\001\022\t\n\005CROWD\020\002\022\010\n\004FULL\020\003*E\n\017pb_money_typ"
+    "e_t\022\021\n\rDIAMOND_MONEY\020\001\022\016\n\nGOLD_MONEY\020\002\022\017"
+    "\n\013ARENA_MONEY\020\003*\214\004\n\020pb_unlock_type_t\022\020\n\014"
+    "EXPED_UNLOCK\020\001\022\017\n\013SHOP_UNLOCK\020\002\022\020\n\014ARENA"
+    "_UNLOCK\020\003\022\020\n\014ELITE_UNLOCK\020\004\022\032\n\026EQUIP_MIJ"
+    "ING_L1_UNLOCK\020\005\022\032\n\026EQUIP_MIJING_L2_UNLOC"
+    "K\020\006\022\032\n\026EQUIP_MIJING_L3_UNLOCK\020\007\022\032\n\026EQUIP"
+    "_MIJING_L4_UNLOCK\020\010\022\032\n\026EQUIP_MIJING_L5_U"
+    "NLOCK\020\t\022\032\n\026EQUIP_MIJING_L6_UNLOCK\020\n\022\030\n\024E"
+    "XP_MIJING_L1_UNLOCK\020\013\022\030\n\024EXP_MIJING_L2_U"
+    "NLOCK\020\014\022\030\n\024EXP_MIJING_L3_UNLOCK\020\r\022\030\n\024EXP"
+    "_MIJING_L4_UNLOCK\020\016\022\030\n\024EXP_MIJING_L5_UNL"
+    "OCK\020\017\022\030\n\024EXP_MIJING_L6_UNLOCK\020\020\022\037\n\033VIP_T"
+    "REASURE_VISABLE_UNLOCK\020\021\022\037\n\033VIP_TREASURE"
+    "_USEABLE_UNLOCK\020\022\022\027\n\023TASK_USEABLE_UNLOCK"
+    "\020\024\022\022\n\016SAODANG_UNLOCK\020\025*\231\003\n\020pb_novice_typ"
+    "e_t\022\024\n\020NOV_LOTTERY_GOLD\020\001\022\027\n\023NOV_LOTTERY"
+    "_DIAMOND\020\002\022\020\n\014NOV_TUTORIAL\020\003\022\033\n\027NOV_LOTT"
+    "ERY_GOLD_SECOND\020\004\022\023\n\017NOV_FIRST_BLOOD\020\005\022\023"
+    "\n\017NOV_HERO_SUMMON\020\006\022\021\n\rNOV_EQUIP_ARM\020\007\022\r"
+    "\n\tNOV_ARENA\020\010\022\r\n\tNOV_EXPED\020\t\022\016\n\nNOV_MIJI"
+    "NG\020\n\022\r\n\tNOV_ELITE\020\013\022\033\n\027NOV_STAR_RATING_U"
+    "PGRADE\020\014\022\026\n\022NOV_RATING_UPGRADE\020\r\022\023\n\017NOV_"
+    "USE_EXPITEM\020\016\022\024\n\020NOV_BATTLE_QUEUE\020\017\022\022\n\016N"
+    "OV_DAILY_TASK\020\020\022\022\n\016NOV_MAIN_EVENT\020\021\022\r\n\tN"
+    "OV_DEATH\020\022\022\026\n\022NOV_SKILL_RATINGUP\020\023*\"\n\016pb"
+    "_open_type_t\022\020\n\014EXPED_O_TYPE\020\001*d\n\017pb_lev"
+    "el_star_t\022\023\n\017LEVEL_STAR_NONE\020\000\022\022\n\016LEVEL_"
+    "STAR_ONE\020\001\022\022\n\016LEVEL_STAR_TWO\020\002\022\024\n\020LEVEL_"
+    "STAR_THREE\020\003*V\n\017pb_level_type_t\022\017\n\013LEVEL"
+    "_STORY\020\000\022\017\n\013LEVEL_ARENA\020\024\022\017\n\013LEVEL_ELITE"
+    "\020\036\022\020\n\014LEVEL_MIJING\020(*\344\001\n\017pb_queue_type_t"
+    "\022\017\n\013QUEUE_STORY\020\000\022\017\n\013QUEUE_ELITE\020\n\022\023\n\017QU"
+    "EUE_ARENA_DEF\020\024\022\023\n\017QUEUE_ARENA_ATK\020\036\022\026\n\022"
+    "QUEUE_MIJING_MONEY\020(\022\024\n\020QUEUE_MIJING_EXP"
+    "\0202\022\026\n\022QUEUE_MIJING_ITEM1\020<\022\026\n\022QUEUE_MIJI"
+    "NG_ITEM2\020F\022\026\n\022QUEUE_MIJING_ITEM3\020Z\022\017\n\013QU"
+    "EUE_EXPED\020d*\307\t\n\017pb_event_type_t\022\024\n\020e_ev_"
+    "t_player_lv\020\001\022\022\n\016e_ev_t_hero_lv\020\002\022\027\n\023e_e"
+    "v_t_hero_num4_lv\020\003\022\027\n\023e_ev_t_hero_num8_l"
+    "v\020\004\022\030\n\024e_ev_t_hero_num12_lv\020\005\022\030\n\024e_ev_t_"
+    "hero_num16_lv\020\006\022\030\n\024e_ev_t_hero_num20_lv\020"
+    "\007\022\030\n\024e_ev_t_hero_num25_lv\020\010\022\030\n\024e_ev_t_he"
+    "ro_num30_lv\020\t\022 \n\034e_ev_t_hero_green_ratin"
+    "g_num\020\n\022\033\n\027e_ev_t_hero_num4_rating\020\013\022\033\n\027"
+    "e_ev_t_hero_num8_rating\020\014\022\034\n\030e_ev_t_hero"
+    "_num12_rating\020\r\022\034\n\030e_ev_t_hero_num20_rat"
+    "ing\020\016\022\034\n\030e_ev_t_hero_num30_rating\020\017\022\023\n\017e"
+    "_ev_t_hero_num\020\020\022\033\n\027e_ev_t_hero_star_rat"
+    "ing\020\021\022 \n\034e_ev_t_hero_num4_star_rating\020\022\022"
+    "!\n\035e_ev_t_hero_num12_star_rating\020\023\022!\n\035e_"
+    "ev_t_hero_num20_star_rating\020\024\022!\n\035e_ev_t_"
+    "hero_num30_star_rating\020\025\022\020\n\014e_ev_t_level"
+    "\020\026\022\020\n\014e_ev_t_elite\020\027\022\026\n\022e_ev_t_level_aga"
+    "in\020\030\022\026\n\022e_ev_t_elite_again\020\031\022\027\n\023e_ev_t_f"
+    "irst_charge\020\032\022\035\n\031e_ev_t_first_hero_rank_"
+    "up\020\033\022\030\n\024e_ev_t_player_lv_new\020\034\022\037\n\033e_ev_t"
+    "_hero_summon_gaoqiang\020\035\022\037\n\033e_ev_t_hero_s"
+    "ummon_lishuang\020\036\022\035\n\031e_ev_t_hero_summon_s"
+    "anyan\020\037\022!\n\035e_ev_t_hero_green1_rating_num"
+    "\020 \022\037\n\033e_ev_t_hero_blue_rating_num\020!\022 \n\034e"
+    "_ev_t_hero_blue1_rating_num\020\"\022 \n\034e_ev_t_"
+    "hero_blue2_rating_num\020#\022!\n\035e_ev_t_hero_p"
+    "urple_rating_num\020$\022\"\n\036e_ev_t_hero_purple"
+    "1_rating_num\020%\022\"\n\036e_ev_t_hero_purple2_ra"
+    "ting_num\020&\022\"\n\036e_ev_t_hero_purple3_rating"
+    "_num\020\'\022\"\n\036e_ev_t_hero_purple4_rating_num"
+    "\020(\022!\n\035e_ev_t_hero_orange_rating_num\020)*\267\002"
+    "\n\023pb_hero_attr_type_t\022\013\n\007HERO_LV\020\001\022\014\n\010HE"
+    "RO_EXP\020\002\022\030\n\024HERO_SKILL_ACTIVE_LV\020\003\022\034\n\030HE"
+    "RO_SKILL_ACTIVE_RATING\020\004\022\031\n\025HERO_SKILL_P"
+    "ASSIVE_LV\020\005\022\035\n\031HERO_SKILL_PASSIVE_RATING"
+    "\020\006\022\030\n\024HERO_SKILL_FRIEND_LV\020\007\022\034\n\030HERO_SKI"
+    "LL_FRIEND_RATING\020\010\022\027\n\023HERO_SKILL_COMBO_L"
+    "V\020\t\022\033\n\027HERO_SKILL_COMBO_RATING\020\n\022\017\n\013HERO"
+    "_RATING\020\013\022\024\n\020HERO_STAR_RATING\020\014*Y\n\017pb_sk"
+    "ill_type_t\022\020\n\014SKILL_ACTIVE\020\001\022\020\n\014SKILL_FR"
+    "IEND\020\002\022\017\n\013SKILL_COMBO\020\003\022\021\n\rSKILL_PASSIVE"
+    "\020\004*\255\001\n\021pb_lottery_type_t\022\022\n\016LOTTERY_GOLD"
+    "_1\020\001\022\023\n\017LOTTERY_GOLD_10\020\002\022\025\n\021LOTTERY_DIA"
+    "MOND_1\020\003\022\026\n\022LOTTERY_DIAMOND_10\020\004\022\025\n\021LOTT"
+    "ERY_GOLD_FREE\020\005\022\030\n\024LOTTERY_DIAMOND_FREE\020"
+    "\006\022\017\n\013LOTTERY_VIP\020\007*\213\001\n\021pb_saodang_type_t"
+    "\022\r\n\tSAODANG_1\020\001\022\016\n\nSAODANG_10\020\002\022\017\n\013SAODA"
+    "NG_ALL\020\003\022\025\n\021SAODANG_DIAMOND_1\020\004\022\026\n\022SAODA"
+    "NG_DIAMOND_10\020\005\022\027\n\023SAODANG_DIAMOND_ALL\020\006"
+    "*2\n\017pb_midas_type_t\022\016\n\nMIDAS_ONCE\020\001\022\017\n\013M"
+    "IDAS_COMBO\020\002*C\n\026pb_stamina_task_type_t\022\t"
+    "\n\005LUNCH\020\001\022\n\n\006DINNER\020\002\022\022\n\016MIDNIGHT_SNACK\020"
+    "\003", 8081);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common.proto", &protobuf_RegisterTypes);
   pb_level_id_t::default_instance_ = new pb_level_id_t();
@@ -14428,8 +14435,11 @@ void pb_exped_survive_hero_list_t::Swap(pb_exped_survive_hero_list_t* other) {
 
 #ifndef _MSC_VER
 const int pb_rank_player_t::kNickFieldNumber;
-const int pb_rank_player_t::kStarsFieldNumber;
+const int pb_rank_player_t::kTotalStarsFieldNumber;
 const int pb_rank_player_t::kUnionNameFieldNumber;
+const int pb_rank_player_t::kUidFieldNumber;
+const int pb_rank_player_t::kTop4BtlValFieldNumber;
+const int pb_rank_player_t::kTotalBtlValFieldNumber;
 #endif  // !_MSC_VER
 
 pb_rank_player_t::pb_rank_player_t()
@@ -14449,8 +14459,11 @@ pb_rank_player_t::pb_rank_player_t(const pb_rank_player_t& from)
 void pb_rank_player_t::SharedCtor() {
   _cached_size_ = 0;
   nick_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  stars_ = 0u;
+  total_stars_ = 0u;
   union_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  uid_ = 0u;
+  top4_btl_val_ = 0u;
+  total_btl_val_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -14497,12 +14510,15 @@ void pb_rank_player_t::Clear() {
         nick_->clear();
       }
     }
-    stars_ = 0u;
+    total_stars_ = 0u;
     if (has_union_name()) {
       if (union_name_ != &::google::protobuf::internal::kEmptyString) {
         union_name_->clear();
       }
     }
+    uid_ = 0u;
+    top4_btl_val_ = 0u;
+    total_btl_val_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -14526,19 +14542,19 @@ bool pb_rank_player_t::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(16)) goto parse_stars;
+        if (input->ExpectTag(16)) goto parse_total_stars;
         break;
       }
 
-      // required uint32 stars = 2;
+      // optional uint32 total_stars = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_stars:
+         parse_total_stars:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &stars_)));
-          set_has_stars();
+                 input, &total_stars_)));
+          set_has_total_stars();
         } else {
           goto handle_uninterpreted;
         }
@@ -14556,6 +14572,54 @@ bool pb_rank_player_t::MergePartialFromCodedStream(
           ::google::protobuf::internal::WireFormat::VerifyUTF8String(
             this->union_name().data(), this->union_name().length(),
             ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(32)) goto parse_uid;
+        break;
+      }
+
+      // optional uint32 uid = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_uid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &uid_)));
+          set_has_uid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(40)) goto parse_top4_btl_val;
+        break;
+      }
+
+      // optional uint32 top4_btl_val = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_top4_btl_val:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &top4_btl_val_)));
+          set_has_top4_btl_val();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(48)) goto parse_total_btl_val;
+        break;
+      }
+
+      // optional uint32 total_btl_val = 6;
+      case 6: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_total_btl_val:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &total_btl_val_)));
+          set_has_total_btl_val();
         } else {
           goto handle_uninterpreted;
         }
@@ -14590,9 +14654,9 @@ void pb_rank_player_t::SerializeWithCachedSizes(
       1, this->nick(), output);
   }
 
-  // required uint32 stars = 2;
-  if (has_stars()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->stars(), output);
+  // optional uint32 total_stars = 2;
+  if (has_total_stars()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->total_stars(), output);
   }
 
   // optional string union_name = 3;
@@ -14602,6 +14666,21 @@ void pb_rank_player_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
       3, this->union_name(), output);
+  }
+
+  // optional uint32 uid = 4;
+  if (has_uid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->uid(), output);
+  }
+
+  // optional uint32 top4_btl_val = 5;
+  if (has_top4_btl_val()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->top4_btl_val(), output);
+  }
+
+  // optional uint32 total_btl_val = 6;
+  if (has_total_btl_val()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->total_btl_val(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -14622,9 +14701,9 @@ void pb_rank_player_t::SerializeWithCachedSizes(
         1, this->nick(), target);
   }
 
-  // required uint32 stars = 2;
-  if (has_stars()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->stars(), target);
+  // optional uint32 total_stars = 2;
+  if (has_total_stars()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->total_stars(), target);
   }
 
   // optional string union_name = 3;
@@ -14635,6 +14714,21 @@ void pb_rank_player_t::SerializeWithCachedSizes(
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         3, this->union_name(), target);
+  }
+
+  // optional uint32 uid = 4;
+  if (has_uid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->uid(), target);
+  }
+
+  // optional uint32 top4_btl_val = 5;
+  if (has_top4_btl_val()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->top4_btl_val(), target);
+  }
+
+  // optional uint32 total_btl_val = 6;
+  if (has_total_btl_val()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->total_btl_val(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -14655,11 +14749,11 @@ int pb_rank_player_t::ByteSize() const {
           this->nick());
     }
 
-    // required uint32 stars = 2;
-    if (has_stars()) {
+    // optional uint32 total_stars = 2;
+    if (has_total_stars()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->stars());
+          this->total_stars());
     }
 
     // optional string union_name = 3;
@@ -14667,6 +14761,27 @@ int pb_rank_player_t::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->union_name());
+    }
+
+    // optional uint32 uid = 4;
+    if (has_uid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->uid());
+    }
+
+    // optional uint32 top4_btl_val = 5;
+    if (has_top4_btl_val()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->top4_btl_val());
+    }
+
+    // optional uint32 total_btl_val = 6;
+    if (has_total_btl_val()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->total_btl_val());
     }
 
   }
@@ -14699,11 +14814,20 @@ void pb_rank_player_t::MergeFrom(const pb_rank_player_t& from) {
     if (from.has_nick()) {
       set_nick(from.nick());
     }
-    if (from.has_stars()) {
-      set_stars(from.stars());
+    if (from.has_total_stars()) {
+      set_total_stars(from.total_stars());
     }
     if (from.has_union_name()) {
       set_union_name(from.union_name());
+    }
+    if (from.has_uid()) {
+      set_uid(from.uid());
+    }
+    if (from.has_top4_btl_val()) {
+      set_top4_btl_val(from.top4_btl_val());
+    }
+    if (from.has_total_btl_val()) {
+      set_total_btl_val(from.total_btl_val());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -14722,7 +14846,7 @@ void pb_rank_player_t::CopyFrom(const pb_rank_player_t& from) {
 }
 
 bool pb_rank_player_t::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
@@ -14730,8 +14854,11 @@ bool pb_rank_player_t::IsInitialized() const {
 void pb_rank_player_t::Swap(pb_rank_player_t* other) {
   if (other != this) {
     std::swap(nick_, other->nick_);
-    std::swap(stars_, other->stars_);
+    std::swap(total_stars_, other->total_stars_);
     std::swap(union_name_, other->union_name_);
+    std::swap(uid_, other->uid_);
+    std::swap(top4_btl_val_, other->top4_btl_val_);
+    std::swap(total_btl_val_, other->total_btl_val_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -14751,6 +14878,7 @@ void pb_rank_player_t::Swap(pb_rank_player_t* other) {
 
 #ifndef _MSC_VER
 const int pb_rank_player_list_t::kRankPlayersFieldNumber;
+const int pb_rank_player_list_t::kSelfRankFieldNumber;
 #endif  // !_MSC_VER
 
 pb_rank_player_list_t::pb_rank_player_list_t()
@@ -14769,6 +14897,7 @@ pb_rank_player_list_t::pb_rank_player_list_t(const pb_rank_player_list_t& from)
 
 void pb_rank_player_list_t::SharedCtor() {
   _cached_size_ = 0;
+  self_rank_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -14803,6 +14932,9 @@ pb_rank_player_list_t* pb_rank_player_list_t::New() const {
 }
 
 void pb_rank_player_list_t::Clear() {
+  if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
+    self_rank_ = 0u;
+  }
   rank_players_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -14825,6 +14957,22 @@ bool pb_rank_player_list_t::MergePartialFromCodedStream(
           goto handle_uninterpreted;
         }
         if (input->ExpectTag(10)) goto parse_rank_players;
+        if (input->ExpectTag(16)) goto parse_self_rank;
+        break;
+      }
+
+      // optional uint32 self_rank = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_self_rank:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &self_rank_)));
+          set_has_self_rank();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -14853,6 +15001,11 @@ void pb_rank_player_list_t::SerializeWithCachedSizes(
       1, this->rank_players(i), output);
   }
 
+  // optional uint32 self_rank = 2;
+  if (has_self_rank()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->self_rank(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -14868,6 +15021,11 @@ void pb_rank_player_list_t::SerializeWithCachedSizes(
         1, this->rank_players(i), target);
   }
 
+  // optional uint32 self_rank = 2;
+  if (has_self_rank()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->self_rank(), target);
+  }
+
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -14878,6 +15036,15 @@ void pb_rank_player_list_t::SerializeWithCachedSizes(
 int pb_rank_player_list_t::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
+    // optional uint32 self_rank = 2;
+    if (has_self_rank()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->self_rank());
+    }
+
+  }
   // repeated .commonproto.pb_rank_player_t rank_players = 1;
   total_size += 1 * this->rank_players_size();
   for (int i = 0; i < this->rank_players_size(); i++) {
@@ -14912,6 +15079,11 @@ void pb_rank_player_list_t::MergeFrom(const ::google::protobuf::Message& from) {
 void pb_rank_player_list_t::MergeFrom(const pb_rank_player_list_t& from) {
   GOOGLE_CHECK_NE(&from, this);
   rank_players_.MergeFrom(from.rank_players_);
+  if (from._has_bits_[1 / 32] & (0xffu << (1 % 32))) {
+    if (from.has_self_rank()) {
+      set_self_rank(from.self_rank());
+    }
+  }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
@@ -14938,6 +15110,7 @@ bool pb_rank_player_list_t::IsInitialized() const {
 void pb_rank_player_list_t::Swap(pb_rank_player_list_t* other) {
   if (other != this) {
     rank_players_.Swap(&other->rank_players_);
+    std::swap(self_rank_, other->self_rank_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

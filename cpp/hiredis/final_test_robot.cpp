@@ -24,6 +24,13 @@ uint32_t f_range_random(uint32_t beg, uint32_t end) {
 }
 
 
+uint32_t g_sum_total_btl_val = 0;
+
+
+void f_calc_sum_btl_val(uint32_t val) {
+	g_sum_total_btl_val += val;
+}
+
 int main(int argc, char* argv[]) {
 
 	if(2 != argc) {
@@ -102,7 +109,9 @@ int main(int argc, char* argv[]) {
 	std::stringstream ss;
 	commonproto::pb_challenge_player_t challenge_player;
 	commonproto::pb_hero_t* challenge_hero;
-	
+
+	commonproto::pb_rank_player_t rank_player; 
+		
 	srandom(time(NULL));
 
 	int lv_max = 70;
@@ -114,20 +123,35 @@ int main(int argc, char* argv[]) {
 
 	const char* rk_arena_rank_btl_val = "ARENA_RANK_BTL_VAL";
 
+	const char* rk_rank_total_stars = "RANK_TOTAL_STARS";
+	const char* rk_rank_total_btl_val = "RANK_TOTAL_BTL_VAL";
+	const char* rk_rank_top4_btl_val = "RANK_TOP4_BTL_VAL";
+
+	const char* rk_rank_player_info = "RANK_PLAYER_INFO";
+	
 	std::string seri_str;
+
+
 		
 	for(int i=0; i<robot_sum; ++i) {
 		uint32_t btl_val = 0;
+		uint32_t sum_stars = 0;
+		g_sum_total_btl_val = 0;
+		uint32_t sum_top4_btl_val = 0;
+		std::vector<uint32_t> btl_val_vec;
+		rank_player.Clear();
+		
 		commonproto::pb_challenge_player_t challenge_player_top1;
 		uint32_t uid = 80000+i;
-		challenge_player_top1.set_uid(uid);
-			
+		challenge_player_top1.set_uid(uid);		
+		
 		uint32_t name_index1 = f_range_random(0, g_name_vec.size()-1);
 		uint32_t name_index2 = f_range_random(0, g_name_vec.size()-1);
 
 		std::stringstream ss_nick;
 		ss_nick << g_name_vec[name_index1].name1 << g_name_vec[name_index2].name2; 
 		challenge_player_top1.set_nick(ss_nick.str());
+		rank_player.set_nick(ss_nick.str());
 
 		challenge_player_top1.set_win_count(f_range_random(500, 600));
 		challenge_player_top1.set_rank(i+1);
@@ -141,6 +165,9 @@ int main(int argc, char* argv[]) {
 		std::vector<uint32_t> u_array(hero_id_vec.size(), 0);//[30] = {0};
 			
 		for(int j=0; j<4; ++j) {
+
+			uint32_t single_btl_val = 0;
+			
 			challenge_hero_top1 = challenge_player_top1.add_chal_hero();
 
 			uint32_t index = f_range_random(0, hero_id_vec.size()-j-1);
@@ -162,7 +189,7 @@ int main(int argc, char* argv[]) {
 			challenge_hero_top1->set_rating(hero_rating);
 			uint32_t hero_star_rating = 1;
 			challenge_hero_top1->set_star_rating(hero_star_rating);
-
+			sum_stars += hero_star_rating;
 			commonproto::pb_hero_equip_t* hero_equip;
 			uint32_t equip_num = 0;
 			for(int k=0; k<6; ++k) {
@@ -202,9 +229,28 @@ int main(int argc, char* argv[]) {
 			uint32_t equip_btl_val = 0;
 			uint32_t x = hero_rating;
 			equip_btl_val = hero_rating;
-			btl_val = btl_val + (100*(1+hero_lv*0.8) * (1+(hero_star_rating-1)*0.5) + x + equip_num*equip_btl_val) * (0.33+0.66*(1+sum_hero_skill_lv*0.01));
+			single_btl_val = (100*(1+hero_lv*0.8) * (1+(hero_star_rating-1)*0.5) + x + equip_num*equip_btl_val) * (0.33+0.66*(1+sum_hero_skill_lv*0.01));
+
+			btl_val_vec.push_back(single_btl_val);
+			// btl_val = btl_val + (100*(1+hero_lv*0.8) * (1+(hero_star_rating-1)*0.5) + x + equip_num*equip_btl_val) * (0.33+0.66*(1+sum_hero_skill_lv*0.01));
 		}
-		
+
+		std::sort(btl_val_vec.begin(), btl_val_vec.end());
+		std::for_each(btl_val_vec.begin(), btl_val_vec.end(), f_calc_sum_btl_val);
+
+		rank_player.set_total_btl_val(g_sum_total_btl_val);
+		rank_player.set_total_stars(sum_stars);
+			
+		uint32_t hero_i = 0;
+		for(std::vector<uint32_t>::reverse_iterator rit=btl_val_vec.rbegin(); rit!=btl_val_vec.rend(); ++rit) {
+			if(hero_i++ == 4) {
+				break;
+			}
+			sum_top4_btl_val += *rit;			
+		}
+
+		rank_player.set_top4_btl_val(sum_top4_btl_val);
+			
 		challenge_player_top1.set_btl_val(btl_val);
 
 		seri_str.clear();
@@ -218,44 +264,31 @@ int main(int argc, char* argv[]) {
 		redisAppendCommand(g_redis, "ZADD %s %d %d", rk_arena_rank_btl_val, challenge_player_top1.btl_val(), challenge_player_top1.uid());
 
 
+		redisAppendCommand(g_redis, "ZADD %s %d %d", rk_rank_total_stars, sum_stars, challenge_player_top1.uid());
+		redisAppendCommand(g_redis, "ZADD %s %d %d", rk_rank_total_btl_val, g_sum_total_btl_val, challenge_player_top1.uid());
+		redisAppendCommand(g_redis, "ZADD %s %d %d", rk_rank_top4_btl_val, sum_top4_btl_val, challenge_player_top1.uid());
 
+
+		std::string str_rank_player;
+		rank_player.SerializeToString(&str_rank_player);
+		redisAppendCommand(g_redis, "HSET %s %d %b", rk_rank_player_info, challenge_player_top1.uid(), str_rank_player.c_str(), str_rank_player.size());
+
+			
 		//splice redis command.
 
-		redisGetReply(g_redis, (void**)&reply);
-		if(reply) {
-			freeReplyObject(reply);
-		} else {
-			std::cout << "redisGetReply error" << std::endl;
-			return -1;
+		for(int i=0; i<8; ++i) {
+			redisGetReply(g_redis, (void**)&reply);
+			if(reply) {
+				freeReplyObject(reply);
+			} else {
+				std::cout << "redisGetReply error" << std::endl;
+				return -1;
+			}
 		}
 
-		redisGetReply(g_redis, (void**)&reply);
-		if(reply) {
-			freeReplyObject(reply);
-		} else {
-			std::cout << "redisGetReply error" << std::endl;
-			return -1;
-		}
-
-		redisGetReply(g_redis, (void**)&reply);
-		if(reply) {
-			freeReplyObject(reply);
-		} else {
-			std::cout << "redisGetReply error" << std::endl;
-			return -1;
-		}
-
-		redisGetReply(g_redis, (void**)&reply);
-		if(reply) {
-			freeReplyObject(reply);
-		} else {
-			std::cout << "redisGetReply error" << std::endl;
-			return -1;
-		}
-		
 	}
 
-
+	
 		
 	// for(int ii=0; ii<robot_sum; ++ii) {
 	// 	redisGetReply(g_redis, (void**)&reply);

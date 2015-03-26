@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include <new>
 
 
 class AgainstDefaultCompilerGen {
@@ -196,11 +197,11 @@ class Base {
 	virtual void mf1();
 	virtual void mf2();
 	void mf3();
-	void mf4(); 
+	void mf4();
+	virtual void mfB();//derived class derived this interface and default behavior.
  private:
 	
 };
-
 
 
 class Derived : public Base {
@@ -214,4 +215,137 @@ class Derived : public Base {
 	
  private:
 	
+};
+
+
+class Airport {
+ public:
+ Airport() : name_("Airport") {
+	}
+
+	const std::string name() const {
+		return name_;
+	} 
+ private:	
+	std::string name_;	
+};
+
+class Airplane {
+ public:
+	virtual void fly(const Airport& dst_airport) = 0;//pure virtual method but still has its definition and it must be redefine in its derived class.
+	
+ protected:
+	void defaultFly(const Airport& dst_airport);
+	
+ 
+};
+
+class ModeA_Airplane : public Airplane {
+ public:
+	void fly(const Airport& dst_airport);
+	
+};
+
+class ModeB_Airplane : public Airplane {
+ public:
+	void fly(const Airport& dst_airport);
+};
+
+class ModeC_Airplane : public Airplane {
+ public:
+	void fly(const Airport& dst_airport);
+};
+
+
+class Person {
+ public:
+	void sleep(); 
+};
+
+class Student : private Person { //what is private derived means ?
+ public:
+	void snap();
+	//error: ‘Person’ is an inaccessible base of ‘Student’
+};
+
+
+void eat(const Person& person); 
+void study(const Student& student);
+
+
+
+class MultiBase {
+	
+ private:
+	std::string name_;// must make all the direct derived class  inharit virtually to avoid multi data member copy 
+};
+
+class MultiA : virtual public MultiBase { //virtual derived to avoid multi data member copy of MultiBase
+
+};
+
+class MultiB  : virtual public MultiBase { //virtual derived to avoid multi data member copy of MultiBase
+
+};
+
+class MultiAB {
+	
+};
+
+
+template <typename C>
+void printSomething(const C& c) {
+	typename C::const_iterator cit = c.cbegin();// if no typename keyword C::const_iterator the compiler will compilent
+	//typename C::const_iterator cit = c.cbegin();// if no typename keyword C::const_iterator the compiler 
+	std::cout << "*cit:" << *cit << std::endl;
+}
+
+
+template<typename T>
+class Calculator {
+ public:
+	template<typename Y>//use member function template to accept "all compatible types"
+		Calculator(const Y& rhs); 
+};
+
+struct t_trait_A {
+	
+};
+
+struct t_trait_B {
+	
+};
+
+template<typename T>
+void test_trait(const T& t, t_trait_A) {
+	std::cout << "t_trait_A test_trait t:" << t << std::endl;
+}
+
+template<typename T>
+void test_trait(const T& t, t_trait_B) {
+	std::cout << "t_trait_B test_trait t:" << t << std::endl;
+}
+
+
+class NewHandlerHolder {
+ public:
+	NewHandlerHolder(std::new_handler nh);
+	~NewHandlerHolder();
+	
+ private:
+	std::new_handler handler_;
+};
+
+
+class Alloc_T {
+ public:
+	void* operator new(std::size_t size) throw (std::bad_alloc);
+	/* void* operator new(std::size_t size); */
+	void* operator new(std::size_t size, std::ostream& os);
+	void* operator new(std::size_t size, const std::nothrow_t&) throw (); 
+	void operator delete(void*);
+	static std::new_handler set_new_handler(std::new_handler p);
+	
+ private:
+	static std::new_handler currentHandler_; 
 };

@@ -1,4 +1,4 @@
-//g++ main.cpp effective.cpp a.cpp b.cpp -o effective.linux
+//g++ main.cpp effective.cpp a.cpp b.cpp -ggdb -o effective.linux
 
 
 #include <iostream>
@@ -90,8 +90,36 @@ int main(int argc, char* argv[]) {
 	Base* base = new Derived;
 
 	base->mf1();
-	base->Base::mf1();
+	base->Base::mf1();//when called be explicitly tell the name of the class.
+	base->mfB();//
 	delete base;
+
+	Airplane* pAirplane = new ModeC_Airplane;
+	Airport aport;
+	pAirplane->fly(aport);
+	delete pAirplane;
+	
+
+	Student student;
+	Person person;
+
+	//eat(student); //error: ‘Person’ is an inaccessible base of ‘Student’
+	eat(person);
+
+	student.snap();
+
+	test_trait("abc", t_trait_A());
+
+	Alloc_T* alloc = new Alloc_T;//will use Alloc_T::operator new(std::size_t size);
+
+	Alloc_T* alloc2 = new (std::cout) Alloc_T;//use placement new, need a same signature placement delete when this throw exception.
+
+	Alloc_T* alloc3 = new (std::nothrow) Alloc_T;//use nothrow new
+
+	
+	delete alloc;
+	delete alloc2;
+	delete alloc3;
 	
 	return EXIT_SUCCESS;
 }

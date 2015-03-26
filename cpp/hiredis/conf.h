@@ -25,6 +25,17 @@ struct skill_lv_conf_t {
 	
 };
 
+
+struct robot_conf_t {
+	uint32_t rank;
+	uint32_t player_lv;
+	uint32_t hero_lv;
+	uint32_t hero_rating;
+	uint32_t hero_star;
+	uint32_t arena_hero_total_stars;
+};
+
+
 struct name_conf_t {
 	std::string name1;
 	std::string name2;
@@ -77,7 +88,49 @@ private:
 };
 
 
+class robot_conf_mgr_t {
+public:
+    robot_conf_mgr_t() {
+        clear();
+    }
+	
+    ~robot_conf_mgr_t() {
+        clear();
+    }
+	
+    inline void clear() {
+        robot_conf_map_.clear();
+    }
+    
+    inline const std::map<uint32_t, robot_conf_t> &const_robot_conf_map() const {
+        return robot_conf_map_;
+    }
+    
+    inline void copy_from(const robot_conf_mgr_t &m) {
+        robot_conf_map_ = m.const_robot_conf_map();
+    }
+    
+    inline bool is_robot_conf_exist(uint32_t type_rank) {
+        return robot_conf_map_.count(type_rank) > 0 ? true : false;
+    }
+    
+    inline bool add_robot_conf(const robot_conf_t &robot_conf) {
+        if (is_robot_conf_exist(robot_conf.type_rank)) return false;
+        robot_conf_map_[robot_conf.type_rank] = robot_conf; return true;
+    }
+    
+    inline const robot_conf_t *find_robot_conf(uint32_t type_rank) {
+        if (!is_robot_conf_exist(type_rank)) return NULL;
+        return &((robot_conf_map_.find(type_rank))->second);
+    }
+
+private:
+    std::map<uint32_t, robot_conf_t> robot_conf_map_;
+};
+
+
 extern skill_lv_conf_mgr_t g_skill_lv_conf_mgr;
+extern robot_conf_mgr_t g_robot_conf_mgr;
 extern std::vector<name_conf_t> g_name_vec;
 extern std::map<uint32_t, skill_lv_conf_t> g_skill_lv_conf_map;
 extern std::vector<battle_point_conf_t> g_battle_point_conf_vec;
