@@ -32,7 +32,14 @@ struct robot_conf_t {
 	uint32_t hero_lv;
 	uint32_t hero_rating;
 	uint32_t hero_star;
-	uint32_t arena_hero_total_stars;
+	uint32_t team_star;
+};
+
+
+struct hero_conf_t {
+	uint32_t id;
+	uint32_t hero_rating;
+	uint32_t hero_star;
 };
 
 
@@ -115,13 +122,13 @@ public:
     }
     
     inline bool add_robot_conf(const robot_conf_t &robot_conf) {
-        if (is_robot_conf_exist(robot_conf.type_rank)) return false;
-        robot_conf_map_[robot_conf.type_rank] = robot_conf; return true;
+        if (is_robot_conf_exist(robot_conf.rank)) return false;
+        robot_conf_map_[robot_conf.rank] = robot_conf; return true;
     }
     
-    inline const robot_conf_t *find_robot_conf(uint32_t type_rank) {
-        if (!is_robot_conf_exist(type_rank)) return NULL;
-        return &((robot_conf_map_.find(type_rank))->second);
+    inline const robot_conf_t *find_robot_conf(uint32_t rank) {
+        if (!is_robot_conf_exist(rank)) return NULL;
+        return &((robot_conf_map_.find(rank))->second);
     }
 
 private:
@@ -129,8 +136,50 @@ private:
 };
 
 
+class hero_conf_mgr_t {
+public:
+    hero_conf_mgr_t() {
+        clear();
+    }
+	
+    ~hero_conf_mgr_t() {
+        clear();
+    }
+	
+    inline void clear() {
+        hero_conf_map_.clear();
+    }
+    
+    inline const std::map<uint32_t, hero_conf_t> &const_hero_conf_map() const {
+        return hero_conf_map_;
+    }
+    
+    inline void copy_from(const hero_conf_mgr_t &m) {
+        hero_conf_map_ = m.const_hero_conf_map();
+    }
+    
+    inline bool is_hero_conf_exist(uint32_t id) {
+        return hero_conf_map_.count(id) > 0 ? true : false;
+    }
+    
+    inline bool add_hero_conf(const hero_conf_t &hero_conf) {
+        if (is_hero_conf_exist(hero_conf.id)) return false;
+        hero_conf_map_[hero_conf.id] = hero_conf; return true;
+    }
+    
+    inline const hero_conf_t *find_hero_conf(uint32_t id) {
+        if (!is_hero_conf_exist(id)) return NULL;
+        return &((hero_conf_map_.find(id))->second);
+    }
+
+private:
+    std::map<uint32_t, hero_conf_t> hero_conf_map_;
+};
+
+
 extern skill_lv_conf_mgr_t g_skill_lv_conf_mgr;
 extern robot_conf_mgr_t g_robot_conf_mgr;
+extern hero_conf_mgr_t g_hero_conf_mgr;
 extern std::vector<name_conf_t> g_name_vec;
 extern std::map<uint32_t, skill_lv_conf_t> g_skill_lv_conf_map;
 extern std::vector<battle_point_conf_t> g_battle_point_conf_vec;

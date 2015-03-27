@@ -39,9 +39,9 @@ int main(int argc, char* argv[]) {
 	}
 
 
-	if(0 != load_xmlconf("./CfgRobotName.xml", &load_name_conf)) {
-	   // || 0 != load_xmlconf("Cfg", &load_skill_lv_config)
-	   // || 0 != load_xmlconf("CfgBattlePoint", &load_battle_point_conf)) {		
+	if(0 != load_xmlconf("./CfgRobotName.xml", &load_name_conf) 
+	   || 0 != load_xmlconf("./CfgRobot.xml", &load_robot_conf) 
+	   || 0 != load_xmlconf("./CfgHero.xml", &load_hero_conf)) {
 		std::cerr << "load_xml_conf faild!!" << std::endl;
 	}
 

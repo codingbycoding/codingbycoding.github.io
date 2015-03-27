@@ -61,8 +61,12 @@ static inline void decode_xml_prop_float_default(float* val, xmlNodePtr cur, con
 }
 
 
-int load_xmlconf(const char* file, int (*parser)(xmlNodePtr cur_node));
 int load_name_conf(xmlNodePtr root);
 int load_battle_point_conf(xmlNodePtr root);
+int load_robot_conf(xmlNodePtr root);
+int load_hero_conf(xmlNodePtr root);
+int load_skill_lv_conf(xmlNodePtr root);
+
+int load_xmlconf(const char* file, int (*parser)(xmlNodePtr cur_node));
 
 #endif

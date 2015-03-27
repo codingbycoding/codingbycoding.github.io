@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<root>
+<CfgHeroSkill Type="1" LVLimit="1" RatingLimit="1" Rank="1" LV="90" RankUpCost="0" LVUpCostBase="100" LVUpCostAdd="500" />
+<CfgHeroSkill Type="2" LVLimit="1" RatingLimit="1" Rank="1" LV="20" RankUpCost="10" LVUpCostBase="100" LVUpCostAdd="500" />
+<CfgHeroSkill Type="2" LVLimit="21" RatingLimit="3" Rank="2" LV="20" RankUpCost="20" LVUpCostBase="10000" LVUpCostAdd="500" />
+<CfgHeroSkill Type="2" LVLimit="41" RatingLimit="5" Rank="3" LV="30" RankUpCost="0" LVUpCostBase="20000" LVUpCostAdd="500" />
+<CfgHeroSkill Type="3" LVLimit="21" RatingLimit="4" Rank="1" LV="30" RankUpCost="30" LVUpCostBase="10000" LVUpCostAdd="500" />
+<CfgHeroSkill Type="3" LVLimit="51" RatingLimit="6" Rank="2" LV="30" RankUpCost="0" LVUpCostBase="25000" LVUpCostAdd="1000" />
+<CfgHeroSkill Type="4" LVLimit="61" RatingLimit="7" Rank="1" LV="30" RankUpCost="0" LVUpCostBase="20000" LVUpCostAdd="1000" />
+</root>
