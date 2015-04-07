@@ -1,3 +1,7 @@
+#ifndef ADAM_EFFECTIVE_CPP_B_H_
+#define ADAM_EFFECTIVE_CPP_B_H_
+
+
 #include <cassert>
 
 
@@ -41,3 +45,5 @@ private:
 
 
 extern B theB;
+
+#endif

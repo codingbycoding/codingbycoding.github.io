@@ -1,3 +1,6 @@
+#ifndef ADAM_EFFECTIVE_CPP_A_H_
+#define ADAM_EFFECTIVE_CPP_A_H_
+
 #include <cassert>
 
 
@@ -39,3 +42,5 @@ private:
 	int x_;
 	int y_[100];
 };
+
+#endif

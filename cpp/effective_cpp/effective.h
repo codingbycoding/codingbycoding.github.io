@@ -1,3 +1,6 @@
+#ifndef ADAM_EFFECTIVE_CPP_EFFECTIVE_H_
+#define ADAM_EFFECTIVE_CPP_EFFECTIVE_H_
+
 #include <iostream>
 #include <cassert>
 #include <new>
@@ -349,3 +352,5 @@ class Alloc_T {
  private:
 	static std::new_handler currentHandler_; 
 };
+
+#endif

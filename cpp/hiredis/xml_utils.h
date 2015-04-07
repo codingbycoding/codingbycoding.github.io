@@ -1,5 +1,5 @@
-#ifndef __XML_UTILS_H__
-#define __XML_UTILS_H__
+#ifndef ADAM_HIREDIS_XML_UTILS_H_
+#define ADAM_HIREDIS_XML_UTILS_H_
 
 extern "C" {
 #include <libxml/tree.h>
@@ -46,6 +46,18 @@ extern "C" {
 			char* endpt; \
 			v = strtoul((const char*)str, &endpt, 10); \
 			xmlFree (str); \
+		} while (0)
+
+
+#define DECODE_XML_PROP_INT_DEFAULT(v, cur, prop, def) \
+		do { \
+			xmlChar *str; \
+			if (!cur || !(str = xmlGetProp(cur, (xmlChar*)prop))) { \
+				v = def; \
+			} else { \
+				v = atoi ((const char*)str); \
+				xmlFree (str); \
+			} \
 		} while (0)
 
 

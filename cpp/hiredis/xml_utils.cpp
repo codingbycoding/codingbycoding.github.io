@@ -98,18 +98,16 @@ int load_robot_conf(xmlNodePtr root) {
         }
         robot_conf_t robot_conf;
 
-		DECODE_XML_PROP_UINT32(robot_conf.rank, cur, "rank");
+		DECODE_XML_PROP_UINT32(robot_conf.entry, cur, "entry");
+		DECODE_XML_PROP_UINT32(robot_conf.rank_beg, cur, "rank_beg");
+		DECODE_XML_PROP_UINT32(robot_conf.rank_end, cur, "rank_end");
         DECODE_XML_PROP_UINT32(robot_conf.player_lv, cur, "player_level");
 		DECODE_XML_PROP_UINT32(robot_conf.hero_lv, cur, "hero_level");
         DECODE_XML_PROP_UINT32(robot_conf.hero_rating, cur, "hero_rank");
 		DECODE_XML_PROP_UINT32(robot_conf.hero_star, cur, "hero_star");
+		DECODE_XML_PROP_INT_DEFAULT(robot_conf.hero_skill_lv_delta, cur, "hero_skill_lv", 0);
 		DECODE_XML_PROP_UINT32(robot_conf.team_star , cur, "team_star");
         
-        if (g_robot_conf_mgr.is_robot_conf_exist(robot_conf.rank)) {
-			std::cerr << "Duplicate robot_conf rank[ ]" << robot_conf.rank << "]" << std::endl;
-            return -1;
-        }
-
         g_robot_conf_mgr.add_robot_conf(robot_conf);
         cur = cur->next;
     }
@@ -120,7 +118,7 @@ int load_robot_conf(xmlNodePtr root) {
 int load_hero_conf(xmlNodePtr root) {
     xmlNodePtr cur = root->xmlChildrenNode;
     while (cur) {
-        if (!xmlStrEqual(cur->name, (const xmlChar *)("CfgRobot"))) {
+        if (!xmlStrEqual(cur->name, (const xmlChar *)("CfgHero"))) {
             cur = cur->next;
             continue;
         }

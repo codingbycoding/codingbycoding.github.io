@@ -10,9 +10,15 @@ uint32_t HeroUtils::calc_hero_btl_val(const commonproto::pb_hero_t& hero) {
 	uint32_t skill_lv_sum = 0;
 	for(int i=0; i<4; ++i) {		
 		uint32_t type_rank = (i+1)*100 + hero.skills(i).skill_rating();
-		const skill_lv_conf_t skill_lv_conf = g_skill_lv_conf_map[type_rank];
+		//const skill_lv_conf_t skill_lv_conf = g_skill_lv_conf_map[type_rank];
 
-		skill_lv_sum += skill_lv_conf.LVLimit + hero.skills(i).skill_lv() - 1;		
+		const skill_lv_conf_t* skill_lv_conf = g_skill_lv_conf_mgr.find_skill_lv_conf(type_rank);
+
+		if(NULL == skill_lv_conf) {
+			continue;
+		}
+		
+		skill_lv_sum += skill_lv_conf->LVLimit + hero.skills(i).skill_lv() - 1;		
 	}
 
 	const battle_point_conf_t* conf;

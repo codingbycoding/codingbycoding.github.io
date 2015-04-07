@@ -1,3 +1,6 @@
+#ifndef ADAM_XNET_UTILS_H_
+#define ADAM_XNET_UTILS_H_
+
 #include <errno.h>
 #include <stdio.h>
 
@@ -12,3 +15,5 @@ int print_err() {
 		printf("socket %s\n", errbuf);
 	}
 }
+
+#endif

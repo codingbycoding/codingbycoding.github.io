@@ -7,11 +7,13 @@
 #include <string>
 #include <cmath>
 #include <vector>
+
 //#include <random>
 
 
 #include "conf.h"
 #include "xml_utils.h"
+#include "utils.h"
 
 
 #include <hiredis/hiredis.h>
@@ -40,7 +42,9 @@ int main(int argc, char* argv[]) {
 
 
 	if(0 != load_xmlconf("./CfgRobotName.xml", &load_name_conf) 
-	   || 0 != load_xmlconf("./CfgRobot.xml", &load_robot_conf) 
+	   || 0 != load_xmlconf("./CfgRobot.xml", &load_robot_conf)
+	   || 0 != load_xmlconf("./CfgBattlePoint.xml", &load_battle_point_conf)
+	   || 0 != load_xmlconf("./CfgHeroSkill.xml",  &load_skill_lv_conf)
 	   || 0 != load_xmlconf("./CfgHero.xml", &load_hero_conf)) {
 		std::cerr << "load_xml_conf faild!!" << std::endl;
 	}
@@ -104,21 +108,16 @@ int main(int argc, char* argv[]) {
 										 1046, 1048, 1049, 1050};
 	
 	int uid_beg = 80000;
-	int uid;
 	int robot_sum = 60000;
 	std::stringstream ss;
 	commonproto::pb_challenge_player_t challenge_player;
-	commonproto::pb_hero_t* challenge_hero;
-
 	commonproto::pb_rank_player_t rank_player; 
 		
 	srandom(time(NULL));
 
-	int lv_max = 70;
 	//int win_count_max = 30;
 	const char* chal_key = "ARENA_RANK50K";
 	const char* uid2rank_key = "ARENA_UID2RANK";
-	const char* rank2uid_key = "ARENA_RANK2UID";
 	const char* exped2uid_key = "EXPED_BTL2UID";
 
 	const char* rk_arena_rank_btl_val = "ARENA_RANK_BTL_VAL";
@@ -131,10 +130,8 @@ int main(int argc, char* argv[]) {
 	
 	std::string seri_str;
 
-
 		
-	for(int i=0; i<robot_sum; ++i) {
-		uint32_t btl_val = 0;
+	for(int robot_i=0; robot_i<robot_sum; ++robot_i) {
 		uint32_t sum_stars = 0;
 		g_sum_total_btl_val = 0;
 		uint32_t sum_top4_btl_val = 0;
@@ -142,7 +139,7 @@ int main(int argc, char* argv[]) {
 		rank_player.Clear();
 		
 		commonproto::pb_challenge_player_t challenge_player_top1;
-		uint32_t uid = 80000+i;
+		uint32_t uid = uid_beg+robot_i;
 		challenge_player_top1.set_uid(uid);		
 		
 		uint32_t name_index1 = f_range_random(0, g_name_vec.size()-1);
@@ -154,16 +151,26 @@ int main(int argc, char* argv[]) {
 		rank_player.set_nick(ss_nick.str());
 
 		challenge_player_top1.set_win_count(f_range_random(500, 600));
-		challenge_player_top1.set_rank(i+1);
-		
-		uint32_t lv = 15-(15-8)*challenge_player_top1.rank()/50000;
-		challenge_player_top1.set_lv(lv);
+		challenge_player_top1.set_rank(robot_i+1);
 
+
+		const robot_conf_t* robot_conf = g_robot_conf_mgr.get_robot_conf(challenge_player_top1.rank());
+
+		if(NULL == robot_conf) {
+			std::cout << "NULL == robot_conf" << std::endl;
+			return -1;
+		}
+		
+		
+		// uint32_t lv = 15-(15-8)*challenge_player_top1.rank()/50000;
+		uint32_t lv = robot_conf->player_lv;
+		challenge_player_top1.set_lv(lv);
 		
 		commonproto::pb_hero_t* challenge_hero_top1;			
-
 		std::vector<uint32_t> u_array(hero_id_vec.size(), 0);//[30] = {0};
-			
+
+		uint32_t team_star_left = robot_conf->team_star;
+		
 		for(int j=0; j<4; ++j) {
 
 			uint32_t single_btl_val = 0;
@@ -178,29 +185,41 @@ int main(int argc, char* argv[]) {
 				hero_id = hero_id_vec[u_array[index]];
 			}
 			u_array[index] = hero_id_vec.size()-j-1;
-				
+
+			const hero_conf_t* hero_conf = g_hero_conf_mgr.find_hero_conf(hero_id);
+			if(NULL == hero_conf) {
+				std::cerr << "hero_id:" << hero_id << " hero_conf not exist." << std::endl;
+				return -1;
+			}
+
 			challenge_hero_top1->set_hero_id(hero_id);
 
-			uint32_t hero_lv = challenge_player_top1.lv()-1;
-			challenge_hero_top1->set_lv(hero_lv);
-			
+			// uint32_t hero_lv = challenge_player_top1.lv()-1;
+			uint32_t hero_lv = robot_conf->hero_lv;
+			challenge_hero_top1->set_lv(hero_lv);			
 			challenge_hero_top1->set_exp(random()%lv+1);
-			uint32_t hero_rating = 1;
+			uint32_t hero_rating = robot_conf->hero_rating;
 			challenge_hero_top1->set_rating(hero_rating);
-			uint32_t hero_star_rating = 1;
+
+			uint32_t hero_star_avg = team_star_left/(4-j);
+			uint32_t hero_star_rating = std::min(hero_conf->hero_star, hero_star_avg);
+			
+			if(4-j-1>0 && (team_star_left-hero_conf->hero_star)/(4-j-1) > 0) {
+				hero_star_rating = hero_conf->hero_star;
+			} 			
+				
+			team_star_left -= hero_star_rating;
+			
 			challenge_hero_top1->set_star_rating(hero_star_rating);
 			sum_stars += hero_star_rating;
 			commonproto::pb_hero_equip_t* hero_equip;
-			uint32_t equip_num = 0;
 			for(int k=0; k<6; ++k) {
 				hero_equip = challenge_hero_top1->add_hero_equips();
 				hero_equip->set_lv(0);
 				hero_equip->set_exp(0);
-				++equip_num;
 			}
 
 			commonproto::pb_skill_t* skill;
-			uint32_t sum_hero_skill_lv = 0;
 				
 			for(int k=0; k<4; ++k) {
 				skill = challenge_hero_top1->add_skills();
@@ -211,6 +230,7 @@ int main(int argc, char* argv[]) {
 
 				switch(skill_index) {
 				case commonproto::SKILL_ACTIVE:
+					hero_skill_lv = std::max(0, static_cast<int>(hero_lv)+robot_conf->hero_skill_lv_delta);					
 				case commonproto::SKILL_FRIEND:
 					hero_skill_lv = 1;
 					hero_skill_rating = 1;					
@@ -221,18 +241,13 @@ int main(int argc, char* argv[]) {
 					break;		
 				}
 
-				sum_hero_skill_lv = sum_hero_skill_lv + hero_skill_lv;
 				skill->set_skill_lv(hero_skill_lv);
 				skill->set_skill_rating(hero_skill_rating);
 			}
-
-			uint32_t equip_btl_val = 0;
-			uint32_t x = hero_rating;
-			equip_btl_val = hero_rating;
-			single_btl_val = (100*(1+hero_lv*0.8) * (1+(hero_star_rating-1)*0.5) + x + equip_num*equip_btl_val) * (0.33+0.66*(1+sum_hero_skill_lv*0.01));
-
+			
+			single_btl_val = HeroUtils::calc_hero_btl_val(*challenge_hero_top1);
 			btl_val_vec.push_back(single_btl_val);
-			// btl_val = btl_val + (100*(1+hero_lv*0.8) * (1+(hero_star_rating-1)*0.5) + x + equip_num*equip_btl_val) * (0.33+0.66*(1+sum_hero_skill_lv*0.01));
+
 		}
 
 		std::sort(btl_val_vec.begin(), btl_val_vec.end());
@@ -251,7 +266,7 @@ int main(int argc, char* argv[]) {
 
 		rank_player.set_top4_btl_val(sum_top4_btl_val);
 			
-		challenge_player_top1.set_btl_val(btl_val);
+		challenge_player_top1.set_btl_val(g_sum_total_btl_val);
 
 		seri_str.clear();
 		challenge_player_top1.SerializeToString(&seri_str);

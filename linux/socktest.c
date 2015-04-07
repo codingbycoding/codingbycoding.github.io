@@ -52,7 +52,7 @@ int sock_server_create() {
 }
   
 
-#define MAX_EVENTS 1024
+enum {MAX_EVENTS = 1024};
 
 bool g_bstop = false;
 

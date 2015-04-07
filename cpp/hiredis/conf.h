@@ -1,5 +1,5 @@
-#ifndef __CONF_H__
-#define __CONF_H__
+#ifndef ADAM_HIREDIS_CONF_H_
+#define ADAM_HIREDIS_CONF_H_
 
 #include <vector>
 #include <map>
@@ -27,10 +27,13 @@ struct skill_lv_conf_t {
 
 
 struct robot_conf_t {
-	uint32_t rank;
+	uint32_t entry;
+	uint32_t rank_beg;
+	uint32_t rank_end;
 	uint32_t player_lv;
 	uint32_t hero_lv;
 	uint32_t hero_rating;
+	int hero_skill_lv_delta;
 	uint32_t hero_star;
 	uint32_t team_star;
 };
@@ -106,33 +109,53 @@ public:
     }
 	
     inline void clear() {
-        robot_conf_map_.clear();
-    }
-    
-    inline const std::map<uint32_t, robot_conf_t> &const_robot_conf_map() const {
-        return robot_conf_map_;
+        robot_conf_vec_.clear();
     }
     
     inline void copy_from(const robot_conf_mgr_t &m) {
-        robot_conf_map_ = m.const_robot_conf_map();
+        robot_conf_vec_ = m.get_const_robot_conf_vec();
     }
-    
-    inline bool is_robot_conf_exist(uint32_t type_rank) {
-        return robot_conf_map_.count(type_rank) > 0 ? true : false;
+
+	inline const std::vector<robot_conf_t> get_const_robot_conf_vec() const {
+        return robot_conf_vec_;
     }
-    
+
+		
     inline bool add_robot_conf(const robot_conf_t &robot_conf) {
-        if (is_robot_conf_exist(robot_conf.rank)) return false;
-        robot_conf_map_[robot_conf.rank] = robot_conf; return true;
+        robot_conf_vec_.push_back(robot_conf);
+		return true;
     }
     
-    inline const robot_conf_t *find_robot_conf(uint32_t rank) {
-        if (!is_robot_conf_exist(rank)) return NULL;
-        return &((robot_conf_map_.find(rank))->second);
+
+	inline const robot_conf_t* get_robot_conf(uint32_t robot_rank) {
+		int beg_i=0;
+		int end_i=robot_conf_vec_.size()-1;
+		int find_j=(beg_i + end_i)/2;
+		
+		for(; beg_i<end_i; find_j=(beg_i + end_i)/2) {
+			
+			if(robot_rank < robot_conf_vec_[find_j].rank_beg) {
+				end_i = find_j-1;
+				continue;
+			} else if(robot_rank > robot_conf_vec_[find_j].rank_end) {
+				beg_i = find_j+1;				
+				continue;
+			}
+
+			break;
+										
+		}
+
+		if(robot_rank < robot_conf_vec_[find_j].rank_beg
+		   || robot_rank > robot_conf_vec_[find_j].rank_end) {
+			return NULL;
+		}
+		
+		return &robot_conf_vec_[find_j];
     }
 
 private:
-    std::map<uint32_t, robot_conf_t> robot_conf_map_;
+	std::vector<robot_conf_t> robot_conf_vec_;
 };
 
 
@@ -181,7 +204,7 @@ extern skill_lv_conf_mgr_t g_skill_lv_conf_mgr;
 extern robot_conf_mgr_t g_robot_conf_mgr;
 extern hero_conf_mgr_t g_hero_conf_mgr;
 extern std::vector<name_conf_t> g_name_vec;
-extern std::map<uint32_t, skill_lv_conf_t> g_skill_lv_conf_map;
+//extern std::map<uint32_t, skill_lv_conf_t> g_skill_lv_conf_map;
 extern std::vector<battle_point_conf_t> g_battle_point_conf_vec;
 
 #endif

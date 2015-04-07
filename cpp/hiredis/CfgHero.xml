@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<root>
+<CfgHero id="1001" name="高慧美" desc="高氏姐妹中的姐姐，沉稳内敛" sex="1" rating="1" star="2" ability="0" nature="5" heroType="2" skill="14" passive="101" friend1="234" friend2="334" friend3="434" combo1="526" combo2="626" />
+<CfgHero id="1002" name="李爽" desc="文东会三巨头之一，虎堂堂主" sex="0" rating="1" star="1" ability="0" nature="5" heroType="0" skill="2" passive="101" friend1="219" friend2="319" friend3="419" combo1="511" combo2="611" />
+<CfgHero id="1003" name="金蓉" desc="乖巧可爱的少女，曾被谢文东所救" sex="1" rating="1" star="1" ability="0" nature="1" heroType="3" skill="39" passive="101" friend1="237" friend2="337" friend3="437" combo1="523" combo2="623" />
+<CfgHero id="1004" name="金眼" desc="五行之首，谢文东贴身保镖" sex="1" rating="1" star="3" ability="7" nature="4" heroType="1" skill="30" passive="101" friend1="213" friend2="313" friend3="413" combo1="517" combo2="617" />
+<CfgHero id="1005" name="高慧玉" desc="高氏姐妹中的妹妹，活泼外向" sex="1" rating="1" star="1" ability="1" nature="3" heroType="2" skill="7" passive="101" friend1="235" friend2="335" friend3="435" combo1="513" combo2="613" />
+<CfgHero id="1006" name="三眼" desc="文东会三巨头之一，龙堂堂主" sex="0" rating="1" star="1" ability="0" nature="5" heroType="0" skill="38" passive="101" friend1="231" friend2="331" friend3="431" combo1="530" combo2="630" />
+<CfgHero id="1007" name="高强" desc="文东会三巨头之一，飞鹰堂堂主" sex="0" rating="1" star="1" ability="0" nature="4" heroType="2" skill="1" passive="101" friend1="204" friend2="304" friend3="404" combo1="510" combo2="610" />
+<CfgHero id="1008" name="谢文东" desc="城府极深，喜怒不形于色，是天使与魔鬼的结合体" sex="0" rating="1" star="1" ability="0" nature="3" heroType="0" skill="41" passive="101" friend1="205" friend2="305" friend3="405" combo1="531" combo2="631" />
+<CfgHero id="1009" name="东心雷" desc="北洪门第一虎将，骁勇善战，文武全才" sex="0" rating="1" star="3" ability="4" nature="4" heroType="0" skill="8" passive="101" friend1="206" friend2="306" friend3="406" combo1="514" combo2="614" />
+<CfgHero id="1010" name="彭玲" desc="稳重漂亮的警察，也是谢文东的女友" sex="1" rating="1" star="1" ability="0" nature="3" heroType="2" skill="13" passive="101" friend1="236" friend2="336" friend3="436" combo1="528" combo2="628" />
+<CfgHero id="1013" name="水镜" desc="五行之一，谢文东贴身保镖" sex="1" rating="1" star="2" ability="0" nature="3" heroType="1" skill="20" passive="101" friend1="228" friend2="328" friend3="428" combo1="502" combo2="602" />
+<CfgHero id="1014" name="火焰" desc="五行之一，谢文东贴身保镖" sex="1" rating="1" star="1" ability="1" nature="5" heroType="1" skill="6" passive="101" friend1="226" friend2="326" friend3="426" combo1="512" combo2="612" />
+<CfgHero id="1016" name="刘波" desc="暗组组长，文东会的眼睛" sex="0" rating="1" star="2" ability="0" nature="3" heroType="0" skill="42" passive="101" friend1="238" friend2="338" friend3="438" combo1="506" combo2="606" />
+<CfgHero id="1017" name="张研江" desc="文东会第一智囊，执法堂堂主" sex="0" rating="1" star="2" ability="0" nature="4" heroType="1" skill="3" passive="101" friend1="211" friend2="311" friend3="411" combo1="505" combo2="605" />
+<CfgHero id="1018" name="金鹏" desc="北洪门前任掌门，谢文东恩师，深不可测" sex="0" rating="1" star="3" ability="0" nature="1" heroType="0" skill="35" passive="101" friend1="202" friend2="302" friend3="402" combo1="503" combo2="603" />
+<CfgHero id="1020" name="向问天" desc="南洪门掌门，光明磊落真诚坦荡，与谢文东亦敌亦友" sex="0" rating="1" star="3" ability="0" nature="2" heroType="1" skill="18" passive="101" friend1="210" friend2="310" friend3="410" combo1="522" combo2="622" />
+<CfgHero id="1021" name="任长风" desc="一把唐刀，一身傲气，横扫江湖" sex="0" rating="1" star="3" ability="4" nature="4" heroType="1" skill="21" passive="101" friend1="201" friend2="301" friend3="401" combo1="504" combo2="604" />
+<CfgHero id="1022" name="姜森" desc="血杀组长，枪法无双，文东会毒蛇" sex="0" rating="1" star="2" ability="0" nature="4" heroType="1" skill="17" passive="101" friend1="230" friend2="330" friend3="430" combo1="518" combo2="618" />
+<CfgHero id="1024" name="唐寅" desc="潇洒邪魅，行踪不定的第一高手" sex="0" rating="1" star="3" ability="2" nature="2" heroType="1" skill="32" passive="101" friend1="225" friend2="325" friend3="425" combo1="519" combo2="619" />
+<CfgHero id="1026" name="张婧" desc="活泼开朗的女生，喜欢谢文东" sex="1" rating="1" star="2" ability="1" nature="2" heroType="2" skill="33" passive="101" friend1="215" friend2="315" friend3="415" combo1="520" combo2="620" />
+<CfgHero id="1030" name="老鬼" desc="金三角负责人，与谢文东的关系超越朋友" sex="0" rating="1" star="1" ability="0" nature="5" heroType="1" skill="9" passive="101" friend1="232" friend2="332" friend3="432" combo1="524" combo2="624" />
+<CfgHero id="1033" name="陆寇" desc="南洪门八天王之首，文武双全，玩世不恭，绰号“火王”" sex="0" rating="1" star="2" ability="0" nature="5" heroType="1" skill="19" passive="101" friend1="220" friend2="320" friend3="420" combo1="501" combo2="601" />
+<CfgHero id="1038" name="田方常" desc="南洪门八天王之一，一眼失明，外号“独眼龙”" sex="0" rating="1" star="2" ability="0" nature="4" heroType="1" skill="40" passive="101" friend1="221" friend2="321" friend3="421" combo1="509" combo2="609" />
+<CfgHero id="1043" name="秋凝水" desc="原是女警察，漂亮温柔，谢文东最亏欠的人" sex="1" rating="1" star="2" ability="1" nature="3" heroType="1" skill="37" passive="101" friend1="223" friend2="323" friend3="423" combo1="527" combo2="627" />
+<CfgHero id="1045" name="雪" desc="暗组成员，精通暗杀" sex="1" rating="1" star="1" ability="1" nature="3" heroType="1" skill="31" passive="101" friend1="227" friend2="327" friend3="427" combo1="532" combo2="632" />
+<CfgHero id="1046" name="雾" desc="暗组成员，身手敏捷" sex="1" rating="1" star="1" ability="0" nature="5" heroType="1" skill="36" passive="101" friend1="214" friend2="314" friend3="414" combo1="515" combo2="615" />
+<CfgHero id="1047" name="影" desc="暗组成员，谢文东第一任女保镖" sex="1" rating="1" star="1" ability="0" nature="4" heroType="1" skill="15" passive="101" friend1="233" friend2="333" friend3="433" combo1="525" combo2="625" />
+<CfgHero id="1048" name="小Y" desc="来自异界的萌萌少女，为了拯救世界寻求谢文东的帮助" sex="1" rating="1" star="2" ability="0" nature="1" heroType="3" skill="4" passive="101" friend1="229" friend2="329" friend3="429" combo1="521" combo2="621" />
+<CfgHero id="1049" name="诗音" desc="忍者家族的姐姐，容易害羞，但常常透露出一股中二气息" sex="1" rating="1" star="3" ability="3" nature="3" heroType="2" skill="28" passive="101" friend1="209" friend2="309" friend3="409" combo1="527" combo2="627" />
+<CfgHero id="1050" name="瑚音" desc="忍者家族的妹妹，傲娇腹黑，最大的愿望是和姐姐在一起" sex="1" rating="1" star="3" ability="3" nature="5" heroType="2" skill="29" passive="101" friend1="208" friend2="308" friend3="408" combo1="529" combo2="629" />
+</root>

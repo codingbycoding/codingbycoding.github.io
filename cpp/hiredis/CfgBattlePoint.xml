@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<root>
+<CfgBattlePoint ContRating="0" ContEquip="1.875" />
+<CfgBattlePoint ContRating="15" ContEquip="2.25" />
+<CfgBattlePoint ContRating="18" ContEquip="3.375" />
+<CfgBattlePoint ContRating="27" ContEquip="5.25" />
+<CfgBattlePoint ContRating="42" ContEquip="11.25" />
+<CfgBattlePoint ContRating="90" ContEquip="12.5" />
+<CfgBattlePoint ContRating="100" ContEquip="18.75" />
+<CfgBattlePoint ContRating="150" ContEquip="28.75" />
+<CfgBattlePoint ContRating="230" ContEquip="31.25" />
+<CfgBattlePoint ContRating="250" ContEquip="41.625" />
+</root>

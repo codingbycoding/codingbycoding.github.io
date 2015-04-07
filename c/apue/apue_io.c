@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
   int fds[2];
   pid_t pid;
 
-#define MAXLINE 1024
+  enum {MAXLINE = 1024}; 
   char chbuf[MAXLINE];
   if( pipe(fds) < 0)
     {

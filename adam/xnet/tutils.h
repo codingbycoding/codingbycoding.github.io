@@ -1,3 +1,6 @@
+#ifndef ADAM_XNET_TUTILS_H_
+#define ADAM_XNET_TUTILS_H_
+
 #include <fcntl.h>
 #include <errno.h>
 #include <stdio.h>
@@ -112,3 +115,5 @@ int tcp_serv_sk(uint16_t port, uint32_t backlog) {
 	
 /* 	return 0; */
 /* } */
+
+#endif	
