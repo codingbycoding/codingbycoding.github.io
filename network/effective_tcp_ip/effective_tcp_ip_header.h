@@ -36,7 +36,7 @@ enum {
 	ERR_SOCK_RECV = 107,
 	ERR_EP_CREATE = 108,
 	ERR_EP_ADD = 109,
-	ERR_EP_WAIT = 109,
+	ERR_EP_WAIT = 110,
 };
 
 #endif

@@ -26,7 +26,6 @@ int main(int argc, char** argv) {
 	//wprintf(L"buf:%s size:%d\n", buf,  strlen(buf));
 
 	
-	
 	struct sockaddr_in serv_addr;
 	serv_addr.sin_family = AF_INET;
 	serv_addr.sin_port = htons(kServPort);
@@ -47,9 +46,7 @@ int main(int argc, char** argv) {
 		return ERR_SOCK_SEND;
 	}
 
-
-
-
+	
 	printf("Run to the final.\n");
 	return EXIT_SUCCESS;
 }

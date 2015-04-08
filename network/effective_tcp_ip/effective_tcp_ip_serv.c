@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
 	}
 
 	struct epoll_event event;
-	event.events = EPOLLIN;
+	event.events = EPOLLIN | EPOLLET;
 	event.data.fd = sockfd;
 	int ctl_ret = epoll_ctl(epfd, EPOLL_CTL_ADD, sockfd, &event);
 	if(ctl_ret < 0) {
@@ -65,7 +65,7 @@ int main(int argc, char** argv) {
 
 		while(n_wait--) {
 			if(wait_events[n_wait].events & EPOLLIN) {
-				if(wait_events[n_wait].data.fd == sockfd) {//listen sock new accept
+				if(wait_events[n_wait].data.fd == sockfd) { //listen sock new accept
 					struct sockaddr_in peer_addr;
 					socklen_t peer_addr_len;
 					int peer_sockfd = accept(sockfd, (struct sockaddr*)&peer_addr, &peer_addr_len);
@@ -78,14 +78,14 @@ int main(int argc, char** argv) {
 					}
 				
 					struct epoll_event event;
-					event.events = EPOLLIN;
+					event.events = EPOLLIN | EPOLLET;
 					event.data.fd = peer_sockfd;
 					int ctl_ret = epoll_ctl(epfd, EPOLL_CTL_ADD, peer_sockfd, &event);
 					if(ctl_ret < 0) {
 						printf("ERR_EP_ADD peer_sockfd:%d\n", peer_sockfd);
 					}
 					
-					continue;//new accept socket handle finished.
+					continue; //new accept socket handle finished.
 				}
 
 				//handle connected sock
@@ -93,8 +93,7 @@ int main(int argc, char** argv) {
 				int recv_len = recv(wait_events[n_wait].data.fd, recv_buf, kRecvBufSize, 0);
 				if(recv_len < 0) {
 					perror("ERR_SOCK_RECV");
-					printf("ERR_SOCK_RECV peer_sockfd:%d ", wait_events[n_wait].data.fd);
-					
+					printf("ERR_SOCK_RECV peer_sockfd:%d ", wait_events[n_wait].data.fd);					
 					continue;
 				}
 
@@ -103,7 +102,7 @@ int main(int argc, char** argv) {
 					if(ctl_ret < 0) {
 						printf("ERR_EP_DEL peer_sockfd:%d\n", wait_events[n_wait].data.fd);
 					}
-					continue;//peer closed
+					continue; //peer closed
 				}
 
 				recv_buf[recv_len] = '\0';
@@ -111,23 +110,8 @@ int main(int argc, char** argv) {
 			}
 		
 		}
-	} while(true);//epoll_wait loop
+	} while(true); //epoll_wait loop
 
-	/* struct sockaddr_in peer_addr; */
-	/* socklen_t peer_addr_len; */
-	/* int peer_sockfd = accept(sockfd, (struct sockaddr*)&peer_addr, &peer_addr_len); */
-	/* if(peer_sockfd < 0) { */
-	/* 	return ERR_SOCK_ACCEPT; */
-	/* } */
-	
-	/* char recv_buf[kRecvBufSize]; */
-	/* int recv_len = recv(peer_sockfd, recv_buf, kRecvBufSize, 0); */
-	/* if(recv_len < 0) { */
-	/* 	return ERR_SOCK_RECV; */
-	/* } */
-
-	/* recv_buf[recv_len] = '\0';  */
-	/* printf("buf:%s\n", recv_buf); */
 	
 	printf("Run to the final.\n");
 	return EXIT_SUCCESS;
