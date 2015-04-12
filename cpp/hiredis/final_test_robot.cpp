@@ -1,4 +1,4 @@
-//g++ -ggdb -std=c++0x final_test_robot.cpp xml_utils.cpp conf.cpp utils.cpp  -I/home/adam/test/strike2014/server/proto/client -I/home/adam/test/strike2014/server/online/src -L/home/adam/test/strike2014/server/proto/client -L/usr/local/lib/ -I/usr/include/libxml2/ -L/usr/local/lib/ -lssl  -lclientproto -lhiredis  -lprotobuf -lxml2 -o final_test_robot.linux
+///usr/bin/g++ -ggdb -std=c++0x final_test_robot.cpp xml_utils.cpp conf.cpp utils.cpp  -I/home/adam/test/strike2014/server/proto/client -I/home/adam/test/strike2014/server/online/src -L/home/adam/test/strike2014/server/proto/client -L/usr/local/lib/ -I/usr/include/libxml2/ -L/usr/local/lib/ -lssl  -lclientproto -lhiredis  -lprotobuf -lxml2 -o final_test_robot.linux
 
 #include <iostream>
 #include <cstdlib>
@@ -140,7 +140,12 @@ int main(int argc, char* argv[]) {
 		
 		commonproto::pb_challenge_player_t challenge_player_top1;
 		uint32_t uid = uid_beg+robot_i;
-		challenge_player_top1.set_uid(uid);		
+		challenge_player_top1.set_uid(uid);
+
+
+		std::cout << "[[[[[[[[[" << std::endl;
+		std::cout << "uid:" << uid << std::endl;
+		
 		
 		uint32_t name_index1 = f_range_random(0, g_name_vec.size()-1);
 		uint32_t name_index2 = f_range_random(0, g_name_vec.size()-1);
@@ -228,14 +233,32 @@ int main(int argc, char* argv[]) {
 				uint32_t hero_skill_lv = 0;					
 				uint32_t hero_skill_rating = 0;					
 
+				
 				switch(skill_index) {
 				case commonproto::SKILL_ACTIVE:
-					hero_skill_lv = std::max(0, static_cast<int>(hero_lv)+robot_conf->hero_skill_lv_delta);					
-				case commonproto::SKILL_FRIEND:
-					hero_skill_lv = 1;
+					hero_skill_lv = std::max(0, static_cast<int>(hero_lv)+robot_conf->hero_skill_lv_delta);		
 					hero_skill_rating = 1;					
 					break;
+				case commonproto::SKILL_FRIEND:
+					hero_skill_lv = std::max(0, static_cast<int>(hero_lv)+robot_conf->hero_skill_lv_delta);		
+					hero_skill_rating = 1;					
+					if(hero_skill_lv >= 21) {
+						hero_skill_rating = 2;
+						hero_skill_lv = hero_skill_lv-21+1;
+					}
+					
+					break;
 				case commonproto::SKILL_COMBO:
+					hero_skill_lv = std::max(0, static_cast<int>(hero_lv)+robot_conf->hero_skill_lv_delta);		
+					hero_skill_rating = 1;					
+					if(hero_skill_lv >= 21) {
+						hero_skill_rating = 2;
+						hero_skill_lv = hero_skill_lv-21+1;
+					} else {
+						hero_skill_rating = 0;
+						hero_skill_lv = 0;
+					}
+					
 					break;
 				case commonproto::SKILL_PASSIVE:
 					break;		
@@ -246,9 +269,20 @@ int main(int argc, char* argv[]) {
 			}
 			
 			single_btl_val = HeroUtils::calc_hero_btl_val(*challenge_hero_top1);
+
+			std::cout << "{{{" << std::endl;
+			std::cout << "single_btl_val:" << single_btl_val << std::endl;
+			std::string str = challenge_hero_top1->ShortDebugString();
+			std::cout << str << std::endl;
+			std::cout << "}}}" << std::endl;
+	
 			btl_val_vec.push_back(single_btl_val);
 
 		}
+
+
+		std::cout << "]]]]]]]]]" << std::endl;
+		std::cout << std::endl << std::endl << std::endl;
 
 		std::sort(btl_val_vec.begin(), btl_val_vec.end());
 		std::for_each(btl_val_vec.begin(), btl_val_vec.end(), f_calc_sum_btl_val);

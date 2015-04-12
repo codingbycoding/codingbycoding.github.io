@@ -31,6 +31,9 @@ uint32_t HeroUtils::calc_hero_btl_val(const commonproto::pb_hero_t& hero) {
 	uint32_t hero_equip_count = hero.hero_equips_size();
 	float hero_btl_val = 100.0f * (1 + hero.lv() * 0.08f) * (1 + (hero.star_rating() - 1) * 0.5f) + conf->cont_rating + conf->cont_equip * hero_equip_count;
 	hero_btl_val = hero_btl_val *(0.33f + 0.66f * (1 + skill_lv_sum * 0.02f));
+
+	
+
 	
 	return (uint32_t)hero_btl_val;
 }

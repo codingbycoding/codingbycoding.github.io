@@ -57,9 +57,51 @@ struct battle_point_conf_t {
 };
 
 
+/* class skill_lv_conf_mgr_t { */
+/* public: */
+/*     skill_lv_conf_mgr_t() { */
+/*         clear(); */
+/*     } */
+	
+/*     ~skill_lv_conf_mgr_t() { */
+/*         clear(); */
+/*     } */
+	
+/*     inline void clear() { */
+/*         skill_lv_conf_map_.clear(); */
+/*     } */
+    
+/*     inline const std::map<uint32_t, skill_lv_conf_t> &const_skill_lv_conf_map() const { */
+/*         return skill_lv_conf_map_; */
+/*     } */
+    
+/*     inline void copy_from(const skill_lv_conf_mgr_t &m) { */
+/*         skill_lv_conf_map_ = m.const_skill_lv_conf_map(); */
+/*     } */
+    
+/*     inline bool is_skill_lv_conf_exist(uint32_t type_rank) { */
+/*         return skill_lv_conf_map_.count(type_rank) > 0 ? true : false; */
+/*     } */
+    
+/*     inline bool add_skill_lv_conf(const skill_lv_conf_t &skill_lv_conf) { */
+/*         if (is_skill_lv_conf_exist(skill_lv_conf.type_rank)) return false; */
+/*         skill_lv_conf_map_[skill_lv_conf.type_rank] = skill_lv_conf; return true; */
+/*     } */
+    
+/*     inline const skill_lv_conf_t *find_skill_lv_conf(uint32_t type_rank) { */
+/*         if (!is_skill_lv_conf_exist(type_rank)) return NULL; */
+/*         return &((skill_lv_conf_map_.find(type_rank))->second); */
+/*     } */
+
+/* private: */
+/*     std::map<uint32_t, skill_lv_conf_t> skill_lv_conf_map_; */
+/* }; */
+
+
 class skill_lv_conf_mgr_t {
 public:
-    skill_lv_conf_mgr_t() {
+ skill_lv_conf_mgr_t() :
+	skill_combo_hero_lv_(0), skill_passive_hero_lv_(0) {
         clear();
     }
 	
@@ -70,7 +112,25 @@ public:
     inline void clear() {
         skill_lv_conf_map_.clear();
     }
-    
+
+	inline uint32_t skill_combo_hero_lv() const {
+		return skill_combo_hero_lv_;
+	}
+
+	inline uint32_t skill_passive_hero_lv() const {
+		return skill_passive_hero_lv_;
+	}			
+
+	
+	inline void set_skill_combo_hero_lv(uint32_t skill_combo_hero_lv) {		
+		skill_combo_hero_lv_ = skill_combo_hero_lv;
+	}
+
+	inline void set_skill_passive_hero_lv(uint32_t skill_passive_hero_lv) {		
+		skill_passive_hero_lv_ = skill_passive_hero_lv;
+	}			
+
+	
     inline const std::map<uint32_t, skill_lv_conf_t> &const_skill_lv_conf_map() const {
         return skill_lv_conf_map_;
     }
@@ -95,6 +155,8 @@ public:
 
 private:
     std::map<uint32_t, skill_lv_conf_t> skill_lv_conf_map_;
+	uint32_t skill_combo_hero_lv_; 
+	uint32_t skill_passive_hero_lv_;
 };
 
 

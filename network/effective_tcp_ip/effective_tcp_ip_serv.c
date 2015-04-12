@@ -12,7 +12,7 @@
 
 #include <sys/epoll.h>
 #include <stdbool.h>
-
+#include <errno.h>
 
 #include "effective_tcp_ip_header.h"
 #include "utils.h"
@@ -92,6 +92,11 @@ int main(int argc, char** argv) {
 				char recv_buf[kRecvBufSize];
 				int recv_len = recv(wait_events[n_wait].data.fd, recv_buf, kRecvBufSize, 0);
 				if(recv_len < 0) {
+					if(EAGAIN == errno || EWOULDBLOCK == errno) {
+						printf("socket recv EAGAIN");					
+						continue;
+					}
+					
 					perror("ERR_SOCK_RECV");
 					printf("ERR_SOCK_RECV peer_sockfd:%d ", wait_events[n_wait].data.fd);					
 					continue;
