@@ -27,6 +27,11 @@
 #include <chrono>
 #include <memory>
 #include <vector>
+#include <cstring>
+
+
+#include <unistd.h>
+
 
 
 enum class Phone_Type {kCellphone, kTelephone}; //strongly-typed enums
@@ -129,7 +134,7 @@ void Student::print() {
 
 
 
-int main() {
+int main(int argc, char** argv) {
 
 	auto xx = 8;
 	std::cout << "xx:" << xx << std::endl;
@@ -204,6 +209,13 @@ int main() {
 
 	std::cout << utf8 << "  " << utf16 << "  " << utf32 << std::endl;
 
+	static char* title = "test_program_name";
+	int title_len = std::min(strlen(argv[0]), strlen(title));
+	memset(argv[0], 0, strlen(argv[0])+1);
+	strncpy(argv[0], title, title_len);
+	argv[0][title_len+1] = '\0';
 	
+	
+	pause();
 	return EXIT_SUCCESS;
 }
