@@ -236,11 +236,11 @@ int main(int argc, char* argv[]) {
 				
 				switch(skill_index) {
 				case commonproto::SKILL_ACTIVE:
-					hero_skill_lv = std::max(0, static_cast<int>(hero_lv)+robot_conf->hero_skill_lv_delta);		
+					hero_skill_lv = std::max(1, static_cast<int>(hero_lv)+robot_conf->hero_skill_lv_delta);		
 					hero_skill_rating = 1;					
 					break;
 				case commonproto::SKILL_FRIEND:
-					hero_skill_lv = std::max(0, static_cast<int>(hero_lv)+robot_conf->hero_skill_lv_delta);		
+					hero_skill_lv = std::max(1, static_cast<int>(hero_lv)+robot_conf->hero_skill_lv_delta);		
 					hero_skill_rating = 1;					
 					if(hero_skill_lv >= 21) {
 						hero_skill_rating = 2;

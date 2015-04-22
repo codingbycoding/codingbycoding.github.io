@@ -4,33 +4,40 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <cstdint>
 #include <map>
+#include <vector>
 #include <functional>
 
 
 
 enum GameOption {
+	kGameOptionUnknown = 0,
 	kRock = 1,
 	kPaper = 2,
 	kScissors = 3
 };
 
-enum GameResult {	
-	kSuccess = 1,
-	kDefeat = 2,
-	kDraw = 3,
+enum GameResult {
+	kGameResultUnknown = 0,
+	kWin = 1,
+	kLose = 2,
+	kTie = 3,
 };
 
 std::ostream& operator<<(std::ostream& os, const GameResult& rhs) {
 	switch(rhs) {
-	case kSuccess:
-		os << "Success";
+	case kGameResultUnknown:
+		os << "GameResultUnknown";
 		break;
-	case kDefeat:
-		os << "Defeat";
+	case kWin:
+		os << "Win";
 		break;
-	case kDraw:
-		os << "Draw";
+	case kLose:
+		os << "Lose";
+		break;
+	case kTie:
+		os << "Tie";
 		break;		
 	}
 			
@@ -39,33 +46,10 @@ std::ostream& operator<<(std::ostream& os, const GameResult& rhs) {
 
 class GameOptionPair {
 public:
-	// bool operator<(const GameOptionPair& rhs) {
-	// 	// return option_pair_.first rhs.option_pair_.first) != 0 ? std::less<GameOption>(option_pair_.first, rhs.option_pair_.first) : std::less<GameOption>(option_pair_.second, rhs.option_pair_.second);
-				
-	// 	return std::less<GameOption>(option_pair_.first, rhs.option_pair_.first) != 0 ? std::less<GameOption>(option_pair_.first, rhs.option_pair_.first) : std::less<GameOption>(option_pair_.second, rhs.option_pair_.second);
-
-	// }
-
 private:
 	std::pair<GameOption, GameOption> option_pair_;
 };
 
-// bool operator<(GameOption lhs, GameOption rhs) {
-	
-// }
-	
-// class GameOptionVec {
-// public:
-// 	bool operator<(GameOptionVec rhs) {
-		
-// 	}
-	
-// private:
-// };
-
-// bool std::less<GameOption>(option_pair_.first, rhs.option_pair_.first) {
-// 	std::less<GameOption>(option_pair_.first, rhs.option_pair_.first);
-// }
 
 // namespace std {
 // template<>
@@ -82,24 +66,33 @@ private:
 static std::map<std::pair<GameOption, GameOption>, GameResult> g_resultMap;
 
 GameResult game_once_2(const GameOption& lhs, const GameOption& rhs) {	
-	return kSuccess;
+	return kWin;
 }
 
 GameResult game_once_pair(const std::pair<GameOption, GameOption>& rhs) {	
 	return g_resultMap[rhs];
 }
 
+std::vector<GameResult> game_once_vec(const std::vector<GameOption>& rhs) {
+	std::vector<GameResult> game_esult_vec;
+	// for(auto i : rhs) {
+
+	// }
+	
+	return game_esult_vec;
+}
+
 static void init_game_option_pair2result_map() {
 	g_resultMap = {
-		{std::pair<GameOption, GameOption>(kRock, kRock), kDraw},
-		{std::pair<GameOption, GameOption>(kRock, kPaper), kDefeat},
-		{std::pair<GameOption, GameOption>(kRock, kScissors), kSuccess},
-		{std::pair<GameOption, GameOption>(kPaper, kRock), kSuccess},
-		{std::pair<GameOption, GameOption>(kPaper, kPaper), kDraw},
-		{std::pair<GameOption, GameOption>(kPaper, kScissors), kDefeat},
-		{std::pair<GameOption, GameOption>(kScissors, kRock), kDefeat},
-		{std::pair<GameOption, GameOption>(kScissors, kPaper), kSuccess},
-		{std::pair<GameOption, GameOption>(kScissors, kScissors), kDraw},
+		{std::pair<GameOption, GameOption>(kRock, kRock), kTie},
+		{std::pair<GameOption, GameOption>(kRock, kPaper), kLose},
+		{std::pair<GameOption, GameOption>(kRock, kScissors), kWin},
+		{std::pair<GameOption, GameOption>(kPaper, kRock), kWin},
+		{std::pair<GameOption, GameOption>(kPaper, kPaper), kTie},
+		{std::pair<GameOption, GameOption>(kPaper, kScissors), kLose},
+		{std::pair<GameOption, GameOption>(kScissors, kRock), kLose},
+		{std::pair<GameOption, GameOption>(kScissors, kPaper), kWin},
+		{std::pair<GameOption, GameOption>(kScissors, kScissors), kTie},
 	};
 	
 }
