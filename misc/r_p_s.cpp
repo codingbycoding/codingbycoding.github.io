@@ -9,27 +9,11 @@
 #include <vector>
 #include <functional>
 
+#include "common.h"
 
-
-enum GameOption {
-	kGameOptionUnknown = 0,
-	kRock = 1,
-	kPaper = 2,
-	kScissors = 3
-};
-
-enum GameResult {
-	kGameResultUnknown = 0,
-	kWin = 1,
-	kLose = 2,
-	kTie = 3,
-};
 
 std::ostream& operator<<(std::ostream& os, const GameResult& rhs) {
 	switch(rhs) {
-	case kGameResultUnknown:
-		os << "GameResultUnknown";
-		break;
 	case kWin:
 		os << "Win";
 		break;
@@ -82,24 +66,54 @@ std::vector<GameResult> game_once_vec(const std::vector<GameOption>& rhs) {
 	return game_esult_vec;
 }
 
-static void init_game_option_pair2result_map() {
-	g_resultMap = {
-		{std::pair<GameOption, GameOption>(kRock, kRock), kTie},
-		{std::pair<GameOption, GameOption>(kRock, kPaper), kLose},
-		{std::pair<GameOption, GameOption>(kRock, kScissors), kWin},
-		{std::pair<GameOption, GameOption>(kPaper, kRock), kWin},
-		{std::pair<GameOption, GameOption>(kPaper, kPaper), kTie},
-		{std::pair<GameOption, GameOption>(kPaper, kScissors), kLose},
-		{std::pair<GameOption, GameOption>(kScissors, kRock), kLose},
-		{std::pair<GameOption, GameOption>(kScissors, kPaper), kWin},
-		{std::pair<GameOption, GameOption>(kScissors, kScissors), kTie},
-	};
+
+class GameOptionPairResult {
+public:
+
+	// GameOptionPairResult() = delete;
 	
-}
+	static GameOptionPairResult& instance() {
+		if(NULL == instance_) {
+			instance_ = new GameOptionPairResult();  
+		}
+		
+		return *instance_;
+	}
 
-int main(int argc, char**) {
-	init_game_option_pair2result_map();
+	GameResult game_once_pair(const std::pair<GameOption, GameOption>& rhs) {	
+		return game_option_pair2result_map_[rhs];	
+	}
+	
+protected:
+	GameOptionPairResult() {
+		game_option_pair2result_map_ = {
+			{std::pair<GameOption, GameOption>(kRock, kRock), kTie},
+			{std::pair<GameOption, GameOption>(kRock, kPaper), kLose},
+			{std::pair<GameOption, GameOption>(kRock, kScissors), kWin},
+			{std::pair<GameOption, GameOption>(kPaper, kRock), kWin},
+			{std::pair<GameOption, GameOption>(kPaper, kPaper), kTie},
+			{std::pair<GameOption, GameOption>(kPaper, kScissors), kLose},
+			{std::pair<GameOption, GameOption>(kScissors, kRock), kLose},
+			{std::pair<GameOption, GameOption>(kScissors, kPaper), kWin},
+			{std::pair<GameOption, GameOption>(kScissors, kScissors), kTie},
+		};
+	}
+	
+private:
+	static GameOptionPairResult* instance_;
+	std::map<std::pair<GameOption, GameOption>, GameResult> game_option_pair2result_map_;
+};
 
+
+GameOptionPairResult* GameOptionPairResult::instance_ = nullptr;
+
+int main(int argc, char**)  {
+	// init_game_option_pair2result_map();
+	
+	GameOptionPairResult go_2_res = GameOptionPairResult::instance();
+	std::cout << go_2_res.game_once_pair(std::pair<GameOption, GameOption>(kPaper, kPaper)) << std::endl;
+	
+	
 	std::cout << game_once_pair(std::pair<GameOption, GameOption>(kPaper, kPaper)) << std::endl;
 	std::cout << game_once_pair(std::pair<GameOption, GameOption>(kPaper, kScissors)) << std::endl;
 	

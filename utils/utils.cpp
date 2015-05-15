@@ -11,11 +11,12 @@ extern "C" {
 #include <time.h>
 }
 
+#endif
 
 
 class FunCost {
 public:
-	FunCost(std::string funName)
+	explicit FunCost(std::string funName)
 		: fun_name_(funName) {
 		cl_beg_ = clock();
 	}
