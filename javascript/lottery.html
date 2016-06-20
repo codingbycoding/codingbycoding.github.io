@@ -1,0 +1,58 @@
+<html>
+<head>
+<style>
+#target_html {
+color: red;
+} 
+</style>
+</head>
+<body>
+<h1 id="id1"></h1>
+<script>
+var i = 0;
+var intervalId;
+var game_names = new Array("Clash of Clans", "Puzzle & Dragons", "Candy Crush Saga",  "Monster Strike", "Game of War-Fire Age", 
+					"Hay Day", "Disney Tsum Tsum", "Farm Heroes Saga", "Summoners War", "Boom Beach");
+var company_names = new Array("Clash of Clans", "Puzzle & Dragons", "Candy Crush Saga",  "Monster Strike", "Game of War-Fire Age", 
+					"Hay Day", "Disney Tsum Tsum", "Farm Heroes Saga", "Summoners War", "Boom Beach");
+var target_name = game_names[0];					
+
+var total_num = game_names.length;					
+var target_html = "<h1 id='target_html'>Clash of Clans</h1>";
+
+
+function print() {
+	if(i < total_num) {
+		//document.write(i);
+		document.getElementById("id1").innerText = game_names[i];
+		if(i == total_num-1) {
+			window.clearInterval(intervalId);
+			var target_index = Math.round(Math.random()*100) % total_num;
+			//document.getElementById("id1").innerText = game_names[target_index];
+			//document.getElementById("id1").innerText = target_name;
+			document.getElementById("id1").innerHTML = target_html;
+		}
+	}
+	i++;
+}
+
+/*
+function print() {
+	document.getElementById("id1").innerText = game_names[i++%total_num];
+}
+*/
+
+function winclick() {
+	window.clearInterval(intervalId);
+	document.getElementById("id1").innerHTML = target_html;		
+}
+//document.write("hello world!");
+var total_sec = 1;
+intervalId = window.setInterval(print, total_sec/total_num*1000);
+//document.getElementById("id1").setEventListener("onclick", winclick, true);
+//document.setEventListener("onclick", winclick, false);
+//window.setEventListener("click", winclick, false);
+</script>
+
+</body>
+</html>

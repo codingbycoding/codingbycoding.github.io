@@ -1,0 +1,165 @@
+
+* DONE DuDu Test PLAGame Version intranet pass to DuDu Collegues<2013-10-22 Tue>
+* DONE Server version 20130917R1 First Deployment on BJ01<2013-10-22 Tue>
+* DONE Autodeploy Task: python process services.xml
+* DONE Test NOVODEX0 Phy DS for zhangliming<2013-10-23 Wed>
+
+
+* DONE dudu server problem start match
+* DONE New version to test on BJ
+
+
+* DONE DSA problemReport 5 types
+
+
+* DONE [2013-11-08 Fri]
+** DONE OnFirstNotification not use oneway
+   SCHEDULED: <2013-11-08 Fri>
+** DONE Launcher DuDu
+   SCHEDULED: <2013-11-08 Fri>
+
+** DONE add dudu.key
+
+
+* DONE VersionPrepare batch file
+  SCHEDULED: <2013-11-12 Tue>   
+
+** DONE add dudu zoneid
+
+* DONE 360 real client_id test
+* DONE outer net test version for Bengbu   
+* DONE superhost01 deploy a version 4 youcheng.
+  SCHEDULED: <2013-11-11 Mon>
+
+* DONE 360version finance log format verify.
+  SCHEDULED: <2013-11-13 Wed>
+
+
+** DONE [2013-11-08 Fri](周五 出个版本) 或者11.11(周一) 王天耀部署测试Launcher, 版本部署到北京机房,国安机房全部流程 测试内容:1.Dudu 2.360帐号
+
+** DONE [2013-11-14 Thu](周四)(电信)南3, 南4合服
+
+** DONE [2013-11-15 Fri](周五)(电信)广1, 广2合服
+
+** DONE [2013-11-15 Fri](周五)封版本 部署到北京机房, 国安机房全部流程
+
+** DONE [2013-11-18 Mon]网通一个区:(北3,北2,北1)
+
+** DONE [2013-11-18 Mon](周一)合服成电信一个区(南2):(南4,南3,南2,南1,广2,广1)  
+
+** DONE [2013-11-18 Mon](周一) 南一数据拉到北京或者国安其中一个区, 测试内容
+
+** DONE [2013-11-20 Wed](周三)一天  停线上真如电信, 南汇网通, 南汇电信, 全部部署上封的版本.
+
+
+
+* List Order By Date
+** [2013-11-15 Fri]  List
+*** DONE 1. 360 Account Version Dudu
+*** DONE 2. 20131115R1 Version
+** [2013-11-18 Mon]  List
+*** DONE 1. HP Compiant Win8.1 version
+*** DONE 2. 20131118R1 New Version 2 Deploy
+** [2013-11-19 Tue]  List
+*** DONE 1. Amazon Server Verify
+*** DONE 2. New Version 20131119R1 2 Deploy
+** [2013-11-20 Wed]  List
+*** DONE 1. 20131120R1 New Version 2 Deploy 
+*** DONE 2. PLAOnline 安装包
+*** DONE 3. 整理服务器列表
+** [2013-11-21 Thu]  List
+*** DONE 1. PLAOnline 安装包
+*** DONE 2. 服务器列表梳理
+** [2013-11-22 Fri]  List
+*** DONE 1. 根据产品要求更新官网服务器 Pending
+    
+** [2013-11-25 Mon]    
+*** DONE 1. 更新新版本 grsm_split_charaStat_service.sql Pending
+*** DONE 2. 更新新版本 导数据库 Pending
+
+** [2013-11-25 Mon]  List
+*** DONE 1. Ice Gate Node 分离
+** [2013-11-26 Tue]  List
+*** DONE 1. 多Gate
+** [2013-11-27 Wed]  List
+*** DONE 1. 9:30AM-1:30PM 官网停服 更新版本 20131125R1 (1.确认数据库, 2.确认xml)
+*** TODO 2. 208 Gate DNSException
+** [2013-11-28 Thu]  List
+*** DONE 1. 多Gate内网QA环境
+*** DONE 2. 360 mysql qid(int(10)) versus java int
+** [2013-12-02 Mon]  List
+*** DONE 1. 听雨阁光荣使命外挂
+** [2013-12-03 Tue]  List
+*** TODO 1. Ice-3.4.2 patch
+*** DONE 2. Gate env on 11
+*** DONE 3. HP反馈一个错误 不同版本的HP同时运行 
+** [2013-12-04 Wed]  List
+*** DONE 1. update official servers at 9AM-12AM.
+*** TODO 2. Ice-3.4.2 glacier2router update to 360 servers.
+*** DONE 3. 内网多Gate for QA ENV
+
+** [2013-12-05 Thu] List
+*** DONE 1. Client.Size 90
+*** DONE 2. 360 GM
+*** DONE 3. 听雨阁外挂验证
+    
+** [2013-12-06 Fri] List
+*** DONE 1. 内网360版本进游戏问题
+*** DONE 2. 线上ice_oneway()
+
+** [2013-12-09 Mon] List
+*** DONE 1. 内网多Gate 4 QA ENV
+** [2013-12-10 Tue] List
+*** DONE 1. 多Node(1/3天)
+*** DONE 2. 1-3分钟 HP
+** [2013-12-11 Wed] List
+*** DONE 1. 1-3分钟 HP更新到比赛服DX服    
+*** DONE 2. RUS 新版本制作
+
+** [2013-12-23 Mon] List
+*** DONE 1. 多Node(2/3天)
+
+** [2013-12-24 Tue] List
+*** DONE 1. dudu 未登录, 匹配游戏起不来
+
+** [2013-12-25 Wed] List
+*** DONE 1. Gate 状态统计(1/3)
+** [2013-12-26 Thu] List
+*** TODO 1. Gate 状态统计(2/3)
+
+
+
+** [2014-01-05 Sun] List
+*** DONE 1. Gate Status to Platform interface
+
+** [2014-01-06 Mon] List
+*** DONE 1. Web Service to Platform
+*** DONE 2. Fix Mail 8days ref: BugFree 2172
+*** TODO 3. investigate dudu unsteable game server logic failed(0/2)
+
+** [2014-01-07 Tue] List
+*** DONE 1. investigate dudu unsteable game server logic failed(2/2) :self verify
+*** DONE 2. dudu server restore, dudu service failed to login dudu(1/2)
+
+** [2014-01-09 Thu] List
+*** DONE 1. dudu server restore, dudu service failed to login dudu(2/2)
+
+** [2014-01-10 Fri] List
+*** DONE 1. DSA 对应多DC--内网多DC环境
+*** TODO 2. DSA 对应多DC--
+    
+    
+** [2014-02-10 Mon] List
+*** TODO 1. 线上运维流程
+
+** [2014-02-11 Tue] List
+*** TODO 1. 单DSA多DC环境
+   
+** [2014-02-12 Wed] List
+*** TODO 1. fix bug 2691 restart login server need restart client to login
+
+
+** [2014-02-25 Tue] List
+*** TODO 1. 南京军区服务器和客户端版本
+*** TODO 2. 嘟嘟服务器找谢睿
+*** TODO 3. 查外挂用户

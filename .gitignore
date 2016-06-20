@@ -1,6 +1,10 @@
 # Object files
 *.o
 
+# Object files on Win
+*.obj
+*.exp
+
 # Libraries
 *.lib
 *.a
@@ -15,3 +19,34 @@
 *.exe
 *.out
 *.app
+
+# bin dir
+bin/
+
+#auto-save and backup files
+*~
+*#
+
+
+
+
+#python compiled file
+*.pyc
+python/build/
+
+#latex tmp file
+latex/*.aux
+latex/*.toc
+latex/*.pdf
+latex/*.log
+
+#class
+*.class
+
+#linux bin
+*.linux
+
+
+#cscope
+cscope.files
+cscope.out

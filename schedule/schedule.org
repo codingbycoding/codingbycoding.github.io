@@ -1,0 +1,11 @@
+* Schedule 4
+
+* TODO Introduction To Algorithm
+** TODO heapsort heap size is n, how to calculate left subtree and right subtree size
+** TODO counting-sort						    :ARCHIVE:
+   t_ret[t_temp[t[i]]-1] = t[i]; // array index begin at 0
+
+      // t_ret[t_temp[t[i]]] = t[i]; // !!! error array index begin at
+      0
+
+      

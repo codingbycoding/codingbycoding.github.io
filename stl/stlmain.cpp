@@ -1,6 +1,9 @@
+//g++ -ggdb -std=c++0x stlmain.cpp algorithm.cpp -o stlmain.linux
+
 #include <iostream>
 #include <cassert>
 #include <deque>
+#include <map>
 
 using namespace std;
 
@@ -47,7 +50,7 @@ T sum(T arg1, T arg2)
 
 //Overloading 
 template<typename T=int, int magic = 100>
-T sum(T arg1, T arg2, T arg3)
+ T sum(T arg1, T arg2, T arg3)
 {
 	return arg1 + arg2 + arg3;
 }
@@ -71,6 +74,23 @@ private:
 
 };
 
+
+struct TestKey_t {
+	int id_1;
+	int id_2;
+	bool operator < (const TestKey_t& rhs) const {
+		return id_2 < rhs.id_2;
+	}
+};
+
+struct TestValue_t {
+	int id_1;
+	int id_2;
+};
+
+
+extern void test_stl_algo();
+
 int main()
 {
 	std::cout << "stlmain cpp..." << std::endl;
@@ -84,6 +104,28 @@ int main()
 	//std::cout << "::sum(intArg1, intArg2) :" << ::sum<int>(intArg1, intArg2) << std::endl;
 	//error: 'float' is not a valid type for a template constant parameter
 	//std::cout << "::sum(floatArg1, floatArg2, floatMagic1) :" << ::sum<float, intMagic1>(floatArg1, floatArg2) << std::endl;
+
+
+	// TestKey_t tk1;
+	// std::map<TestKey_t, int> tkM;
 	
+	// tkM[tk1] = 0;
+
+
+	TestKey_t tk1;
+	TestValue_t tv1;
+	std::map<TestKey_t, TestValue_t> tkvM;
+
+	if(tkvM.count(tk1) == 1) {
+		std::cout << "count 1" << std::endl;
+	} else {
+		std::cout << "count 0" << std::endl;
+	}
+	
+	tkvM[tk1] = tv1;
+
+
+	test_stl_algo();
 	return 0;
 }
+

@@ -1,0 +1,9 @@
+<!DOCTYPE TestRoot [
+	  <!-- <!ELEMENT Date (#PCDATA)> -->
+	  <!ELEMENT Persion (id, name, age)+>
+	  <!ELEMENT id (#PCDATA)>
+	  <!ELEMENT name (#PCDATA)>
+	  <!ELEMENT age (#PCDATA)>
+	  
+	  
+]>

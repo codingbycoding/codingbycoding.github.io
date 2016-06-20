@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- take GRSM_NH01 for sample -->
+
+<config>
+  <DB IP="172.30.201.200" DATABASE="GRSM_MAIN" USERNAME="gg"
+      PASSWD="gg***" />
+  
+  <REDIS IP="172.30.201.143" DB="1"/>
+  
+  <!-- GATE config services.xml file <property> just add new attribute
+  on this GATE TAG-->
+  <GATE ID="1" EXIP="112.65.196.121" INIP="172.30.201.145"
+	PlatformUrl.0="http://172.17.189.10:8080/plagame/plaservice"
+	PlatformUrl.1="http://172.17.189.10:8080/plagame/plaservice"
+	TmOnline.ServerZone="GRSM_NH01" TmOnline.ServerZoneId="2500" TmOnline.ServerGameId="8" />
+  
+  <GAME ID="1" EXIP="112.65.196.115" INIP="172.30.201.135" DsaType="1" MaxLoad="50" />
+  <GAME ID="2" EXIP="112.65.196.116" INIP="172.30.201.136" DsaType="2" MaxLoad="60" />
+  <GAME ID="3" EXIP="112.65.196.116" INIP="172.30.201.137" DsaType="3" MaxLoad="70" />
+
+  
+</config>

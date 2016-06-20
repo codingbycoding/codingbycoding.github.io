@@ -17,7 +17,8 @@ CPP=
 CFLAGS=-Wall
 CXXFLAGS=-Wall
 
-C_COMPILER=D:\MinGW\bin\mingw32-gcc.exe
+#C_COMPILER=D:\MinGW\bin\mingw32-gcc.exe
+C_COMPILER=D:\msysgit\msysgit\mingw\bin\mingw32-gcc.exe
 C_SOURCE_FILES=testc.c
 C_INCLUDE_DIR_RUNTIME=D:\MinGW\include
 

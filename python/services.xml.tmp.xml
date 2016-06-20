@@ -1,0 +1,36 @@
+<icegrid>
+  <application name="AppTmServices">
+    <replica-group id="RepTmServices">
+      <object identity="UserSessionManager/TmUserSessionManager" type="::Glacier2::SessionManager" />
+      <object identity="TmOnline/TmAccountService" type="::com::tmgame::rmi::AccountService" />
+    </replica-group>
+
+    <server-template id="SrvTempTmSandbox">
+      <parameter name="index" />
+      <icebox activation="on-demand" exe="java" id="Sandbox${index}">
+	<option>-server</option>
+	<option>-Xms1024m</option>
+	<option>-Xmx1024m</option>
+	<option>-cp</option>
+	<option>test to write</option>
+	
+
+	<property name="TmOnline.Jedis.Address" value="172.30.201.143" />
+	
+	<property name="TmOnline.ServerZone" value="GRSM_NH01" />
+	<property name="TmOnline.ServerZoneId" value="2500" />
+	<property name="TmOnline.ServerGameId" value="8" />
+	
+	<property name="platform.PlatformUrl.0" value="http://127.0.0.1/plagame/plaservice" />
+	<property name="platform.PlatformUrl.1" value="http://127.0.189.69" />	
+
+	
+	<property name="dudu.addr" value="172.17.189.207" />
+	<property name="dudu.port" value="10820" />	
+      </icebox>
+      </server-template>
+	<node name="Node0">
+	  <server-instance index="0" template="SrvTempTmSandbox" />
+	</node>
+  </application>
+</icegrid>

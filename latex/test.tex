@@ -1,0 +1,114 @@
+%pdflatex  test.tex
+
+
+
+
+\documentclass[UTF8, 12pt, a4paper, oneside, titlepage]{book}
+
+ %% \documentclass[UTF8, a4paper, oneside, titlepage]{book}
+\usepackage{amsmath}
+\usepackage{ctex}
+\usepackage{url}
+\usepackage{color}
+%\setcounter{secnumdepth}{0}
+%\raggedright
+
+%% \renewcommand{\abstractname}{Summary for test}
+
+\begin{document}
+
+
+\title{\LaTeX Test}
+\author{Jack\\Rose}
+\date{\color{blue}2013-02-17}
+
+  \maketitle
+  
+  %% \begin{abstract}
+  %% This is abstract.
+  %% \end{abstract}
+  \tableofcontents
+  
+  \LaTeX{} is a document preparation system for the \TeX{}
+  typesetting program. It offers programmable desktop publishing
+  features and extensive facilities for automating most aspects of
+  typesetting and desktop publishing, including numbering and
+  cross-referencing, tables and figures, page layout, bibliographies,
+  and much more. \LaTeX{} was originally written in 1984 by Leslie
+  Lamport and has become the dominant method for using \TeX; few
+  people write in plain \TeX{} anymore. The current version is
+  \LaTeXe.
+ 
+  % This is a comment; it will not be shown in the final output.
+  % The following shows a little of the typesetting power of LaTeX:
+  \begin{align}
+    E &= mc^2                              \\
+    m &= \frac{m_0}{\sqrt{1-\frac{v^2}{c^2}}}
+  \end{align}
+
+	\section{First Document}
+	This is a exmple.
+	中文
+	\begin{itemize}
+	\item ABC
+	\item CBA
+	\item 123
+	\item 321
+	\end{itemize}
+	
+	\subsection{More information}
+	
+	
+	\begin{center}
+		\fbox{\textit{Have a nice day!}}
+		
+	\end{center}
+	
+	
+	
+	\textit{Great?}
+	\underline{Underline}
+	\begin{flushleft}
+	Flush Left
+	\end{flushleft}
+	
+	\begin{center}
+	Stand Center
+	\end{center}
+	
+	\begin{flushright}
+	Flush Right
+	\end{flushright}
+	
+%	\begin{picture}(20,20)
+%	content...
+%		\circle
+%	\end{picture}
+
+%\chapter{Ch1:第一章}
+第一章内容
+\section[Effect on staff turnover]{An analysis of the 
+effect of the revised recruitment policies on staff 
+turnover at divisional headquarters}
+第二章
+
+\begin{itemize}
+
+\item Itemized lists usually have a bullet;
+
+\item Long items use `hanging indentation', 
+whereby the text is wrapped with a margin 
+which brings it clear of the bullet used in 
+the first line of each item;
+
+\item The bullet can be changed for any other 
+symbol, for example from the \textsf{bbding} 
+or \textsf{pifont} package.
+
+\end{itemize}
+
+\url{http://www.ctan.org/tex-archive/info/beginlatex/}
+
+\end{document}
+
+This is also comment.
