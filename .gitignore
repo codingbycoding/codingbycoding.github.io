@@ -23,6 +23,9 @@
 # bin dir
 bin/
 
+# build dir
+build/
+
 #auto-save and backup files
 *~
 *#
