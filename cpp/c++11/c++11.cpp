@@ -1,4 +1,4 @@
-//g++ c++11.cpp -o c++11.linux -ggdb -std=c++11 -Wall -lpthread -fdiagnostics-color=always
+//g++ c++11.cpp -o build/c++11.linux -ggdb -std=c++11 -Wall -lpthread -fdiagnostics-color=always
 
 
 //because I install GCC 4.9.2 in /usr/local and the system also has an old version GCC 4.4.7 in /usr   
