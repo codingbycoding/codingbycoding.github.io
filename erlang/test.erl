@@ -2,5 +2,5 @@
 -export([addfun/2]).
 
 
-addfun() ->
-		 
+addfun(A, B) ->
+	ok.

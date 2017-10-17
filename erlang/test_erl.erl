@@ -30,30 +30,35 @@ start() ->
 start_link(_Name, _Mod, _Args, _Options) ->
 	{ok, self()}.
 	
-handle_call({test}, _From, State) ->
-	NewState = lists:sort(fun(A, B) ->
+handle_call({test}, _From, State = #state{alist = List}) ->
+	NewList = lists:sort(fun(A, B) ->
 				A#amap.akey < B#amap.akey end,				
-			   State#state.alist),
-		
+			   List),
+	NewState = State#state{alist = NewList},	
 	{reply, ok, NewState};
-handle_call({print}, _From, State) ->
-	lists:foreach(fun(A) -> 
-			io:formart("{k:~p  } ", [A]) end,				
-			   State#state.alist),			
+handle_call({print}, _From, State = #state{alist = List}) ->
+	io:format("~p", List),		
 	{reply, ok, State};		
+% handle_call({print}, _From, State = #state{alist = List}) ->
+	% lists:foreach(fun(A) -> 
+			% io:formart("{k:~p  } ", [A#amap.akey]) end,				
+			   % List),			
+	% {reply, ok, State};		
 handle_call(_Request, _From, _State) ->
 	{reply, ok}.
 	
 handle_cast(_Request, _State) ->
-	ok.
+	{noreply, ok}.
 	
-handle_info(atom_a, _State) ->
+handle_info(atom_a, State) ->
 	io:format("xxxatoma~n"),
-	ok.
+	{noreply, State};
+handle_info(_, State) ->
+	{noreply, State}.
 
 	
-code_change(_OldVsn, _State, _Extra) ->
-    ok.
+code_change(_OldVsn, State, _Extra) ->
+    {ok, State}.
 	
 terminate(_Reason,_State) ->
 	ok.
