@@ -1,15 +1,15 @@
-暂时命名为xnet, 以后会更改(与http://www.xnet.com冲突)
+暂时命名为xnet, 以后会更改(与 [http://www.xnet.com](http://www.xnet.com) 冲突)
 
 
 目标:
-1.linux平台下追求最高效率epoll ET模式, 不浪费精力在多种api(select, poll, kqueue)如libevent, 力求精炼.
+1. linux平台下追求最高效率epoll ET模式, 不浪费精力在多种api(select, poll, kqueue)如libevent, 力求精炼.
 
-2.完整的游戏服务器框架(xnet暂只net部分功能+协议数据)有别与libev, libuv, libevent.
+2. 完整的游戏服务器框架(xnet暂只net部分功能+协议数据)有别与libev, libuv, libevent.
 
-3.防御性原则,网络连接,协议数据异常应对. 
+3. 防御性原则,网络连接,协议数据异常应对. 
 
-4.父子进程模式而不是多线程模式(c,c++容易core dump, 父子进程模式, 子进程dump, 父进程可重启子进程)--学习用版多线程模式(仅学习用, 理论性能更高, 但是core dump没有父子进程模式稳定).
+4. 父子进程模式而不是多线程模式(c,c++容易core dump, 父子进程模式, 子进程dump, 父进程可重启子进程)--学习用版多线程模式(仅学习用, 理论性能更高, 但是core dump没有父子进程模式稳定).
 
-4.学习作用, 最终提取设计先c语言实现, 然后C++, Go, Python, Erlang实现.学习不同语言的特性, 发挥不同语言的特性.
+5. 学习作用, 最终提取设计先c语言实现, 然后C++, Go, Python, Erlang实现.学习不同语言的特性, 发挥不同语言的特性.
 
-5.使用C++11标准 GCC4.9.2
+6. 使用C++11标准 GCC4.9.2
